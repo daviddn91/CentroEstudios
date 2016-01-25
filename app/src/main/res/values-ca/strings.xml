@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cercador d\'escoles</string>
+    <string name="action_settings">Configuració</string>
+    <string name="navigation_drawer_close">Tancar el menú de navegació</string>
+    <string name="navigation_drawer_open">Obrir el menú de navegació</string>
+    <string name="buscar">Cercar escoles</string>
+    <string name="contactar">Contactar amb el desenvolupador</string>
+    <string name="faqs">Preguntes freqüents</string>
+    <string name="preferencias">Canviar les preferències</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="ayuda">Ajuda</string>
+    <string name="cercanas">Escoles properes</string>
+</resources>

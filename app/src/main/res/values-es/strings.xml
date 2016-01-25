@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Buscador de colegios</string>
+    <string name="action_settings">Configuración</string>
+    <string name="navigation_drawer_close">Cerrar el menú de navegación</string>
+    <string name="navigation_drawer_open">Abrir el menú de navegación</string>
+    <string name="buscar">Buscar escuelas</string>
+    <string name="contactar">Contactar con el desarrollador</string>
+    <string name="faqs">Preguntas frecuentes</string>
+    <string name="preferencias">Cambiar preferencias</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="cercanas">Escuelas cercanas</string>
+</resources>
