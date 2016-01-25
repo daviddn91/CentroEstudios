@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
+/*
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link FragmentCercanas.OnFragmentInteractionListener} interface
@@ -122,7 +122,7 @@ public class FragmentCercanas extends Fragment {
         // inflate and return the layout
         View v = inflater.inflate(R.layout.fragment_cercanas, container,
                 false);
-        mMapView = (MapView) v.findViewById(R.id.mapView);
+        //mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume();// needed to get the map to display immediately
