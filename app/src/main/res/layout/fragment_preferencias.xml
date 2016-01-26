@@ -12,7 +12,8 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="Concertado"
             android:id="@+id/switch4"
-            android:checked="false"
+            android:checked="true"
             android:height="35dp"
             android:textSize="16dp" />
 
@@ -78,7 +79,7 @@
             android:layout_height="wrap_content"
             android:text="Privado"
             android:id="@+id/switch5"
-            android:checked="false"
+            android:checked="true"
             android:height="35dp"
             android:textSize="16dp" />
 
@@ -90,5 +91,66 @@
             android:checked="false"
             android:height="35dp"
             android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" "
+            android:id="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Idiomas"
+            android:id="@+id/textView6"
+            android:height="25dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Castellano"
+            android:id="@+id/switch7"
+            android:checked="true"
+            android:textSize="16dp"
+            android:height="35dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Catalán"
+            android:id="@+id/switch9"
+            android:checked="true"
+            android:textSize="16dp"
+            android:height="35dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inglés"
+            android:id="@+id/switch8"
+            android:textSize="16dp"
+            android:checked="true"
+            android:height="35dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Francés"
+            android:id="@+id/switch11"
+            android:textSize="16dp"
+            android:checked="false"
+            android:height="35dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alemán"
+            android:id="@+id/switch10"
+            android:checked="false"
+            android:textSize="16dp"
+            android:height="35dp" />
+
     </LinearLayout>
 </FrameLayout>
