@@ -11,4 +11,22 @@
     <string name="title_activity_maps">Map</string>
     <string name="ayuda">Ayuda</string>
     <string name="cercanas">Escuelas cercanas</string>
+    <string name="idiomas">Lenguas</string>
+    <string name="castellano">Castellano</string>
+    <string name="catalan">Catalán</string>
+    <string name="ingles">Inglés</string>
+    <string name="frances">Francés</string>
+    <string name="aleman">Alemán</string>
+    <string name="tipo_centro">Tipo de centro</string>
+    <string name="ambos">Ambos</string>
+    <string name="laico">Laico</string>
+    <string name="religioso">Religioso</string>
+    <string name="creencias_religiosas">Creencias religiosas</string>
+    <string name="publico">Público</string>
+    <string name="concertado">Concertado</string>
+    <string name="privado">Privado</string>
+    <string name="genero">Género</string>
+    <string name="solo_ninas">Solo niñas</string>
+    <string name="solo_ninos">Solo niños</string>
+    <string name="espacio">  </string>
 </resources>
