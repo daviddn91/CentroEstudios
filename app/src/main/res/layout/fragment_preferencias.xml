@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginRight="10px"
-        android:layout_marginLeft="10px"
-        android:layout_marginTop="10px">
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:id="@+id/switch1"
             android:checked="true"
             android:height="35dp"
-            android:textSize="17dp" />
+            android:textSize="16dp" />
 
         <Switch
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:id="@+id/switch2"
             android:checked="true"
             android:height="35dp"
-            android:textSize="17dp" />
+            android:textSize="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             android:id="@+id/switch3"
             android:checked="true"
             android:height="35dp"
-            android:textSize="17dp" />
+            android:textSize="16dp" />
 
         <Switch
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             android:id="@+id/switch4"
             android:checked="false"
             android:height="35dp"
-            android:textSize="17dp" />
+            android:textSize="16dp" />
 
         <Switch
             android:layout_width="match_parent"
@@ -80,7 +80,7 @@
             android:id="@+id/switch5"
             android:checked="false"
             android:height="35dp"
-            android:textSize="17dp" />
+            android:textSize="16dp" />
 
         <Switch
             android:layout_width="match_parent"
@@ -89,6 +89,6 @@
             android:id="@+id/switch6"
             android:checked="false"
             android:height="35dp"
-            android:textSize="17dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 </FrameLayout>
