@@ -33,23 +33,34 @@
                 android:id="@+id/textView2"
                 android:height="25dp" />
 
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Niño"
-                android:id="@+id/switch1"
-                android:checked="true"
-                android:height="35dp"
-                android:textSize="16dp" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Niña"
-                android:id="@+id/switch2"
-                android:checked="true"
-                android:height="35dp"
-                android:textSize="16dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solo niñas"
+                    android:id="@+id/radioButton"
+                    android:checked="false"
+                    android:textSize="16dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Solo niños"
+                    android:id="@+id/radioButton2"
+                    android:checked="false"
+                    android:textSize="16dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ambos"
+                    android:id="@+id/radioButton3"
+                    android:checked="true"
+                    android:textSize="16dp" />
+            </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,7 +84,9 @@
                 android:id="@+id/switch3"
                 android:checked="true"
                 android:height="35dp"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -82,7 +95,9 @@
                 android:id="@+id/switch4"
                 android:checked="true"
                 android:height="35dp"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -91,16 +106,53 @@
                 android:id="@+id/switch5"
                 android:checked="true"
                 android:height="35dp"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
-            <Switch
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Religioso"
-                android:id="@+id/switch6"
-                android:checked="false"
-                android:height="35dp"
-                android:textSize="16dp" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" "
+                android:id="@+id/textView8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Creencias religiosas"
+                android:id="@+id/textView9"
+                android:height="25dp" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Religioso"
+                    android:id="@+id/radioButton4"
+                    android:checked="false"
+                    android:textSize="16dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Laico"
+                    android:id="@+id/radioButton5"
+                    android:checked="false"
+                    android:textSize="16dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ambos"
+                    android:id="@+id/radioButton6"
+                    android:checked="true"
+                    android:textSize="16dp" />
+            </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,7 +176,9 @@
                 android:id="@+id/switch7"
                 android:checked="true"
                 android:textSize="16dp"
-                android:height="35dp" />
+                android:height="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -133,7 +187,9 @@
                 android:id="@+id/switch9"
                 android:checked="true"
                 android:textSize="16dp"
-                android:height="35dp" />
+                android:height="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -142,7 +198,9 @@
                 android:id="@+id/switch8"
                 android:textSize="16dp"
                 android:checked="true"
-                android:height="35dp" />
+                android:height="35dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -151,7 +209,9 @@
                 android:id="@+id/switch11"
                 android:textSize="16dp"
                 android:checked="false"
-                android:height="35dp" />
+                android:height="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -160,7 +220,9 @@
                 android:id="@+id/switch10"
                 android:checked="false"
                 android:textSize="16dp"
-                android:height="35dp" />
+                android:height="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
         </LinearLayout>
     </ScrollView>
