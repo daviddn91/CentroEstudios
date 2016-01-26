@@ -5,9 +5,90 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="School searcher"
-        android:id="@+id/textView2" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginRight="10px"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="10px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Géneros en la escuela"
+            android:id="@+id/textView2"
+            android:height="25dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Niño"
+            android:id="@+id/switch1"
+            android:checked="true"
+            android:height="35dp"
+            android:textSize="17dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Niña"
+            android:id="@+id/switch2"
+            android:checked="true"
+            android:height="35dp"
+            android:textSize="17dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" "
+            android:id="@+id/textView5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Tipo de centro"
+            android:id="@+id/textView3"
+            android:height="25dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Público"
+            android:id="@+id/switch3"
+            android:checked="true"
+            android:height="35dp"
+            android:textSize="17dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Concertado"
+            android:id="@+id/switch4"
+            android:checked="false"
+            android:height="35dp"
+            android:textSize="17dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privado"
+            android:id="@+id/switch5"
+            android:checked="false"
+            android:height="35dp"
+            android:textSize="17dp" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Religioso"
+            android:id="@+id/switch6"
+            android:checked="false"
+            android:height="35dp"
+            android:textSize="17dp" />
+    </LinearLayout>
 </FrameLayout>
