@@ -1,6 +1,9 @@
 package com.example.david.centroestudios;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     FragmentPreferencias fpreferencias;
     FragmentFaqs ffaqs;
     FragmentContacta fcontacta;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,18 @@ public class MainActivity extends AppCompatActivity
         ffaqs = new FragmentFaqs();
         fcontacta = new FragmentContacta();
 
+        /* Base de datos */
+        db=openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
+
+        // Creamos la tabla preferencias
+        db.execSQL("CREATE TABLE IF NOT EXISTS preferencias (nina INTEGER, nino INTEGER, publico INTEGER, concertado INTEGER, privado INTEGER, religioso INTEGER, laico INTEGER, castellano INTEGER, catalan INTEGER, ingles INTEGER, frances INTEGER, aleman INTEGER);");
+
+        // Ahora miramos si no existe nada en la tabla e insertamos los valores por defecto
+        Cursor c = db.rawQuery("SELECT * FROM preferencias", null);
+        if (!c.moveToFirst())
+        {
+            db.execSQL("INSERT INTO preferencias(nina, nino, publico, concertado, privado, religioso, laico, castellano, catalan, ingles, frances, aleman) VALUES (1,1,1,1,1,1,1,1,1,1,0,0);");
+        }
     }
 
     @Override
