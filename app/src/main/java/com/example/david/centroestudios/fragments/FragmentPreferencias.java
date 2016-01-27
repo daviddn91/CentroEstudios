@@ -1,6 +1,8 @@
 package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.david.centroestudios.R;
+
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +31,8 @@ public class FragmentPreferencias extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    SQLiteDatabase db;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,6 +65,8 @@ public class FragmentPreferencias extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //db=openOrCreateDatabase("BaseDeDatos",null);
+        //db.execSQL("SELECT * FROM preferencias;");
     }
 
     @Override
