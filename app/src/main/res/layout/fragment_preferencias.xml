@@ -37,7 +37,8 @@
 
             <RadioGroup
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroup">
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -180,7 +181,9 @@
                 android:textSize="16sp"
                 android:height="35dp"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:paddingRight="10dp"
+                android:clickable="false"
+                android:enabled="false" />
 
             <Switch
                 android:layout_width="match_parent"
@@ -191,7 +194,9 @@
                 android:textSize="16sp"
                 android:height="35dp"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:paddingRight="10dp"
+                android:clickable="false"
+                android:enabled="false"/>
 
             <Switch
                 android:layout_width="match_parent"
