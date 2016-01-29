@@ -73,10 +73,13 @@ public class FragmentPreferencias extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final View view = inflater.inflate(R.layout.fragment_preferencias, container, false);
-        final Switch sw3 = (Switch) view.findViewById(R.id.switch3);
+        // Prueba para cambiar un switch que funciona
+        View view = inflater.inflate(R.layout.fragment_preferencias, container, false);
+        Switch sw3 = (Switch) view.findViewById(R.id.switch3);
+        sw3.setText("Prueba");
         sw3.setChecked(false);
-        return inflater.inflate(R.layout.fragment_preferencias, container, false);
+        //return inflater.inflate(R.layout.fragment_preferencias, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
