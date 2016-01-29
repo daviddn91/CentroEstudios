@@ -16,6 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.david.centroestudios.fragments.FragmentBuscar;
 import com.example.david.centroestudios.fragments.FragmentCercanas;
@@ -66,18 +70,56 @@ public class MainActivity extends AppCompatActivity
         ffaqs = new FragmentFaqs();
         fcontacta = new FragmentContacta();
 
-        /* Base de datos */
-        db=openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
-        //db.execSQL("CREATE TABLE IF NOT EXISTS prefes(id INTEGER, nom VARCHAR,paraules INTEGER, segons INTEGER);");
+        /* Cambio el fragment por defecto al abrir la aplicación */
 
-        // Creamos la tabla preferencias
+        FragmentTransaction ftrans = getFragmentManager().beginTransaction();
+        ftrans.replace(R.id.container, fpreferencias);
+        ftrans.commit();
+
+        /* Base de datos */
+        db = openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
+
+        // Creamos la tabla filtros con las preferencias
         db.execSQL("CREATE TABLE IF NOT EXISTS filtros (nina INTEGER, nino INTEGER, publico INTEGER, concertado INTEGER, privado INTEGER, religioso INTEGER, laico INTEGER, castellano INTEGER, catalan INTEGER, ingles INTEGER, frances INTEGER, aleman INTEGER);");
 
         // Ahora miramos si no existe nada en la tabla e insertamos los valores por defecto
-        Cursor c=db.rawQuery("SELECT * FROM filtros", null);
+        Cursor c = db.rawQuery("SELECT * FROM filtros", null);
         if(!c.moveToFirst())
         {
             db.execSQL("INSERT INTO filtros (nina, nino, publico, concertado, privado, religioso, laico, castellano, catalan, ingles, frances, aleman) VALUES (1,1,1,1,1,1,1,1,1,1,0,0);");
+        }
+
+        /* Asignamos valores a los switch y radiobutton segun la BD */
+        c = db.rawQuery("SELECT * FROM filtros", null);
+        while(c.moveToNext()) {
+            Integer soloninas = c.getInt(0);
+            Integer soloninos = c.getInt(1);
+            Integer centropublico = c.getInt(2);
+            Integer centroconcertado = c.getInt(3);
+            Integer centroprivado = c.getInt(4);
+            Integer religioso = c.getInt(5);
+            Integer laico = c.getInt(6);
+            Integer idiomacastellano = c.getInt(7);
+            Integer idiomacatalan = c.getInt(8);
+            Integer idiomafrances = c.getInt(9);
+            Integer idiomaaleman = c.getInt(10);
+
+            // TextView en content main para probar que la BD funciona
+            TextView textview10 =(TextView)findViewById(R.id.textView10);
+            textview10.setText(soloninos.toString());
+
+            if (soloninas.equals(1) && soloninos.equals(1)) {
+                textview10.setText("2");
+            }
+            else if (soloninas.equals(1) && soloninos.equals(0)){
+                //rbsoloninas.setChecked(true);
+            }
+            else {
+                //rbsoloninos.setSelected(true);
+                //rggenero.check(R.id.radioButton2);
+            }
+            //Switch swpublico = (Switch)findViewById(R.id.switch3);
+            //swpublico.setChecked(false);
         }
     }
 
@@ -121,7 +163,6 @@ public class MainActivity extends AppCompatActivity
 
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
 
-
         if (id == R.id.nav_cercanas) {
             ftrans.replace(R.id.container, fcercanas);
         } else if (id == R.id.nav_buscar) {
@@ -134,6 +175,7 @@ public class MainActivity extends AppCompatActivity
             ftrans.replace(R.id.container, fcontacta);
         } ftrans.commit();
 
+        /* Creo que esto cierra el menu lateral */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

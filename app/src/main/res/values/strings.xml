@@ -32,5 +32,8 @@
     <string name="genero">Gender</string>
     <string name="solo_ninas">Only girls</string>
     <string name="solo_ninos">Only boys</string>
-    <string name="espacio">  </string>
+    <string name="nombre">Name</string>
+    <string name="mail">Mail</string>
+    <string name="mensaje">Message</string>
+    <string name="enviar">Send</string>
 </resources>
