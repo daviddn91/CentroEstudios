@@ -2,6 +2,7 @@ package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.david.centroestudios.R;
 
@@ -34,6 +36,18 @@ public class FragmentPreferencias extends Fragment {
     private String mParam2;
 
     SQLiteDatabase db;
+
+    Integer soloninas;
+    Integer soloninos;
+    Integer centropublico;
+    Integer centroconcertado;
+    Integer centroprivado;
+    Integer religioso;
+    Integer laico;
+    Integer idiomacastellano;
+    Integer idiomacatalan;
+    Integer idiomafrances;
+    Integer idiomaaleman;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,18 +80,39 @@ public class FragmentPreferencias extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        /* Accedemos a la BD y asignamos el valor de ella a las variables globales para luego en el OnCreateView mover switch y radiobuttons segun toque */
+
+        db = getActivity().openOrCreateDatabase("BaseDeDatos",android.content.Context.MODE_PRIVATE ,null);
+        Cursor c = db.rawQuery("SELECT * FROM filtros", null);
+        while(c.moveToNext()) {
+            soloninas = c.getInt(0);
+            soloninos = c.getInt(1);
+            centropublico = c.getInt(2);
+            centroconcertado = c.getInt(3);
+            centroprivado = c.getInt(4);
+            religioso = c.getInt(5);
+            laico = c.getInt(6);
+            idiomacastellano = c.getInt(7);
+            idiomacatalan = c.getInt(8);
+            idiomafrances = c.getInt(9);
+            idiomaaleman = c.getInt(10);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        // Prueba para cambiar un switch que funciona
         View view = inflater.inflate(R.layout.fragment_preferencias, container, false);
-        Switch sw3 = (Switch) view.findViewById(R.id.switch3);
-        sw3.setText("Prueba");
-        sw3.setChecked(false);
+
+        if (centropublico.equals(0)) {
+            Switch sw3 = (Switch) view.findViewById(R.id.switch3);
+            sw3.setChecked(false);
+        }
+        else if (centropublico.equals(1)) {
+            Switch sw3 = (Switch) view.findViewById(R.id.switch3);
+            sw3.setChecked(true);
+        }
         //return inflater.inflate(R.layout.fragment_preferencias, container, false);
         return view;
     }
@@ -107,7 +142,7 @@ public class FragmentPreferencias extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }
