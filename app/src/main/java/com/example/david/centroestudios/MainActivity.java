@@ -101,8 +101,9 @@ public class MainActivity extends AppCompatActivity
             Integer laico = c.getInt(6);
             Integer idiomacastellano = c.getInt(7);
             Integer idiomacatalan = c.getInt(8);
-            Integer idiomafrances = c.getInt(9);
-            Integer idiomaaleman = c.getInt(10);
+            Integer idiomaingles = c.getInt(9);
+            Integer idiomafrances = c.getInt(10);
+            Integer idiomaaleman = c.getInt(11);
 
             // TextView en content main para probar que la BD funciona
             TextView textview10 =(TextView)findViewById(R.id.textView10);

@@ -10,6 +10,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -46,6 +47,7 @@ public class FragmentPreferencias extends Fragment {
     Integer laico;
     Integer idiomacastellano;
     Integer idiomacatalan;
+    Integer idiomaingles;
     Integer idiomafrances;
     Integer idiomaaleman;
 
@@ -94,8 +96,9 @@ public class FragmentPreferencias extends Fragment {
             laico = c.getInt(6);
             idiomacastellano = c.getInt(7);
             idiomacatalan = c.getInt(8);
-            idiomafrances = c.getInt(9);
-            idiomaaleman = c.getInt(10);
+            idiomaingles = c.getInt(9);
+            idiomafrances = c.getInt(10);
+            idiomaaleman = c.getInt(11);
         }
     }
 
@@ -105,14 +108,85 @@ public class FragmentPreferencias extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_preferencias, container, false);
 
+        /* Aqui empieza lo de actualizar switch y radiobuttons segun la BD */
+
+        // RadioGroup genero
+        //RadioGroup rg1 = (RadioGroup) view.findViewById(R.id.radioGroup);
+
+
+
+        // Switch publico
+        Switch sw3 = (Switch) view.findViewById(R.id.switch3);
         if (centropublico.equals(0)) {
-            Switch sw3 = (Switch) view.findViewById(R.id.switch3);
             sw3.setChecked(false);
         }
         else if (centropublico.equals(1)) {
-            Switch sw3 = (Switch) view.findViewById(R.id.switch3);
             sw3.setChecked(true);
         }
+
+        // Switch concertado
+        Switch sw4 = (Switch) view.findViewById(R.id.switch4);
+        if (centroconcertado.equals(0)) {
+            sw4.setChecked(false);
+        }
+        else if (centroconcertado.equals(1)) {
+            sw4.setChecked(true);
+        }
+
+        // Switch privado
+        Switch sw5 = (Switch) view.findViewById(R.id.switch5);
+        if (centroprivado.equals(0)) {
+            sw5.setChecked(false);
+        }
+        else if (centroprivado.equals(1)) {
+            sw5.setChecked(true);
+        }
+
+        // Switch idioma castellano
+        Switch sw7 = (Switch) view.findViewById(R.id.switch7);
+        if (idiomacastellano.equals(0)) {
+            sw7.setChecked(false);
+        }
+        else if (idiomacastellano.equals(1)) {
+            sw7.setChecked(true);
+        }
+
+        // Switch idioma catalan
+        Switch sw8 = (Switch) view.findViewById(R.id.switch8);
+        if (idiomacatalan.equals(0)) {
+            sw8.setChecked(false);
+        }
+        else if (idiomacatalan.equals(1)) {
+            sw8.setChecked(true);
+        }
+
+        // Switch idioma ingles
+        Switch sw9 = (Switch) view.findViewById(R.id.switch9);
+        if (idiomaingles.equals(0)) {
+            sw9.setChecked(false);
+        }
+        else if (idiomaingles.equals(1)) {
+            sw9.setChecked(true);
+        }
+
+        // Switch idioma aleman
+        Switch sw11 = (Switch) view.findViewById(R.id.switch11);
+        if (idiomaaleman.equals(0)) {
+            sw11.setChecked(false);
+        }
+        else if (idiomaaleman.equals(1)) {
+            sw11.setChecked(true);
+        }
+
+        // Switch idioma frances
+        Switch sw10 = (Switch) view.findViewById(R.id.switch10);
+        if (idiomafrances.equals(0)) {
+            sw10.setChecked(false);
+        }
+        else if (idiomafrances.equals(1)) {
+            sw10.setChecked(true);
+        }
+
         //return inflater.inflate(R.layout.fragment_preferencias, container, false);
         return view;
     }
