@@ -10,6 +10,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -111,9 +112,20 @@ public class FragmentPreferencias extends Fragment {
         /* Aqui empieza lo de actualizar switch y radiobuttons segun la BD */
 
         // RadioGroup genero
-        //RadioGroup rg1 = (RadioGroup) view.findViewById(R.id.radioGroup);
+        RadioGroup rg1 = (RadioGroup) view.findViewById(R.id.radioGroup);
+        RadioButton rb1 = (RadioButton) view.findViewById(R.id.radioButton);
+        RadioButton rb2 = (RadioButton) view.findViewById(R.id.radioButton2);
+        RadioButton rb3 = (RadioButton) view.findViewById(R.id.radioButton3);
 
-
+        if (soloninas.equals(1) && soloninos.equals(1)) {
+            rg1.check(rb3.getId());
+        }
+        else if (soloninas.equals(1) && soloninos.equals(0)) {
+            rg1.check(rb1.getId());
+        }
+        else if (soloninas.equals(0) && soloninos.equals(1)) {
+            rg1.check(rb2.getId());
+        }
 
         // Switch publico
         Switch sw3 = (Switch) view.findViewById(R.id.switch3);
@@ -140,6 +152,22 @@ public class FragmentPreferencias extends Fragment {
         }
         else if (centroprivado.equals(1)) {
             sw5.setChecked(true);
+        }
+
+        // RadioGroup creencias religiosas
+        RadioGroup rg2 = (RadioGroup) view.findViewById(R.id.radioGroup2);
+        RadioButton rb4 = (RadioButton) view.findViewById(R.id.radioButton4);
+        RadioButton rb5 = (RadioButton) view.findViewById(R.id.radioButton5);
+        RadioButton rb6 = (RadioButton) view.findViewById(R.id.radioButton6);
+
+        if (religioso.equals(1) && laico.equals(1)) {
+            rg2.check(rb6.getId());
+        }
+        else if (religioso.equals(1) && laico.equals(0)) {
+            rg2.check(rb4.getId());
+        }
+        else if (religioso.equals(0) && laico.equals(1)) {
+            rg2.check(rb5.getId());
         }
 
         // Switch idioma castellano

@@ -89,39 +89,6 @@ public class MainActivity extends AppCompatActivity
             db.execSQL("INSERT INTO filtros (nina, nino, publico, concertado, privado, religioso, laico, castellano, catalan, ingles, frances, aleman) VALUES (1,1,1,1,1,1,1,1,1,1,0,0);");
         }
 
-        /* Asignamos valores a los switch y radiobutton segun la BD */
-        c = db.rawQuery("SELECT * FROM filtros", null);
-        while(c.moveToNext()) {
-            Integer soloninas = c.getInt(0);
-            Integer soloninos = c.getInt(1);
-            Integer centropublico = c.getInt(2);
-            Integer centroconcertado = c.getInt(3);
-            Integer centroprivado = c.getInt(4);
-            Integer religioso = c.getInt(5);
-            Integer laico = c.getInt(6);
-            Integer idiomacastellano = c.getInt(7);
-            Integer idiomacatalan = c.getInt(8);
-            Integer idiomaingles = c.getInt(9);
-            Integer idiomafrances = c.getInt(10);
-            Integer idiomaaleman = c.getInt(11);
-
-            // TextView en content main para probar que la BD funciona
-            TextView textview10 =(TextView)findViewById(R.id.textView10);
-            textview10.setText(soloninos.toString());
-
-            if (soloninas.equals(1) && soloninos.equals(1)) {
-                textview10.setText("2");
-            }
-            else if (soloninas.equals(1) && soloninos.equals(0)){
-                //rbsoloninas.setChecked(true);
-            }
-            else {
-                //rbsoloninos.setSelected(true);
-                //rggenero.check(R.id.radioButton2);
-            }
-            //Switch swpublico = (Switch)findViewById(R.id.switch3);
-            //swpublico.setChecked(false);
-        }
     }
 
     @Override
