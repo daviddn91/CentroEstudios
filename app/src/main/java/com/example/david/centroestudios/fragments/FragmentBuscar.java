@@ -60,7 +60,7 @@ public class FragmentBuscar extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         // Cambia el texto del titulo al nombre de la seccion
-        getActivity().setTitle("Buscar");
+        getActivity().setTitle(R.string.buscar);
     }
 
     @Override

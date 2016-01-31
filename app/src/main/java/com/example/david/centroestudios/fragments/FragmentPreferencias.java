@@ -111,7 +111,7 @@ public class FragmentPreferencias extends Fragment {
             idiomaaleman = c.getInt(11);
         }
         // Cambia el texto del titulo al nombre de la seccion
-        getActivity().setTitle("Preferencias");
+        getActivity().setTitle(R.string.preferencias);
     }
 
     @Override
