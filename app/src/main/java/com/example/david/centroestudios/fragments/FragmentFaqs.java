@@ -59,6 +59,8 @@ public class FragmentFaqs extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // Cambia el texto del titulo al nombre de la seccion
+        getActivity().setTitle("FAQS");
     }
 
     @Override
@@ -93,7 +95,7 @@ public class FragmentFaqs extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }
