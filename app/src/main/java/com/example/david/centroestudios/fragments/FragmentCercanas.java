@@ -27,8 +27,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * create an instance of this fragment.
  */
 public class FragmentCercanas extends Fragment {
-
-    /*
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,10 +44,8 @@ public class FragmentCercanas extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentCercanas.
+     * @return A new instance of fragment FragmentFaqs.
      */
-
-    /*
     // TODO: Rename and change types and number of parameters
     public static FragmentCercanas newInstance(String param1, String param2) {
         FragmentCercanas fragment = new FragmentCercanas();
@@ -103,81 +99,9 @@ public class FragmentCercanas extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-
-    /*
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-    */
 
-    // PARTE DEL TUTORIAL
-
-    MapView mMapView;
-    private GoogleMap googleMap;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // inflate and return the layout
-        View v = inflater.inflate(R.layout.fragment_cercanas, container,
-                false);
-        //mMapView = (MapView) v.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
-
-        mMapView.onResume();// needed to get the map to display immediately
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        googleMap = mMapView.getMap();
-        // latitude and longitude
-        double latitude = 17.385044;
-        double longitude = 78.486671;
-
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps");
-
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
-        // adding marker
-        googleMap.addMarker(marker);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
-
-        // Perform any camera updates here
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
-    }
 }

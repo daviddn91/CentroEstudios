@@ -3,4 +3,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.david.centroestudios.fragments.FragmentCercanas">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Cercanas"
+        android:id="@+id/textView10"
+        android:layout_gravity="left|top" />
 </FrameLayout>

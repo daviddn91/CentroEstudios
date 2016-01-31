@@ -45,16 +45,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        }); */
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -73,8 +63,11 @@ public class MainActivity extends AppCompatActivity
         /* Cambio el fragment por defecto al abrir la aplicación */
 
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
-        ftrans.replace(R.id.container, fpreferencias);
+        ftrans.replace(R.id.container, fcercanas);
         ftrans.commit();
+
+        // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         /* Base de datos */
         db = openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
