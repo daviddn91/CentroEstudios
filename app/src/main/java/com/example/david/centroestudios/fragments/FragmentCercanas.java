@@ -94,21 +94,21 @@ public class FragmentCercanas extends Fragment {
 
         googleMap = mMapView.getMap();
         // latitude and longitude
-        double latitude = 17.385044;
-        double longitude = 78.486671;
+        double latitude = 41.5635368;
+        double longitude = 2.181372099999976;
 
         // create marker
         MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps");
+                new LatLng(latitude, longitude)).title("You are here");
 
         // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        //marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        marker.icon(BitmapDescriptorFactory.defaultMarker());
 
         // adding marker
         googleMap.addMarker(marker);
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
+                .target(new LatLng(41.5635368, 2.181372099999976)).zoom(16).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
