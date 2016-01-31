@@ -10,6 +10,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -215,6 +216,32 @@ public class FragmentPreferencias extends Fragment {
             sw10.setChecked(true);
         }
 
+        /* Hacemos a la inversa, ahora modificamos la BD si tocamos los switch y raddiobuttons */
+
+        // Switch publico
+        sw3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET publico = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET publico = 0;");
+                }
+            }
+        });
+
+        // Switch concertado
+        sw4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET concertado = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET concertado = 0;");
+                }
+            }
+        });
+
         //return inflater.inflate(R.layout.fragment_preferencias, container, false);
         return view;
     }
@@ -246,5 +273,7 @@ public class FragmentPreferencias extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 
 }
