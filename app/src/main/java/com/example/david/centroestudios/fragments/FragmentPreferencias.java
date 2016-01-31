@@ -53,6 +53,14 @@ public class FragmentPreferencias extends Fragment {
     Integer idiomafrances;
     Integer idiomaaleman;
 
+    // Ids de los radiogroup para guardar en BD porque no puedo acceder directamente
+    Integer idrb1;
+    Integer idrb2;
+    Integer idrb3;
+    Integer idrb4;
+    Integer idrb5;
+    Integer idrb6;
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -117,6 +125,9 @@ public class FragmentPreferencias extends Fragment {
         RadioButton rb1 = (RadioButton) view.findViewById(R.id.radioButton);
         RadioButton rb2 = (RadioButton) view.findViewById(R.id.radioButton2);
         RadioButton rb3 = (RadioButton) view.findViewById(R.id.radioButton3);
+        idrb1 = rb1.getId();
+        idrb2 = rb2.getId();
+        idrb3 = rb3.getId();
 
         if (soloninas.equals(1) && soloninos.equals(1)) {
             rg1.check(rb3.getId());
@@ -161,6 +172,10 @@ public class FragmentPreferencias extends Fragment {
         RadioButton rb5 = (RadioButton) view.findViewById(R.id.radioButton5);
         RadioButton rb6 = (RadioButton) view.findViewById(R.id.radioButton6);
 
+        idrb4 = rb4.getId();
+        idrb5 = rb5.getId();
+        idrb6 = rb6.getId();
+
         if (religioso.equals(1) && laico.equals(1)) {
             rg2.check(rb6.getId());
         }
@@ -181,21 +196,21 @@ public class FragmentPreferencias extends Fragment {
         }
 
         // Switch idioma catalan
-        Switch sw8 = (Switch) view.findViewById(R.id.switch8);
+        Switch sw9 = (Switch) view.findViewById(R.id.switch9);
         if (idiomacatalan.equals(0)) {
-            sw8.setChecked(false);
+            sw9.setChecked(false);
         }
         else if (idiomacatalan.equals(1)) {
-            sw8.setChecked(true);
+            sw9.setChecked(true);
         }
 
         // Switch idioma ingles
-        Switch sw9 = (Switch) view.findViewById(R.id.switch9);
+        Switch sw8 = (Switch) view.findViewById(R.id.switch8);
         if (idiomaingles.equals(0)) {
-            sw9.setChecked(false);
+            sw8.setChecked(false);
         }
         else if (idiomaingles.equals(1)) {
-            sw9.setChecked(true);
+            sw8.setChecked(true);
         }
 
         // Switch idioma aleman
@@ -218,6 +233,26 @@ public class FragmentPreferencias extends Fragment {
 
         /* Hacemos a la inversa, ahora modificamos la BD si tocamos los switch y raddiobuttons */
 
+        // RadioGroup genero
+        rg1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == idrb1) {
+                    db.execSQL("UPDATE filtros SET nina = 1;");
+                    db.execSQL("UPDATE filtros SET nino = 0;");
+                }
+                else if (checkedId == idrb2) {
+                    db.execSQL("UPDATE filtros SET nino = 1;");
+                    db.execSQL("UPDATE filtros SET nina = 0;");
+                }
+                else if (checkedId == idrb3){
+                    db.execSQL("UPDATE filtros SET nina = 1;");
+                    db.execSQL("UPDATE filtros SET nino = 1;");
+                }
+            }
+        });
+
         // Switch publico
         sw3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -238,6 +273,98 @@ public class FragmentPreferencias extends Fragment {
                 }
                 else {
                     db.execSQL("UPDATE filtros SET concertado = 0;");
+                }
+            }
+        });
+
+        // Switch privado
+        sw5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET privado = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET privado = 0;");
+                }
+            }
+        });
+
+        // RadioGroup religion
+        rg2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == idrb4) {
+                    db.execSQL("UPDATE filtros SET religioso = 1;");
+                    db.execSQL("UPDATE filtros SET laico = 0;");
+                }
+                else if (checkedId == idrb5) {
+                    db.execSQL("UPDATE filtros SET laico = 1;");
+                    db.execSQL("UPDATE filtros SET religioso = 0;");
+                }
+                else if (checkedId == idrb6){
+                    db.execSQL("UPDATE filtros SET religioso = 1;");
+                    db.execSQL("UPDATE filtros SET laico = 1;");
+                }
+            }
+        });
+
+        // Switch castellano
+        sw7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET castellano = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET castellano = 0;");
+                }
+            }
+        });
+
+        // Switch catalan
+        sw9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET catalan = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET catalan = 0;");
+                }
+            }
+        });
+
+        // Switch ingles
+        sw8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET ingles = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET ingles = 0;");
+                }
+            }
+        });
+
+        // Switch frances
+        sw11.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET frances = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET frances = 0;");
+                }
+            }
+        });
+
+        // Switch aleman
+        sw10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET aleman = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET aleman = 0;");
                 }
             }
         });
