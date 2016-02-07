@@ -15,10 +15,4 @@
             android:textSize="20sp"/>
     </ScrollView>
 
-    <ExpandableListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/expandableListView"
-        android:layout_gravity="left|top" />
-
 </FrameLayout>

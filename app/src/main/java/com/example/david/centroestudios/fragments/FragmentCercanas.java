@@ -1,6 +1,7 @@
 package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -38,6 +39,7 @@ public class FragmentCercanas extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
+    Location location;
 
 
     private OnFragmentInteractionListener mListener;
@@ -93,9 +95,16 @@ public class FragmentCercanas extends Fragment {
         }
 
         googleMap = mMapView.getMap();
+        googleMap.setMyLocationEnabled(true);
+
+        location = googleMap.getMyLocation();
+
         // latitude and longitude
         double latitude = 41.5635368;
         double longitude = 2.181372099999976;
+
+        //double latitude = location.getLatitude();
+        //double longitude = location.getLongitude();
 
         // create marker
         MarkerOptions marker = new MarkerOptions().position(
@@ -107,8 +116,9 @@ public class FragmentCercanas extends Fragment {
 
         // adding marker
         googleMap.addMarker(marker);
+
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(41.5635368, 2.181372099999976)).zoom(16).build();
+                .target(new LatLng(latitude, longitude)).zoom(16).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 

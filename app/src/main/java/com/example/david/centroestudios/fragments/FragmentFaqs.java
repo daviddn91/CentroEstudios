@@ -2,6 +2,7 @@ package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.david.centroestudios.R;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +63,7 @@ public class FragmentFaqs extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.faqs);
     }
@@ -67,6 +72,7 @@ public class FragmentFaqs extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_faqs, container, false);
     }
 
