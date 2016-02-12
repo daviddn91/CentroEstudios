@@ -1,13 +1,21 @@
 package com.example.david.centroestudios.fragments;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,12 +45,13 @@ public class FragmentCercanas extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    double latitud = 1;
+    double longitud = 1;
+
     MapView mMapView;
     private GoogleMap googleMap;
-    Location location;
-
-
     private OnFragmentInteractionListener mListener;
+    Location location;
 
     /**
      * Use this factory method to create a new instance of
@@ -83,6 +92,8 @@ public class FragmentCercanas extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_cercanas, container,
                 false);
+
+        requestPermission();
         mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -95,30 +106,42 @@ public class FragmentCercanas extends Fragment {
         }
 
         googleMap = mMapView.getMap();
-        googleMap.setMyLocationEnabled(true);
+        if (checkPermission()) {
+            googleMap.setMyLocationEnabled(true);
+            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        location = googleMap.getMyLocation();
+            if (myLocation == null) {
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+                String provider = lm.getBestProvider(criteria, true);
+                myLocation = lm.getLastKnownLocation(provider);
+            }
+            latitud = myLocation.getLatitude();
+            longitud = myLocation.getLongitude();
+        }
+        else {
+            googleMap.setMyLocationEnabled(false);
+            // latitude and longitude
+            latitud = 41.5635368;
+            longitud = 2.181372099999976;
+        }
 
-        // latitude and longitude
-        double latitude = 41.5635368;
-        double longitude = 2.181372099999976;
+        /* Marcadores
 
-        //double latitude = location.getLatitude();
-        //double longitude = location.getLongitude();
-
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("You are here");
+        // Crear un marcador (Para cada escuela, coger de BD)
+        //MarkerOptions marker = new MarkerOptions().position(
+                //new LatLng(latitud, longitud)).title("You are here");
 
         // Changing marker icon
         //marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-        marker.icon(BitmapDescriptorFactory.defaultMarker());
+        //marker.icon(BitmapDescriptorFactory.defaultMarker());
 
         // adding marker
-        googleMap.addMarker(marker);
-
+        //googleMap.addMarker(marker);
+        */
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude)).zoom(16).build();
+                .target(new LatLng(latitud, longitud)).zoom(16).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
@@ -180,4 +203,21 @@ public class FragmentCercanas extends Fragment {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
+    private void requestPermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)){
+
+            Toast.makeText(getActivity().getApplicationContext(),"GPS permission allows us to access location data. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
+        }
+    }
+
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
 }
