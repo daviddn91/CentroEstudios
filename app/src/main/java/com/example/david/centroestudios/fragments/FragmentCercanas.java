@@ -45,8 +45,8 @@ public class FragmentCercanas extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    double latitud = 1;
-    double longitud = 1;
+    double latitud = 41.5635368;
+    double longitud = 2.181372099999976;
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -108,6 +108,8 @@ public class FragmentCercanas extends Fragment {
         googleMap = mMapView.getMap();
         if (checkPermission()) {
             googleMap.setMyLocationEnabled(true);
+
+            /*
             LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -119,6 +121,7 @@ public class FragmentCercanas extends Fragment {
             }
             latitud = myLocation.getLatitude();
             longitud = myLocation.getLongitude();
+            */
         }
         else {
             googleMap.setMyLocationEnabled(false);
