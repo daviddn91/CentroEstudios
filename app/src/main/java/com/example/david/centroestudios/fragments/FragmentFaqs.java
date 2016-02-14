@@ -2,9 +2,11 @@ package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -167,9 +169,9 @@ public class FragmentFaqs extends Fragment {
         public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
             TextView textView = new TextView(FragmentFaqs.this.getActivity());
             textView.setText(getGroup(i).toString());
-            textView.setTypeface(null, Typeface.BOLD);
+            //textView.setTypeface(null, Typeface.BOLD);
             textView.setTextSize(18);
-            textView.setPadding(75,25,0,25);
+            textView.setPadding(75, 25, 0, 25);
             return textView;
         }
 
@@ -179,6 +181,7 @@ public class FragmentFaqs extends Fragment {
             textView.setText(getChild(i, i1).toString());
             textView.setTextSize(16);
             textView.setPadding(90, 0, 0, 25);
+            textView.setTextColor(Color.BLACK);
             return textView;
         }
 
@@ -186,6 +189,7 @@ public class FragmentFaqs extends Fragment {
         public boolean isChildSelectable(int i, int i1) {
             return true;
         }
+
 
     }
 
