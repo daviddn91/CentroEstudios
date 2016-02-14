@@ -1,6 +1,8 @@
 package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,11 +10,18 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.david.centroestudios.R;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +82,10 @@ public class FragmentFaqs extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_faqs, container, false);
+        View v = inflater.inflate(R.layout.fragment_faqs, null);
+        ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.expandableListView);
+        elv.setAdapter(new SavedTabsListAdapter());
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -102,6 +114,79 @@ public class FragmentFaqs extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class SavedTabsListAdapter extends BaseExpandableListAdapter {
+
+        private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names", "¿Guardamos tus datos?" };
+
+        private String[][] children = {
+                { "Arnold", "Barry", "Chuck", "David" },
+                { "Ace", "Bandit", "Cha-Cha", "Deuce" },
+                { "Fluffy", "Snuggles" },
+                { "Goldy", "Bubbles" },
+                { "No, toda tu información se almacena localmente y no se envía a ningún servidor externo." }
+        };
+
+        @Override
+        public int getGroupCount() {
+            return groups.length;
+        }
+
+        @Override
+        public int getChildrenCount(int i) {
+            return children[i].length;
+        }
+
+        @Override
+        public Object getGroup(int i) {
+            return groups[i];
+        }
+
+        @Override
+        public Object getChild(int i, int i1) {
+            return children[i][i1];
+        }
+
+        @Override
+        public long getGroupId(int i) {
+            return i;
+        }
+
+        @Override
+        public long getChildId(int i, int i1) {
+            return i1;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
+            TextView textView = new TextView(FragmentFaqs.this.getActivity());
+            textView.setText(getGroup(i).toString());
+            textView.setTypeface(null, Typeface.BOLD);
+            textView.setTextSize(23);
+            textView.setPadding(0,0,0,15);
+            return textView;
+        }
+
+        @Override
+        public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
+            TextView textView = new TextView(FragmentFaqs.this.getActivity());
+            textView.setText(getChild(i, i1).toString());
+            textView.setTextSize(20);
+            textView.setPadding(5,0,0,10);
+            return textView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int i, int i1) {
+            return true;
+        }
+
     }
 
 }
