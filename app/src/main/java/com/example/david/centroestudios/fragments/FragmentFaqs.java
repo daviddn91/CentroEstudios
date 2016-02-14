@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +86,7 @@ public class FragmentFaqs extends Fragment {
         View v = inflater.inflate(R.layout.fragment_faqs, null);
         ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.expandableListView);
         elv.setAdapter(new SavedTabsListAdapter());
+        elv.setDividerHeight(0);
         return v;
     }
 
@@ -118,34 +120,32 @@ public class FragmentFaqs extends Fragment {
 
     public class SavedTabsListAdapter extends BaseExpandableListAdapter {
 
-        private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names", "¿Guardamos tus datos?" };
+        private String[] preguntas = { "¿La aplicación guarda algún tipo de información sobre el usuario?", "¿De dónde se obtienen los datos de los centros educativos?", "Tengo alguna sugerencia o queja de la aplicación, ¿es posible contactar con vosotros?" };
 
-        private String[][] children = {
-                { "Arnold", "Barry", "Chuck", "David" },
-                { "Ace", "Bandit", "Cha-Cha", "Deuce" },
-                { "Fluffy", "Snuggles" },
-                { "Goldy", "Bubbles" },
-                { "No, toda tu información se almacena localmente y no se envía a ningún servidor externo." }
+        private String[][] respuestas = {
+                { "No, toda la información se almacena localmente en los dispositivos y nunca llegan (ni llegarán) a nuestro servidor." },
+                { "Toda la información proviene de documentos públicos de la Generalitat de Catalunya y del Ayuntamiento de Barcelona." },
+                { "¡Claro! Puedes hacerlo a través de la opción del menú 'Contactar con el desarrollador'." }
         };
 
         @Override
         public int getGroupCount() {
-            return groups.length;
+            return preguntas.length;
         }
 
         @Override
         public int getChildrenCount(int i) {
-            return children[i].length;
+            return respuestas[i].length;
         }
 
         @Override
         public Object getGroup(int i) {
-            return groups[i];
+            return preguntas[i];
         }
 
         @Override
         public Object getChild(int i, int i1) {
-            return children[i][i1];
+            return respuestas[i][i1];
         }
 
         @Override
@@ -168,8 +168,8 @@ public class FragmentFaqs extends Fragment {
             TextView textView = new TextView(FragmentFaqs.this.getActivity());
             textView.setText(getGroup(i).toString());
             textView.setTypeface(null, Typeface.BOLD);
-            textView.setTextSize(23);
-            textView.setPadding(0,0,0,15);
+            textView.setTextSize(18);
+            textView.setPadding(75,25,0,25);
             return textView;
         }
 
@@ -177,8 +177,8 @@ public class FragmentFaqs extends Fragment {
         public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
             TextView textView = new TextView(FragmentFaqs.this.getActivity());
             textView.setText(getChild(i, i1).toString());
-            textView.setTextSize(20);
-            textView.setPadding(5,0,0,10);
+            textView.setTextSize(16);
+            textView.setPadding(90, 0, 0, 25);
             return textView;
         }
 

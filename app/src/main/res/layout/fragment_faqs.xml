@@ -16,8 +16,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/expandableListView"
+        android:divider="@color/transparent"
+        android:childDivider="@color/transparent"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginLeft="10sp"
-        android:layout_marginTop="10sp" />
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="10sp"
+        android:headerDividersEnabled="false" />
 
 </FrameLayout>
