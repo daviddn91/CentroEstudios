@@ -1,13 +1,18 @@
 package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.david.centroestudios.MainActivity;
 import com.example.david.centroestudios.R;
 
 /**
@@ -67,6 +72,10 @@ public class FragmentContacta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        Button enviar = (Button) getActivity().findViewById(R.id.button);
+        //sendEmail();
+
         return inflater.inflate(R.layout.fragment_contacta, container, false);
     }
 
@@ -96,6 +105,29 @@ public class FragmentContacta extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    protected void sendEmailWithIntent() {
+        Log.i("Send email", "");
+        String[] TO = {"ddn1991@gmail.com"};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "El sujeto del mail");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "El contenido del mail");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Enviando mail..."));
+            getActivity().finish();
+            Log.i("Mail enviado...", "");
+        }
+        catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getActivity().getApplicationContext(), "No dispones de un cliente de mail instalado...", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
