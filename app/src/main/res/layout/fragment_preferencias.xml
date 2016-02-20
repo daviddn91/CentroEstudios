@@ -35,51 +35,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/genero"
-                android:id="@+id/textView2"
-                android:height="25dp" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioGroup">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/solo_ninas"
-                    android:id="@+id/radioButton"
-                    android:checked="false"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/solo_ninos"
-                    android:id="@+id/radioButton2"
-                    android:checked="false"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mixto"
-                    android:id="@+id/radioButton3"
-                    android:checked="true"
-                    android:textSize="16sp" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text=" "
-                android:id="@+id/textView5" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/tipo_centro"
                 android:id="@+id/textView3"
                 android:height="25dp" />
@@ -168,6 +123,51 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text=" "
                 android:id="@+id/textView4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/genero"
+                android:id="@+id/textView2"
+                android:height="25dp" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroup">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/solo_ninas"
+                    android:id="@+id/radioButton"
+                    android:checked="false"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/solo_ninos"
+                    android:id="@+id/radioButton2"
+                    android:checked="false"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mixto"
+                    android:id="@+id/radioButton3"
+                    android:checked="true"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=" "
+                android:id="@+id/textView5" />
 
             <TextView
                 android:layout_width="wrap_content"

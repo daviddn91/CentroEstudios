@@ -171,7 +171,7 @@ public class FragmentFaqs extends Fragment {
             textView.setText(getGroup(i).toString());
             //textView.setTypeface(null, Typeface.BOLD);
             textView.setTextSize(18);
-            textView.setPadding(85, 25, 0, 25);
+            textView.setPadding(95, 25, 0, 25);
             return textView;
         }
 
@@ -180,7 +180,7 @@ public class FragmentFaqs extends Fragment {
             TextView textView = new TextView(FragmentFaqs.this.getActivity());
             textView.setText(getChild(i, i1).toString());
             textView.setTextSize(16);
-            textView.setPadding(90, 0, 0, 25);
+            textView.setPadding(110, 0, 0, 25);
             textView.setTextColor(Color.BLACK);
             return textView;
         }
