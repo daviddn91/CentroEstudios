@@ -63,7 +63,7 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ambos"
+                    android:text="@string/mixto"
                     android:id="@+id/radioButton3"
                     android:checked="true"
                     android:textSize="16sp" />

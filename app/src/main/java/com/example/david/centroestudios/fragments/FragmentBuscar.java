@@ -11,6 +11,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -130,7 +133,43 @@ public class FragmentBuscar extends Fragment {
     }
 
     public String GetHTTPData(String urlString){
-        return null;
+        String stream = null;
+        try{
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Check the connection status
+            if(urlConnection.getResponseCode() == 200)
+            {
+                // if response code = 200 ok
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                // Read the BufferedInputStream
+                BufferedReader r = new BufferedReader(new InputStreamReader(in));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    sb.append(line);
+                }
+                stream = sb.toString();
+                // End reading...............
+
+                // Disconnect the HttpURLConnection
+                urlConnection.disconnect();
+            }
+            else
+            {
+                // Do something
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally {
+
+        }
+        // Return the data from specified url
+        return stream;
     }
 
     private void requestPermission(){
@@ -148,5 +187,6 @@ public class FragmentBuscar extends Fragment {
         int result = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.INTERNET);
         return result == PackageManager.PERMISSION_GRANTED;
     }
+
 
 }

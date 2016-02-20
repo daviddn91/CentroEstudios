@@ -4,9 +4,18 @@
     tools:context="com.example.david.centroestudios.fragments.FragmentBuscar">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/buscar"
-        android:textSize="20sp"
-        android:id="@+id/textView1" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView4"
+        android:layout_gravity="left|top" >
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_gravity="left|top" />
+    </ScrollView>
 
 </FrameLayout>

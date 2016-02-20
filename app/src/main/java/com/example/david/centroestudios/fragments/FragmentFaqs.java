@@ -171,7 +171,7 @@ public class FragmentFaqs extends Fragment {
             textView.setText(getGroup(i).toString());
             //textView.setTypeface(null, Typeface.BOLD);
             textView.setTextSize(18);
-            textView.setPadding(75, 25, 0, 25);
+            textView.setPadding(85, 25, 0, 25);
             return textView;
         }
 
