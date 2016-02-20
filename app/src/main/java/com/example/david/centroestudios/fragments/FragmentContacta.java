@@ -45,6 +45,10 @@ public class FragmentContacta extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    EditText editNombre;
+    EditText editMail;
+    EditText editComentario;
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -96,41 +100,49 @@ public class FragmentContacta extends Fragment {
             StrictMode.setThreadPolicy(policy);
 
             Button button = (Button) view.findViewById(R.id.button);
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
+            editNombre = (EditText) view.findViewById(R.id.editText);
+            editMail = (EditText) view.findViewById(R.id.editText2);
+            editComentario = (EditText) view.findViewById(R.id.editText3);
 
+
+            button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    String nombre = editNombre.getText().toString();
+                    String mail = editMail.getText().toString();
+                    String comentario = editComentario.getText().toString();
+
+                    if (nombre.length() < 1 || mail.length() < 1 || comentario.length() < 1) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Por favor rellena todos los campos para enviar el mensaje.", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        nombre = quitaEspacios(nombre);
+                        mail = quitaEspacios(mail);
+                        comentario = quitaEspacios(comentario);
+                        System.out.println("Nombre: "+nombre);
+                        System.out.println("Mail: "+mail);
+                        System.out.println("Comentario: "+comentario);
+                        String data = sendFeedback(nombre, mail, comentario);
+                        if (data.equals("1")) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet.", Toast.LENGTH_SHORT).show();
+                        }
+                        System.out.println(data);
+                        editNombre.setText("");
+                        editMail.setText("");
+                        editComentario.setText("");
+                    }
                 }
             });
 
-            EditText editNombre = (EditText) view.findViewById(R.id.editText);
-            String nombre = editNombre.getText().toString();
-            if (nombre.length() < 2) {
-                nombre = "SinNombre";
-            }
-            EditText editMail = (EditText) view.findViewById(R.id.editText2);
-            String mail = editMail.getText().toString();
-            if (mail.length() < 2) {
-                mail = "SinMail";
-            }
-            EditText editComentario = (EditText) view.findViewById(R.id.editText3);
-            String comentario = editComentario.getText().toString();
-            if (comentario.length() < 2) {
-                comentario = "SinComentarios";
-            }
 
-            System.out.println("Nombre: "+nombre);
-            System.out.println("Mail: "+mail);
-            System.out.println("Comentario: "+comentario);
-            String data = sendFeedback(nombre, mail, comentario);
-            if (data.equals("1")) {
-                Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet.", Toast.LENGTH_SHORT).show();
-            }
-            System.out.println(data);
+
+
         }
-
         return view;
     }
 
@@ -236,6 +248,11 @@ public class FragmentContacta extends Fragment {
         }
         // Return the data from specified url
         return stream;
+    }
+
+    public String quitaEspacios (String palabra) {
+        palabra.replace(" ","_");
+        return palabra;
     }
 
 }
