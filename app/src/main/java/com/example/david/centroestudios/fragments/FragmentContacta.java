@@ -105,30 +105,28 @@ public class FragmentContacta extends Fragment {
             editComentario = (EditText) view.findViewById(R.id.editText3);
 
 
-            button.setOnClickListener(new View.OnClickListener()
-            {
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     String nombre = editNombre.getText().toString();
                     String mail = editMail.getText().toString();
                     String comentario = editComentario.getText().toString();
 
                     if (nombre.length() < 1 || mail.length() < 1 || comentario.length() < 1) {
                         Toast.makeText(getActivity().getApplicationContext(), "Por favor rellena todos los campos para enviar el mensaje.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        nombre = quitaEspacios(nombre);
-                        mail = quitaEspacios(mail);
-                        comentario = quitaEspacios(comentario);
-                        System.out.println("Nombre: "+nombre);
-                        System.out.println("Mail: "+mail);
-                        System.out.println("Comentario: "+comentario);
+                    } else if (!mail.contains("@") || !mail.contains(".")) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Por favor introduce un mail correcto.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        nombre = nombre.replace(" ","-");
+                        mail = mail.replace(" ","-");
+                        comentario = comentario.replace(" ","-");
+                        System.out.println("Nombre: " + nombre);
+                        System.out.println("Mail: " + mail);
+                        System.out.println("Comentario: " + comentario);
                         String data = sendFeedback(nombre, mail, comentario);
                         if (data.equals("1")) {
                             Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet.", Toast.LENGTH_SHORT).show();
                         }
                         System.out.println(data);
@@ -138,10 +136,6 @@ public class FragmentContacta extends Fragment {
                     }
                 }
             });
-
-
-
-
         }
         return view;
     }
@@ -237,22 +231,15 @@ public class FragmentContacta extends Fragment {
             }
             else
             {
-                // Do something
+                System.out.println("Else del urlConnection.getREsponseCode() == 200");
             }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }finally {
-
+            System.out.println("Pete del sendFeedback() en FragmentContacta");
         }
         // Return the data from specified url
         return stream;
-    }
-
-    public String quitaEspacios (String palabra) {
-        palabra.replace(" ","_");
-        return palabra;
     }
 
 }

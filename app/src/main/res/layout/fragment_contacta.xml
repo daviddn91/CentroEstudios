@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
+                android:maxLength="25"
                 android:id="@+id/editText" />
 
             <TextView
@@ -54,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:ems="10"
+                android:maxLength="25"
                 android:id="@+id/editText2" />
 
             <TextView
@@ -75,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
+                android:maxLength="50"
                 android:id="@+id/editText3" />
 
             <TextView
