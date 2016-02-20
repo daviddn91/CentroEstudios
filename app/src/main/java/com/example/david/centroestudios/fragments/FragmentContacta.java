@@ -85,29 +85,53 @@ public class FragmentContacta extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        View view = inflater.inflate(R.layout.fragment_contacta, container, false);
+
         requestPermission();
-        Button enviar = (Button) getActivity().findViewById(R.id.button);
+        Button enviar = (Button) view.findViewById(R.id.button);
 
-                int SDK_INT = android.os.Build.VERSION.SDK_INT;
-                if (SDK_INT > 8) {
-                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                            .permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
 
-                    //EditText editNombre = (EditText) getActivity().findViewById(R.id.editText);
-                    //String nombre = editNombre.getText().toString();
-                    //EditText editMail = (EditText) getActivity().findViewById(R.id.editText);
-                    //String mail = editMail.getText().toString();
-                    //EditText editComentario = (EditText) getActivity().findViewById(R.id.editText);
-                    //String comentario = editComentario.getText().toString();
-                    String nombre = "1";
-                    String mail = "1";
-                    String comentario = "1";
-                    String data = sendFeedback(nombre, mail, comentario);
-                    System.out.println(data);
+            Button button = (Button) view.findViewById(R.id.button);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+
                 }
+            });
 
-        return inflater.inflate(R.layout.fragment_contacta, container, false);
+            EditText editNombre = (EditText) view.findViewById(R.id.editText);
+            String nombre = editNombre.getText().toString();
+            if (nombre.length() < 2) {
+                nombre = "SinNombre";
+            }
+            EditText editMail = (EditText) view.findViewById(R.id.editText2);
+            String mail = editMail.getText().toString();
+            if (mail.length() < 2) {
+                mail = "SinMail";
+            }
+            EditText editComentario = (EditText) view.findViewById(R.id.editText3);
+            String comentario = editComentario.getText().toString();
+            if (comentario.length() < 2) {
+                comentario = "SinComentarios";
+            }
+
+            System.out.println("Nombre: "+nombre);
+            System.out.println("Mail: "+mail);
+            System.out.println("Comentario: "+comentario);
+            String data = sendFeedback(nombre, mail, comentario);
+            if (data.equals("1")) {
+                Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet.", Toast.LENGTH_SHORT).show();
+            }
+            System.out.println(data);
+        }
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -173,7 +197,7 @@ public class FragmentContacta extends Fragment {
     }
 
     public String sendFeedback(String nombre, String mail, String comentario){
-        String stream = null;
+        String stream = "0";
         try{
             String urlbase = "http://raspi.cat/api.php?feedback=1";
             String urlString = urlbase+"&nombre="+nombre+"&mail="+mail+"&comentario="+comentario;
