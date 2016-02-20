@@ -127,7 +127,7 @@ public class FragmentContacta extends Fragment {
                         if (data.equals("1")) {
                             Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet o envía un mail a ddn1991@gmail.com.", Toast.LENGTH_SHORT).show();
                         }
                         System.out.println(data);
                         editNombre.setText("");
