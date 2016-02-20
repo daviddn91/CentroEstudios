@@ -5,15 +5,27 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.david.centroestudios.MainActivity;
 import com.example.david.centroestudios.R;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,8 +85,27 @@ public class FragmentContacta extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        requestPermission();
         Button enviar = (Button) getActivity().findViewById(R.id.button);
-        //sendEmail();
+
+                int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                if (SDK_INT > 8) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                            .permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+
+                    //EditText editNombre = (EditText) getActivity().findViewById(R.id.editText);
+                    //String nombre = editNombre.getText().toString();
+                    //EditText editMail = (EditText) getActivity().findViewById(R.id.editText);
+                    //String mail = editMail.getText().toString();
+                    //EditText editComentario = (EditText) getActivity().findViewById(R.id.editText);
+                    //String comentario = editComentario.getText().toString();
+                    String nombre = "1";
+                    String mail = "1";
+                    String comentario = "1";
+                    String data = sendFeedback(nombre, mail, comentario);
+                    System.out.println(data);
+                }
 
         return inflater.inflate(R.layout.fragment_contacta, container, false);
     }
@@ -109,7 +140,7 @@ public class FragmentContacta extends Fragment {
 
     protected void sendEmailWithIntent() {
         Log.i("Send email", "");
-        String[] TO = {"ddn1991@gmail.com"};
+        String[] TO = {""};
         String[] CC = {""};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
@@ -128,6 +159,59 @@ public class FragmentContacta extends Fragment {
         catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(getActivity().getApplicationContext(), "No dispones de un cliente de mail instalado...", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void requestPermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)){
+
+            Toast.makeText(getActivity().getApplicationContext(), "We need internet to obtain schools information", Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
+        }
+    }
+
+    public String sendFeedback(String nombre, String mail, String comentario){
+        String stream = null;
+        try{
+            String urlbase = "http://raspi.cat/api.php?feedback=1";
+            String urlString = urlbase+"&nombre="+nombre+"&mail="+mail+"&comentario="+comentario;
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Check the connection status
+            if(urlConnection.getResponseCode() == 200)
+            {
+                // if response code = 200 ok
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                // Read the BufferedInputStream
+                BufferedReader r = new BufferedReader(new InputStreamReader(in));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    sb.append(line);
+                }
+                stream = sb.toString();
+                // End reading...............
+
+                // Disconnect the HttpURLConnection
+                urlConnection.disconnect();
+            }
+            else
+            {
+                // Do something
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally {
+
+        }
+        // Return the data from specified url
+        return stream;
     }
 
 }
