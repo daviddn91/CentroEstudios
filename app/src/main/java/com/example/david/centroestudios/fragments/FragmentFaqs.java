@@ -46,6 +46,10 @@ public class FragmentFaqs extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    // Variable para determinar los dpi y ajustar el padding izquierdo segun eso
+    final float scale = getResources().getDisplayMetrics().density;
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -169,9 +173,9 @@ public class FragmentFaqs extends Fragment {
         public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
             TextView textView = new TextView(FragmentFaqs.this.getActivity());
             textView.setText(getGroup(i).toString());
-            //textView.setTypeface(null, Typeface.BOLD);
             textView.setTextSize(18);
-            textView.setPadding(95, 25, 0, 25);
+            int padding = (int) (40 * scale + 0.5f);
+            textView.setPadding(padding, 25, 0, 25);
             return textView;
         }
 
@@ -180,7 +184,8 @@ public class FragmentFaqs extends Fragment {
             TextView textView = new TextView(FragmentFaqs.this.getActivity());
             textView.setText(getChild(i, i1).toString());
             textView.setTextSize(16);
-            textView.setPadding(110, 0, 0, 25);
+            int padding = (int) (50 * scale + 0.5f);
+            textView.setPadding(padding, 0, 0, 25);
             textView.setTextColor(Color.BLACK);
             return textView;
         }
