@@ -117,6 +117,8 @@ public class FragmentContacta extends Fragment {
                     String mail = editMail.getText().toString();
                     String comentario = editComentario.getText().toString();
 
+                    String data = "Data: Valor";
+
                     if (nombre.length() < 1 || mail.length() < 1 || comentario.length() < 1) {
                         Toast.makeText(getActivity().getApplicationContext(), "Por favor rellena todos los campos para enviar el mensaje.", Toast.LENGTH_SHORT).show();
                     } else if (!mail.contains("@") || !mail.contains(".")) {
@@ -127,14 +129,19 @@ public class FragmentContacta extends Fragment {
                         System.out.println("Comentario: " + comentario);
 
                         try {
-                            GetText(nombre, mail, comentario);
+                            data = GetText(nombre, mail, comentario);
+                            System.out.println("Data:" + data);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
-
-                        editNombre.setText("");
-                        editMail.setText("");
-                        editComentario.setText("");
+                        if (!data.equals("0")) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
+                            editNombre.setText("");
+                            editMail.setText("");
+                            editComentario.setText("");
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet y si el problema persiste por favor contacta en david.delgado@est.fib.upc.edu.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
@@ -183,7 +190,7 @@ public class FragmentContacta extends Fragment {
     }
 
 
-    public  void  GetText(String nombre, String mail, String comentario)  throws  UnsupportedEncodingException
+    public  String  GetText(String nombre, String mail, String comentario)  throws  UnsupportedEncodingException
     {
         // Create data variable for sent values to server
 
@@ -197,6 +204,8 @@ public class FragmentContacta extends Fragment {
                 + "=" + URLEncoder.encode(comentario, "UTF-8");
 
         BufferedReader reader=null;
+
+        String result = "0";
 
         // Send data
         try
@@ -226,6 +235,8 @@ public class FragmentContacta extends Fragment {
                 sb.append(line + "\n");
             }
 
+            result = sb.toString();
+
         }
         catch(Exception ex)
         {
@@ -243,6 +254,8 @@ public class FragmentContacta extends Fragment {
                 System.out.println("Pete enviar comentario en FragmentContacta");
             }
         }
+
+        return result;
 
     }
 
