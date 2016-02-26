@@ -109,27 +109,24 @@ public class FragmentCercanas extends Fragment {
         googleMap = mMapView.getMap();
         if (checkPermission()) {
             googleMap.setMyLocationEnabled(true);
+            if (googleMap != null) {
 
-            /*
-            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 
-            if (myLocation == null) {
-                Criteria criteria = new Criteria();
-                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-                String provider = lm.getBestProvider(criteria, true);
-                myLocation = lm.getLastKnownLocation(provider);
+                    @Override
+                    public void onMyLocationChange(Location arg0) {
+                        // TODO Auto-generated method stub
+
+                        googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+                    }
+                });
             }
-            latitud = myLocation.getLatitude();
-            longitud = myLocation.getLongitude();
-            */
         }
         else {
             googleMap.setMyLocationEnabled(false);
-            // latitude and longitude
-            latitud = 41.5635368;
-            longitud = 2.181372099999976;
         }
+
+
 
         /* Marcadores
 
@@ -152,9 +149,6 @@ public class FragmentCercanas extends Fragment {
 */
         // Perform any camera updates here
         return v;
-
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_cercanas, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
