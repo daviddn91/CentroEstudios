@@ -118,6 +118,10 @@ public class FragmentCercanas extends Fragment {
                         // TODO Auto-generated method stub
 
                         googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(arg0.getLatitude(), arg0.getLongitude())).zoom(16).build();
+                        googleMap.animateCamera(CameraUpdateFactory
+                                .newCameraPosition(cameraPosition));
                     }
                 });
             }
