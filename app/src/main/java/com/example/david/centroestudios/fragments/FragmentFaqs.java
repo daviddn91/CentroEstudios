@@ -47,7 +47,7 @@ public class FragmentFaqs extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     // Variable para determinar los dpi y ajustar el padding izquierdo segun eso
-    final float scale = getResources().getDisplayMetrics().density;
+    private float scale;
 
 
     /**
@@ -90,6 +90,7 @@ public class FragmentFaqs extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_faqs, null);
+        scale = getResources().getDisplayMetrics().density;
         ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.expandableListView);
         elv.setAdapter(new SavedTabsListAdapter());
         elv.setDividerHeight(0);

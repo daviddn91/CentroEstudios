@@ -20,12 +20,18 @@ import com.example.david.centroestudios.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,7 +98,6 @@ public class FragmentContacta extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contacta, container, false);
 
         requestPermission();
-        Button enviar = (Button) view.findViewById(R.id.button);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -117,19 +122,16 @@ public class FragmentContacta extends Fragment {
                     } else if (!mail.contains("@") || !mail.contains(".")) {
                         Toast.makeText(getActivity().getApplicationContext(), "Por favor introduce un mail correcto.", Toast.LENGTH_SHORT).show();
                     } else {
-                        nombre = nombre.replace(" ","-");
-                        mail = mail.replace(" ","-");
-                        comentario = comentario.replace(" ","-");
                         System.out.println("Nombre: " + nombre);
                         System.out.println("Mail: " + mail);
                         System.out.println("Comentario: " + comentario);
-                        String data = sendFeedback(nombre, mail, comentario);
-                        if (data.equals("1")) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet o envía un mail a ddn1991@gmail.com.", Toast.LENGTH_SHORT).show();
+
+                        try {
+                            GetText(nombre, mail, comentario);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
                         }
-                        System.out.println(data);
+
                         editNombre.setText("");
                         editMail.setText("");
                         editComentario.setText("");
@@ -168,28 +170,6 @@ public class FragmentContacta extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    protected void sendEmailWithIntent() {
-        Log.i("Send email", "");
-        String[] TO = {""};
-        String[] CC = {""};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "El sujeto del mail");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "El contenido del mail");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Enviando mail..."));
-            getActivity().finish();
-            Log.i("Mail enviado...", "");
-        }
-        catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getActivity().getApplicationContext(), "No dispones de un cliente de mail instalado...", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void requestPermission(){
 
@@ -202,44 +182,69 @@ public class FragmentContacta extends Fragment {
         }
     }
 
-    public String sendFeedback(String nombre, String mail, String comentario){
-        String stream = "0";
-        try{
-            String urlbase = "http://raspi.cat/api.php?feedback=1";
-            String urlString = urlbase+"&nombre="+nombre+"&mail="+mail+"&comentario="+comentario;
-            URL url = new URL(urlString);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            // Check the connection status
-            if(urlConnection.getResponseCode() == 200)
+    public  void  GetText(String nombre, String mail, String comentario)  throws  UnsupportedEncodingException
+    {
+        // Create data variable for sent values to server
+
+        String data = URLEncoder.encode("nombre", "UTF-8")
+                + "=" + URLEncoder.encode(nombre, "UTF-8");
+
+        data += "&" + URLEncoder.encode("mail", "UTF-8") + "="
+                + URLEncoder.encode(mail, "UTF-8");
+
+        data += "&" + URLEncoder.encode("comentario", "UTF-8")
+                + "=" + URLEncoder.encode(comentario, "UTF-8");
+
+        BufferedReader reader=null;
+
+        // Send data
+        try
+        {
+
+            // Defined URL  where to send data
+            URL url = new URL("http://raspi.cat/api.php");
+
+            // Send POST data request
+
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write( data );
+            wr.flush();
+
+            // Get the server response
+
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            // Read Server Response
+            while((line = reader.readLine()) != null)
             {
-                // if response code = 200 ok
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-                // Read the BufferedInputStream
-                BufferedReader r = new BufferedReader(new InputStreamReader(in));
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    sb.append(line);
-                }
-                stream = sb.toString();
-                // End reading...............
-
-                // Disconnect the HttpURLConnection
-                urlConnection.disconnect();
+                // Append server response in string
+                sb.append(line + "\n");
             }
-            else
-            {
-                System.out.println("Else del urlConnection.getREsponseCode() == 200");
-            }
-        } catch(IOException e){
-            e.printStackTrace();
-        }finally {
-            System.out.println("Pete del sendFeedback() en FragmentContacta");
+
         }
-        // Return the data from specified url
-        return stream;
+        catch(Exception ex)
+        {
+            System.out.println("Pete enviar comentario en FragmentContacta");
+        }
+        finally
+        {
+            try
+            {
+
+                reader.close();
+            }
+
+            catch(Exception ex) {
+                System.out.println("Pete enviar comentario en FragmentContacta");
+            }
+        }
+
     }
 
 }
+

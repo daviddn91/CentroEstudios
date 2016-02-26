@@ -144,11 +144,12 @@ public class FragmentCercanas extends Fragment {
         // adding marker
         //googleMap.addMarker(marker);
         */
+        /*
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitud, longitud)).zoom(16).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
-
+*/
         // Perform any camera updates here
         return v;
 
