@@ -109,6 +109,10 @@ public class FragmentBuscar extends Fragment {
                 System.out.println("Data despues: " + data);
                 datajson = new JSONObject(data);
                 System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+                System.out.println(datajson.getString("id"));
+                System.out.println(datajson.getString("nombre"));
+                System.out.println(datajson.getString("latitud"));
+                System.out.println(datajson.getString("longitud"));
             }
             catch (JSONException e) {
                 System.out.println("JSON Exception");
