@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONObject;
+
 /*
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -117,7 +119,7 @@ public class FragmentCercanas extends Fragment {
                     public void onMyLocationChange(Location arg0) {
                         // TODO Auto-generated method stub
 
-                        googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+                        //googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                 .target(new LatLng(arg0.getLatitude(), arg0.getLongitude())).zoom(16).build();
                         googleMap.animateCamera(CameraUpdateFactory
@@ -129,7 +131,6 @@ public class FragmentCercanas extends Fragment {
         else {
             googleMap.setMyLocationEnabled(false);
         }
-
 
 
         /* Marcadores

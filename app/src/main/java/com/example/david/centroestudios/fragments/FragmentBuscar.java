@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -98,7 +101,18 @@ public class FragmentBuscar extends Fragment {
             //your codes here
             String data = GetHTTPData("http://raspi.cat/api.php?id=1");
             //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
-            System.out.println(data);
+            JSONObject datajson;
+            try {
+                System.out.println("Data antes: "+ data);
+                data = data.replace("[","");
+                data = data.replace("]","");
+                System.out.println("Data despues: " + data);
+                datajson = new JSONObject(data);
+                System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+            }
+            catch (JSONException e) {
+                System.out.println("JSON Exception");
+            }
         }
 
         return inflater.inflate(R.layout.fragment_buscar, container, false);
@@ -159,14 +173,13 @@ public class FragmentBuscar extends Fragment {
             }
             else
             {
-                // Do something
+                System.out.println("Else del GetHTTPData en FragmentBuscar");
             }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
         }catch(IOException e){
             e.printStackTrace();
+            System.out.println("Catch del GetHTTPData en FragmentBuscar");
         }finally {
-
+            System.out.println("Finally del GetHTTPData en FragmentBuscar");
         }
         // Return the data from specified url
         return stream;
