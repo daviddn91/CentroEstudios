@@ -101,21 +101,24 @@ public class FragmentBuscar extends Fragment {
             //your codes here
             String data = GetHTTPData("http://raspi.cat/api.php?id=1");
             //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
-            JSONObject datajson;
-            try {
-                System.out.println("Data antes: "+ data);
-                data = data.replace("[","");
-                data = data.replace("]","");
-                System.out.println("Data despues: " + data);
-                datajson = new JSONObject(data);
-                System.out.println("PRINT JSON GENERADO: " +datajson.toString());
-                System.out.println(datajson.getString("id"));
-                System.out.println(datajson.getString("nombre"));
-                System.out.println(datajson.getString("latitud"));
-                System.out.println(datajson.getString("longitud"));
-            }
-            catch (JSONException e) {
-                System.out.println("JSON Exception");
+
+            if (data != null && !data.isEmpty()) {
+                JSONObject datajson;
+                try {
+                    System.out.println("Data antes: "+ data);
+                    data = data.replace("[","");
+                    data = data.replace("]","");
+                    System.out.println("Data despues: " + data);
+                    datajson = new JSONObject(data);
+                    System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+                    System.out.println(datajson.getString("id"));
+                    System.out.println(datajson.getString("nombre"));
+                    System.out.println(datajson.getString("latitud"));
+                    System.out.println(datajson.getString("longitud"));
+                }
+                catch (JSONException e) {
+                    System.out.println("JSON Exception");
+                }
             }
         }
 

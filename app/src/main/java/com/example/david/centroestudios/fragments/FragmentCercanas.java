@@ -4,17 +4,25 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
@@ -25,9 +33,19 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /*
  * A simple {@link Fragment} subclass.
@@ -47,8 +65,14 @@ public class FragmentCercanas extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    double latitud = 41.5635368;
-    double longitud = 2.181372099999976;
+    SQLiteDatabase db;
+    boolean zoominicial = true;
+
+    double latitud = 1;
+    double longitud = 1;
+
+    double latituddatos = -10;
+    double longituddatos = -10;
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -85,6 +109,7 @@ public class FragmentCercanas extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         // Cambia el texto del titulo al nombre de la seccion
+        db = getActivity().openOrCreateDatabase("BaseDeDatos",android.content.Context.MODE_PRIVATE ,null);
         getActivity().setTitle(R.string.cercanas);
     }
 
@@ -120,10 +145,132 @@ public class FragmentCercanas extends Fragment {
                         // TODO Auto-generated method stub
 
                         //googleMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(new LatLng(arg0.getLatitude(), arg0.getLongitude())).zoom(16).build();
-                        googleMap.animateCamera(CameraUpdateFactory
-                                .newCameraPosition(cameraPosition));
+                        if (zoominicial) {
+                            CameraPosition cameraPosition = new CameraPosition.Builder()
+                                    .target(new LatLng(arg0.getLatitude(), arg0.getLongitude())).zoom(16).build();
+                            googleMap.animateCamera(CameraUpdateFactory
+                                    .newCameraPosition(cameraPosition));
+                            zoominicial = false;
+                        }
+
+                        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                            @Override
+                            public View getInfoWindow(Marker arg0) {
+                                return null;
+                            }
+
+                            @Override
+                            public View getInfoContents(Marker marker) {
+
+                                LinearLayout info = new LinearLayout(getActivity());
+                                info.setOrientation(LinearLayout.VERTICAL);
+
+                                TextView title = new TextView(getActivity());
+                                title.setTextColor(Color.BLACK);
+                                title.setGravity(Gravity.CENTER);
+                                title.setTypeface(null, Typeface.BOLD);
+                                title.setText(marker.getTitle());
+
+                                TextView snippet = new TextView(getActivity());
+                                snippet.setTextColor(Color.GRAY);
+                                snippet.setText(marker.getSnippet());
+
+                                info.addView(title);
+                                info.addView(snippet);
+
+                                return info;
+                            }
+                        });
+
+                        if (Math.abs(latituddatos-arg0.getLatitude())>0.05 || Math.abs(longituddatos-arg0.getLongitude())>0.05) {
+
+                            latitud = arg0.getLatitude();
+                            latituddatos = arg0.getLatitude();
+                            longitud = arg0.getLongitude();
+                            longituddatos = arg0.getLongitude();
+                            double longitudmin = longitud-0.2;
+                            String lonmin = String.valueOf(longitudmin);
+                            lonmin = lonmin.replace(".",",");
+                            double longitudmax = longitud+0.2;
+                            String lonmax = String.valueOf(longitudmax);
+                            lonmax = lonmax.replace(".",",");
+                            double latitudmin = latitud-0.2;
+                            String latmin = String.valueOf(latitudmin);
+                            latmin = latmin.replace(".",",");
+                            double latitudmax = latitud+0.2;
+                            String latmax = String.valueOf(latitudmax);
+                            latmax = latmax.replace(".",",");
+
+
+                            // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
+
+                            int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                            if (SDK_INT > 8) {
+                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                        .permitAll().build();
+                                StrictMode.setThreadPolicy(policy);
+                                //your codes here
+                                String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin="+lonmin+"&longitudmax="+lonmax+"&latitudmin="+latmin+"&latitudmax="+latmax);
+                                //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
+
+                                if (data != null && !data.isEmpty()) {
+                                    // AQUI IR DIVIDIENDO EL STRING Y HACER UN BUCLE PARA PASAR A JSON
+
+
+                                    //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
+
+
+                                    JSONObject datajson;
+                                    try {
+                                        System.out.println("Data antes: "+ data);
+                                        data = data.replace("[","");
+                                        data = data.replace("]","");
+                                        String[] parts = data.split("fininfo");
+
+                                        for (int i = 0; i < parts.length; i++) {
+                                            if (!parts[i].equals("\"}")) {
+                                                System.out.println("Parte cortada " + i + ": " + parts[i]);
+                                                String parte = parts[i] + "fininfo\"}";
+                                                parte = parte.replace("\"},", "");
+
+                                                //System.out.println("Parte puesta:"+parte);
+                                                //System.out.println("id:" + data2);
+                                                datajson = new JSONObject(parte);
+                                                String lat = datajson.getString("latitud");
+                                                lat = lat.replace(",", ".");
+                                                String lon = datajson.getString("longitud");
+                                                lon = lon.replace(",", ".");
+                                                //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+                                                MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
+                                                googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad")));
+
+                                            /*
+                                            System.out.println(datajson.getString("id"));
+                                            System.out.println(datajson.getString("nombre"));
+                                            System.out.println(datajson.getString("latitud"));
+                                            System.out.println(datajson.getString("longitud"));
+                                            */
+                                            }
+                                        }
+                                        System.out.println("Fin de la carga de markers");
+                                    }
+                                    catch (JSONException e) {
+                                        System.out.println("JSON Exception");
+                                    }
+
+                                }
+
+                                            /*
+                                            // Changing marker icon
+                                            //marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                                            //marker.icon(BitmapDescriptorFactory.defaultMarker());
+                                            */
+                            }
+
+
+
+                        }
                     }
                 });
             }
@@ -132,26 +279,6 @@ public class FragmentCercanas extends Fragment {
             googleMap.setMyLocationEnabled(false);
         }
 
-
-        /* Marcadores
-
-        // Crear un marcador (Para cada escuela, coger de BD)
-        //MarkerOptions marker = new MarkerOptions().position(
-                //new LatLng(latitud, longitud)).title("You are here");
-
-        // Changing marker icon
-        //marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-        //marker.icon(BitmapDescriptorFactory.defaultMarker());
-
-        // adding marker
-        //googleMap.addMarker(marker);
-        */
-        /*
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitud, longitud)).zoom(16).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
-*/
         // Perform any camera updates here
         return v;
     }
@@ -233,6 +360,45 @@ public class FragmentCercanas extends Fragment {
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
         }
+    }
+
+    public String GetHTTPData(String urlString){
+        String stream = null;
+        try{
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            // Check the connection status
+            if(urlConnection.getResponseCode() == 200)
+            {
+                // if response code = 200 ok
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                // Read the BufferedInputStream
+                BufferedReader r = new BufferedReader(new InputStreamReader(in));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    sb.append(line);
+                }
+                stream = sb.toString();
+                // End reading...............
+
+                // Disconnect the HttpURLConnection
+                urlConnection.disconnect();
+            }
+            else
+            {
+                System.out.println("Else del GetHTTPData en FragmentBuscar");
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+            System.out.println("Catch del GetHTTPData en FragmentBuscar");
+        }finally {
+            System.out.println("Finally del GetHTTPData en FragmentBuscar");
+        }
+        // Return the data from specified url
+        return stream;
     }
 
 }
