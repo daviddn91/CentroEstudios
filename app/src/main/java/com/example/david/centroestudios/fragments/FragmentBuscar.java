@@ -2,6 +2,7 @@ package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +55,8 @@ public class FragmentBuscar extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    SQLiteDatabase db;
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -83,6 +88,7 @@ public class FragmentBuscar extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        db = getActivity().openOrCreateDatabase("BaseDeDatos",android.content.Context.MODE_PRIVATE ,null);
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.buscar);
     }
@@ -99,27 +105,46 @@ public class FragmentBuscar extends Fragment {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
             //your codes here
-            String data = GetHTTPData("http://raspi.cat/api.php?id=1");
-            //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
+
+            /*
+            String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=1&longitudmax=3&latitudmin=30&latitudmax=50");
 
             if (data != null && !data.isEmpty()) {
                 JSONObject datajson;
                 try {
-                    System.out.println("Data antes: "+ data);
-                    data = data.replace("[","");
-                    data = data.replace("]","");
-                    System.out.println("Data despues: " + data);
-                    datajson = new JSONObject(data);
-                    System.out.println("PRINT JSON GENERADO: " +datajson.toString());
-                    System.out.println(datajson.getString("id"));
-                    System.out.println(datajson.getString("nombre"));
-                    System.out.println(datajson.getString("latitud"));
-                    System.out.println(datajson.getString("longitud"));
-                }
-                catch (JSONException e) {
+                    System.out.println("Data antes: " + data);
+                    data = data.replace("[", "");
+                    data = data.replace("]", "");
+                    String[] parts = data.split("fininfo");
+
+                    for (int i = 0; i < parts.length; i++) {
+                        if (!parts[i].equals("\"}")) {
+                            System.out.println("Parte cortada " + i + ": " + parts[i]);
+                            String parte = parts[i] + "fininfo\"}";
+                            parte = parte.replace("\"},", "");
+                            datajson = new JSONObject(parte);
+                            String id = datajson.getString("id");
+                            String nombre = datajson.getString("nombre");
+                            String telefono = datajson.getString("telefono");
+                            String direccion = datajson.getString("direccion");
+                            String localidad = datajson.getString("localidad");
+                            String infantil1 = datajson.getString("infantil1");
+                            String infantil2 = datajson.getString("infantil2");
+                            String primaria = datajson.getString("primaria");
+                            String eso = datajson.getString("eso");
+                            String bachillerato = datajson.getString("bachillerato");
+                            String latitud = datajson.getString("latitud");
+                            String longitud = datajson.getString("longitud");
+
+                            db.execSQL("INSERT INTO centros (id, nombre, direccion, codigopostal, telefono, localidad, infantil1, infantil2, primaria, eso, bachillerato, actualizado) VALUES ('"+id+"','"+nombre+"','"+telefono+"','"+direccion+"','"+localidad+"','"+infantil1+"','"+infantil2+"','"+primaria+"','"+eso+"','"+bachillerato+"',sysdate());");
+                        }
+                    }
+                    System.out.println("Fin de la carga de datos de los centros");
+                } catch (JSONException e) {
                     System.out.println("JSON Exception");
                 }
-            }
+
+            } */
         }
 
         return inflater.inflate(R.layout.fragment_buscar, container, false);

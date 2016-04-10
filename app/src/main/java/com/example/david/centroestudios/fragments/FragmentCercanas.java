@@ -189,16 +189,16 @@ public class FragmentCercanas extends Fragment {
                             latituddatos = arg0.getLatitude();
                             longitud = arg0.getLongitude();
                             longituddatos = arg0.getLongitude();
-                            double longitudmin = longitud-0.2;
+                            double longitudmin = longitud-0.15;
                             String lonmin = String.valueOf(longitudmin);
                             lonmin = lonmin.replace(".",",");
-                            double longitudmax = longitud+0.2;
+                            double longitudmax = longitud+0.15;
                             String lonmax = String.valueOf(longitudmax);
                             lonmax = lonmax.replace(".",",");
-                            double latitudmin = latitud-0.2;
+                            double latitudmin = latitud-0.15;
                             String latmin = String.valueOf(latitudmin);
                             latmin = latmin.replace(".",",");
-                            double latitudmax = latitud+0.2;
+                            double latitudmax = latitud+0.15;
                             String latmax = String.valueOf(latitudmax);
                             latmax = latmax.replace(".",",");
 

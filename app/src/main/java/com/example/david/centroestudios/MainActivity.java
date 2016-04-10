@@ -82,8 +82,10 @@ public class MainActivity extends AppCompatActivity
             db.execSQL("INSERT INTO filtros (nina, nino, publico, concertado, privado, religioso, laico, castellano, catalan, ingles, frances, aleman) VALUES (1,1,1,1,1,1,1,1,1,1,0,0);");
         }
 
-        // Creamos la tabla con la info de los colegios cercanos a la posicion del usuario
-        db.execSQL("CREATE TABLE IF NOT EXISTS centros_cercanos (id VARCHAR(100), nombre VARCHAR(100), direccion VARCHAR(1000), latitud VARCHAR (1000), longitud VARCHAR (1000));");
+        // Creamos la tabla con la info de los colegios y borramos los que sean muy antiguos
+        db.execSQL("CREATE TABLE IF NOT EXISTS centros (id VARCHAR(100), nombre VARCHAR(100), direccion VARCHAR(1000), codigopostal VARCHAR(10), telefono VARCHAR(15), localidad VARCHAR(100), infantil1 VARCHAR(1), infantil2 VARCHAR(1), primaria VARCHAR(1), eso VARCHAR(1), bachillerato VARCHAR(1), actualizado VARCHAR(100), latitud VARCHAR(1000), longitud VARCHAR(1000));");
+
+        //db.execSQL("DELETE FROM centros WHERE actualizado < sysdate()-30;");
 
     }
 
