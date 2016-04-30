@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.david.centroestudios.Anime;
 import com.example.david.centroestudios.AnimeAdapter;
+import com.example.david.centroestudios.CentrosEstudios;
+import com.example.david.centroestudios.CentrosEstudiosAdapter;
 import com.example.david.centroestudios.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -124,13 +126,11 @@ public class FragmentBuscar extends Fragment {
 
         }
 
-        List<Anime> items = new ArrayList<>();
+        List<CentrosEstudios> items = new ArrayList<>();
 
-        items.add(new Anime(R.drawable.angel, "Angel Beats", 230));
-        items.add(new Anime(R.drawable.death, "Death Note", 456));
-        items.add(new Anime(R.drawable.fate, "Fate Stay Night", 342));
-        items.add(new Anime(R.drawable.nhk, "Welcome to the NHK", 645));
-        items.add(new Anime(R.drawable.suzumiya, "Suzumiya Haruhi", 459));
+        items.add(new CentrosEstudios("Centro 1","Calle la pantomima","983281328","Canet de Mar","3","2"));
+        items.add(new CentrosEstudios("Centro 2","Calle la pantomima","983281328","Canet de Mar","3","2"));
+        items.add(new CentrosEstudios("Centro 3","Calle la pantomima","983281328","Canet de Mar","3","2"));
 
         // Obtener el Recycler
         recycler = (RecyclerView) view.findViewById(R.id.reciclador);
@@ -141,7 +141,7 @@ public class FragmentBuscar extends Fragment {
         recycler.setLayoutManager(lManager);
 
         // Crear un nuevo adaptador
-        adapter = new AnimeAdapter(items);
+        adapter = new CentrosEstudiosAdapter(items);
         recycler.setAdapter(adapter);
 
         return view;
