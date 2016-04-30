@@ -104,47 +104,7 @@ public class FragmentBuscar extends Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            //your codes here
 
-            /*
-            String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=1&longitudmax=3&latitudmin=30&latitudmax=50");
-
-            if (data != null && !data.isEmpty()) {
-                JSONObject datajson;
-                try {
-                    System.out.println("Data antes: " + data);
-                    data = data.replace("[", "");
-                    data = data.replace("]", "");
-                    String[] parts = data.split("fininfo");
-
-                    for (int i = 0; i < parts.length; i++) {
-                        if (!parts[i].equals("\"}")) {
-                            System.out.println("Parte cortada " + i + ": " + parts[i]);
-                            String parte = parts[i] + "fininfo\"}";
-                            parte = parte.replace("\"},", "");
-                            datajson = new JSONObject(parte);
-                            String id = datajson.getString("id");
-                            String nombre = datajson.getString("nombre");
-                            String telefono = datajson.getString("telefono");
-                            String direccion = datajson.getString("direccion");
-                            String localidad = datajson.getString("localidad");
-                            String infantil1 = datajson.getString("infantil1");
-                            String infantil2 = datajson.getString("infantil2");
-                            String primaria = datajson.getString("primaria");
-                            String eso = datajson.getString("eso");
-                            String bachillerato = datajson.getString("bachillerato");
-                            String latitud = datajson.getString("latitud");
-                            String longitud = datajson.getString("longitud");
-
-                            db.execSQL("INSERT INTO centros (id, nombre, direccion, codigopostal, telefono, localidad, infantil1, infantil2, primaria, eso, bachillerato, actualizado) VALUES ('"+id+"','"+nombre+"','"+telefono+"','"+direccion+"','"+localidad+"','"+infantil1+"','"+infantil2+"','"+primaria+"','"+eso+"','"+bachillerato+"',sysdate());");
-                        }
-                    }
-                    System.out.println("Fin de la carga de datos de los centros");
-                } catch (JSONException e) {
-                    System.out.println("JSON Exception");
-                }
-
-            } */
         }
 
         return inflater.inflate(R.layout.fragment_buscar, container, false);
