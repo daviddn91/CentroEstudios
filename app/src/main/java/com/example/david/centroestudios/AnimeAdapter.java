@@ -49,6 +49,6 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
     public void onBindViewHolder(AnimeViewHolder viewHolder, int i) {
         viewHolder.imagen.setImageResource(items.get(i).getImagen());
         viewHolder.nombre.setText(items.get(i).getNombre());
-        viewHolder.visitas.setText("Visitas:"+String.valueOf(items.get(i).getVisitas()));
+        viewHolder.visitas.setText("Visitas: "+String.valueOf(items.get(i).getVisitas()));
     }
 }
