@@ -57,15 +57,6 @@
             android:id="@+id/localidad"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="5dp"/>
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="#ffd5d5d5"
-            android:id="@+id/linea"
-            android:layout_above="@+id/compartir"
-            android:layout_toRightOf="@+id/imagen">
-
-        </View>
 
         <ImageView
             android:layout_width="wrap_content"

@@ -131,6 +131,7 @@ public class FragmentBuscar extends Fragment {
         items.add(new CentrosEstudios("Centro 1","Calle la pantomima","983281328","Canet de Mar","3","2"));
         items.add(new CentrosEstudios("Centro 2","Calle la pantomima","983281328","Canet de Mar","3","2"));
         items.add(new CentrosEstudios("Centro 3","Calle la pantomima","983281328","Canet de Mar","3","2"));
+        items.add(new CentrosEstudios("Centro 4","Calle la pantomima","983281328","Canet de Mar","3","2"));
 
         // Obtener el Recycler
         recycler = (RecyclerView) view.findViewById(R.id.reciclador);
