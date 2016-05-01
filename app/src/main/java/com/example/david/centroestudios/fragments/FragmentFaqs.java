@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +21,13 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.david.centroestudios.Faqs;
+import com.example.david.centroestudios.FaqsAdapter;
 import com.example.david.centroestudios.R;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,6 +48,13 @@ public class FragmentFaqs extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    /*
+    Declarar instancias globales
+     */
+    private RecyclerView recycler;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager lManager;
 
     private OnFragmentInteractionListener mListener;
 
@@ -89,12 +101,27 @@ public class FragmentFaqs extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_faqs, null);
-        scale = getResources().getDisplayMetrics().density;
-        ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.expandableListView);
-        elv.setAdapter(new SavedTabsListAdapter());
-        elv.setDividerHeight(0);
-        return v;
+        View view = inflater.inflate(R.layout.fragment_faqs, null);
+
+        List<Faqs> items = new ArrayList<>();
+
+        items.add(new Faqs("Faqs 1","Calle la pantomima"));
+        items.add(new Faqs("Faqs 2","Calle la pantomima"));
+
+        // Obtener el Recycler
+        recycler = (RecyclerView) view.findViewById(R.id.recicladorFaqs);
+        recycler.setHasFixedSize(true);
+
+        // Usar un administrador para LinearLayout
+        lManager = new LinearLayoutManager(getActivity());
+        recycler.setLayoutManager(lManager);
+
+        // Crear un nuevo adaptador
+        adapter = new FaqsAdapter(items);
+        recycler.setAdapter(adapter);
+
+        return view;
+        
     }
 
     // TODO: Rename method, update argument and hook method into UI event

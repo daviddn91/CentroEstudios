@@ -1,7 +1,7 @@
 package com.example.david.centroestudios;
 
 /**
- * Creado por Hermosa Programación
+ * Clase para el contenido de las cardview en Buscar escuela
  */
 public class CentrosEstudios {
     private String nombre;
