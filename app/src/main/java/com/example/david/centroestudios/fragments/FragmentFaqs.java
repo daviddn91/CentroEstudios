@@ -105,8 +105,9 @@ public class FragmentFaqs extends Fragment {
 
         List<Faqs> items = new ArrayList<>();
 
-        items.add(new Faqs("Faqs 1","Calle la pantomima"));
-        items.add(new Faqs("Faqs 2","Calle la pantomima"));
+        items.add(new Faqs("¿La aplicación guarda algún tipo de información sobre el usuario?","No, toda la información se almacena localmente en los dispositivos y nunca llegan (ni llegarán) a nuestro servidor."));
+        items.add(new Faqs("¿De dónde se obtienen los datos de los centros educativos?","Toda la información proviene de documentos públicos de la Generalitat de Catalunya."));
+        items.add(new Faqs("Tengo alguna sugerencia o queja de la aplicación, ¿es posible contactar con vosotros?","¡Claro! Puedes hacerlo a través de la opción del menú 'Contactar con el desarrollador'."));
 
         // Obtener el Recycler
         recycler = (RecyclerView) view.findViewById(R.id.recicladorFaqs);
