@@ -20,8 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.david.centroestudios.Anime;
-import com.example.david.centroestudios.AnimeAdapter;
 import com.example.david.centroestudios.CentrosEstudios;
 import com.example.david.centroestudios.CentrosEstudiosAdapter;
 import com.example.david.centroestudios.R;
