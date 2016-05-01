@@ -20,11 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Large Text"
+            android:text="Pregunta"
+            android:textColor="#000000"
             android:id="@+id/pregunta"
             android:layout_toRightOf="@+id/imagen"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
 
@@ -32,11 +34,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
+            android:text="Respuesta"
             android:layout_below="@+id/pregunta"
             android:id="@+id/respuesta"
             android:layout_toRightOf="@+id/imagen"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp"/>
 
 
