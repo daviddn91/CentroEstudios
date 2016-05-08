@@ -135,6 +135,8 @@ public class FragmentBuscar extends Fragment {
         botonBuscar = (Button) view.findViewById(R.id.botonBuscar);
         locationSearch = (EditText) view.findViewById(R.id.editTextBuscar);
 
+        recycler = (RecyclerView) view.findViewById(R.id.reciclador);
+
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,31 +156,32 @@ public class FragmentBuscar extends Fragment {
                     System.out.println(address.getLatitude() + "-" + address.getLongitude());
 
                     // HACER PETICION AL SERVIDOR CON LOS DATOS DE LA LONGITUD Y LATITUD CON LA API DE CERCANAS
+
+                    // INSERTANDO CONTENIDO EN TARJETAS
+
+                    List<CentrosEstudios> items = new ArrayList<>();
+
+                    items.add(new CentrosEstudios("Centro 1","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("Centro 2","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("Centro 3","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("Centro 4","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+
+                    // Obtener el Recycler
+                    recycler.setHasFixedSize(true);
+
+                    // Usar un administrador para LinearLayout
+                    lManager = new LinearLayoutManager(getActivity());
+                    recycler.setLayoutManager(lManager);
+
+                    // Crear un nuevo adaptador
+                    adapter = new CentrosEstudiosAdapter(items);
+                    recycler.setAdapter(adapter);
+
                 }
             }
         });
 
 
-        // INSERTANDO CONTENIDO EN TARJETAS
-
-        List<CentrosEstudios> items = new ArrayList<>();
-
-        items.add(new CentrosEstudios("Centro 1","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-        items.add(new CentrosEstudios("Centro 2","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-        items.add(new CentrosEstudios("Centro 3","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-        items.add(new CentrosEstudios("Centro 4","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-
-        // Obtener el Recycler
-        recycler = (RecyclerView) view.findViewById(R.id.reciclador);
-        recycler.setHasFixedSize(true);
-
-        // Usar un administrador para LinearLayout
-        lManager = new LinearLayoutManager(getActivity());
-        recycler.setLayoutManager(lManager);
-
-        // Crear un nuevo adaptador
-        adapter = new CentrosEstudiosAdapter(items);
-        recycler.setAdapter(adapter);
 
         return view;
     }
