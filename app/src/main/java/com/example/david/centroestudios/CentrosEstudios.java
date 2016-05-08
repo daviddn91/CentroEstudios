@@ -4,6 +4,7 @@ package com.example.david.centroestudios;
  * Clase para el contenido de las cardview en Buscar escuela
  */
 public class CentrosEstudios {
+    private String id;
     private String nombre;
     private String direccion;
     private String telefono;
@@ -11,13 +12,18 @@ public class CentrosEstudios {
     private String longitud;
     private String latitud;
 
-    public CentrosEstudios(String nombre, String direccion, String telefono, String localidad, String longitud, String latitud) {
+    public CentrosEstudios(String id, String nombre, String direccion, String telefono, String localidad, String longitud, String latitud) {
+        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.localidad = localidad;
         this.longitud = longitud;
         this.latitud = latitud;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -43,6 +49,5 @@ public class CentrosEstudios {
     public String getLatitud() {
         return latitud;
     }
-
 
 }

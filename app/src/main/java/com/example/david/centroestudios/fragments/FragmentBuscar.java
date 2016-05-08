@@ -161,10 +161,10 @@ public class FragmentBuscar extends Fragment {
 
                     List<CentrosEstudios> items = new ArrayList<>();
 
-                    items.add(new CentrosEstudios("Centro 1","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-                    items.add(new CentrosEstudios("Centro 2","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-                    items.add(new CentrosEstudios("Centro 3","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-                    items.add(new CentrosEstudios("Centro 4","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("1","Centro 1","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("2", "Centro 2","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("3", "Centro 3","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                    items.add(new CentrosEstudios("4", "Centro 4","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
 
                     // Obtener el Recycler
                     recycler.setHasFixedSize(true);

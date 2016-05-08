@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.List;
 
 /**
@@ -21,10 +24,39 @@ public class CentrosEstudiosAdapter extends RecyclerView.Adapter<CentrosEstudios
         public TextView direccion;
         public TextView telefono;
         public TextView localidad;
+        public String selectedName;
+        public String selectedLatitude;
+        public String selectedLongitude;
+        public String selectedDireccion;
+        public String selectedTelefono;
+        public String selectedLocalidad;
 
+        public View view;
 
         public CentrosEstudiosViewHolder(View v) {
             super(v);
+            view = v;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    System.out.println("Nombre + " + selectedName);
+                    System.out.println("Latitud + " + selectedLatitude);
+                    System.out.println("Longitud + " + selectedLongitude);
+                    System.out.println("Direccion + " + selectedDireccion);
+                    System.out.println("Telefono + " + selectedTelefono);
+                    System.out.println("Localidad + " + selectedLocalidad);
+
+                    // AQUI TOCARIA ABRIR UN NUEVO FRAGMENT CON EL MAPA CON ESA LATITUD
+                    // Y LONGITUD PONIENDO UN MARKER CON LOS MISMOS DATOS QUE EN CERCANAS
+
+                    String lat = selectedLatitude;
+                    lat = lat.replace(",", ".");
+                    String lon = selectedLongitude;
+                    lon = lon.replace(",", ".");
+                    //MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
+                    //googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad")));
+
+                }
+            });
             nombre = (TextView) v.findViewById(R.id.nombre);
             direccion = (TextView) v.findViewById(R.id.direccion);
             telefono = (TextView) v.findViewById(R.id.telefono);
@@ -54,5 +86,11 @@ public class CentrosEstudiosAdapter extends RecyclerView.Adapter<CentrosEstudios
         viewHolder.direccion.setText(items.get(i).getDireccion());
         viewHolder.telefono.setText(items.get(i).getTelefono());
         viewHolder.localidad.setText(items.get(i).getLocalidad());
+        viewHolder.selectedName = items.get(i).getNombre();
+        viewHolder.selectedLatitude = items.get(i).getLatitud();
+        viewHolder.selectedLongitude = items.get(i).getLongitud();
+        viewHolder.selectedDireccion = items.get(i).getDireccion();
+        viewHolder.selectedTelefono = items.get(i).getTelefono();
+        viewHolder.selectedLocalidad = items.get(i).getLocalidad();
     }
 }
