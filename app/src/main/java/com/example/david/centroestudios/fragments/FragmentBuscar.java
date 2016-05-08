@@ -3,6 +3,8 @@ package com.example.david.centroestudios.fragments;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +27,7 @@ import android.widget.Toast;
 import com.example.david.centroestudios.CentrosEstudios;
 import com.example.david.centroestudios.CentrosEstudiosAdapter;
 import com.example.david.centroestudios.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -34,6 +39,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -60,6 +66,9 @@ public class FragmentBuscar extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    EditText locationSearch;
+    Button botonBuscar;
 
     /*
     Declarar instancias globales
@@ -123,6 +132,34 @@ public class FragmentBuscar extends Fragment {
             StrictMode.setThreadPolicy(policy);
 
         }
+        botonBuscar = (Button) view.findViewById(R.id.botonBuscar);
+        locationSearch = (EditText) view.findViewById(R.id.editTextBuscar);
+
+        botonBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String location = locationSearch.getText().toString();
+                List<Address> addressList = null;
+                if (location != null || !location.equals("")) {
+                    Geocoder geocoder = new Geocoder(getActivity());
+                    try {
+                        System.out.println("Valor del location = " + location);
+                        addressList = geocoder.getFromLocationName(location, 1);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Address address = addressList.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    System.out.println(address.getLatitude() + "-" + address.getLongitude());
+
+                    // HACER PETICION AL SERVIDOR CON LOS DATOS DE LA LONGITUD Y LATITUD
+                }
+            }
+        });
+
+
+        // INSERTANDO CONTENIDO EN TARJETAS
 
         List<CentrosEstudios> items = new ArrayList<>();
 
