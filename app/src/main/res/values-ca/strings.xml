@@ -35,4 +35,6 @@
     <string name="section_name">Escola</string>
     <string name="estas_aqui">Estàs aquí</string>
     <string name="mixto">Mixt</string>
+    <string name="texto_buscador">Introdueix una localització</string>
+    <string name="boton_buscar">Cercar</string>
 </resources>

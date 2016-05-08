@@ -153,7 +153,7 @@ public class FragmentBuscar extends Fragment {
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     System.out.println(address.getLatitude() + "-" + address.getLongitude());
 
-                    // HACER PETICION AL SERVIDOR CON LOS DATOS DE LA LONGITUD Y LATITUD
+                    // HACER PETICION AL SERVIDOR CON LOS DATOS DE LA LONGITUD Y LATITUD CON LA API DE CERCANAS
                 }
             }
         });

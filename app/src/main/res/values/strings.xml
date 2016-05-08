@@ -39,4 +39,6 @@
     <string name="section_name">School</string>
     <string name="estas_aqui">You are here</string>
     <string name="mixto">Mixed</string>
+    <string name="texto_buscador">Search location here</string>
+    <string name="boton_buscar">Search</string>
 </resources>
