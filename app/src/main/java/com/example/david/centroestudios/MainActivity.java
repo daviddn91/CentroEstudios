@@ -146,4 +146,12 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void abrirMapaBuscar() {
+        System.out.println("Eiiiii");
+        FragmentTransaction ftrans = getFragmentManager().beginTransaction();
+        
+        //ftrans.replace(R.id.container, fcercanas);
+        ftrans.commit();
+    }
 }
