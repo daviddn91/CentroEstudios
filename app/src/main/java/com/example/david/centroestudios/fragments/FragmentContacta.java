@@ -93,6 +93,9 @@ public class FragmentContacta extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Cambia el texto del titulo al nombre de la seccion
+        getActivity().setTitle(R.string.contactar);
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_contacta, container, false);

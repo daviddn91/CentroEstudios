@@ -99,6 +99,9 @@ public class FragmentFaqs extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Cambia el texto del titulo al nombre de la seccion
+        getActivity().setTitle(R.string.faqs);
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_faqs, null);
