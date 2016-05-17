@@ -1,5 +1,6 @@
 package com.example.david.centroestudios;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -97,7 +100,22 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }*/
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager manager = getFragmentManager();
+        int count = manager.getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            manager.popBackStack();
+        }
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,15 +148,15 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
 
         if (id == R.id.nav_cercanas) {
-            ftrans.replace(R.id.container, fcercanas);
+            ftrans.replace(R.id.container, fcercanas).addToBackStack(null);
         } else if (id == R.id.nav_buscar) {
-            ftrans.replace(R.id.container, fbuscar);
+            ftrans.replace(R.id.container, fbuscar).addToBackStack(null);
         } else if (id == R.id.nav_manage) {
-            ftrans.replace(R.id.container, fpreferencias);
+            ftrans.replace(R.id.container, fpreferencias).addToBackStack(null);
         } else if (id == R.id.nav_share) {
-            ftrans.replace(R.id.container, ffaqs);
+            ftrans.replace(R.id.container, ffaqs).addToBackStack(null);
         } else if (id == R.id.nav_send) {
-            ftrans.replace(R.id.container, fcontacta);
+            ftrans.replace(R.id.container, fcontacta).addToBackStack(null);
         } ftrans.commit();
 
         /* Creo que esto cierra el menu lateral */
@@ -148,10 +166,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void abrirMapaBuscar() {
-        System.out.println("Eiiiii");
+
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
-        
-        //ftrans.replace(R.id.container, fcercanas);
+        ftrans.replace(R.id.container, fcercanas).addToBackStack(null);
         ftrans.commit();
     }
 }

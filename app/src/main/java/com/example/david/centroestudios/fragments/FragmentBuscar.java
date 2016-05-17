@@ -1,6 +1,5 @@
 package com.example.david.centroestudios.fragments;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
@@ -10,44 +9,31 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.david.centroestudios.CentrosEstudios;
-import com.example.david.centroestudios.CentrosEstudiosAdapter;
+import com.example.david.centroestudios.MainActivity;
 import com.example.david.centroestudios.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -148,6 +134,7 @@ public class FragmentBuscar extends Fragment {
                         System.out.println("Valor del location = " + location);
                         addressList = geocoder.getFromLocationName(location, 1);
 
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -198,6 +185,11 @@ public class FragmentBuscar extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    public void cambiaAMapa() {
+        System.out.println("ESTOY EN EL FRAGMENT");
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -269,5 +261,142 @@ public class FragmentBuscar extends Fragment {
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
+
+    /**
+     * Clase para el contenido de las cardview en Buscar escuela
+     */
+    public class CentrosEstudios {
+        private String id;
+        private String nombre;
+        private String direccion;
+        private String telefono;
+        private String localidad;
+        private String longitud;
+        private String latitud;
+
+        public CentrosEstudios(String id, String nombre, String direccion, String telefono, String localidad, String longitud, String latitud) {
+            this.id = id;
+            this.nombre = nombre;
+            this.direccion = direccion;
+            this.telefono = telefono;
+            this.localidad = localidad;
+            this.longitud = longitud;
+            this.latitud = latitud;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public String getDireccion() {
+            return direccion;
+        }
+
+        public String getTelefono() {
+            return telefono;
+        }
+
+        public String getLocalidad() {
+            return localidad;
+        }
+
+        public String getLongitud() {
+            return longitud;
+        }
+
+        public String getLatitud() {
+            return latitud;
+        }
+
+    }
+
+
+    public class CentrosEstudiosAdapter extends RecyclerView.Adapter<CentrosEstudiosAdapter.CentrosEstudiosViewHolder> {
+        private List<CentrosEstudios> items;
+
+        public class CentrosEstudiosViewHolder extends RecyclerView.ViewHolder {
+            // Campos respectivos de un item
+            public TextView nombre;
+            public TextView direccion;
+            public TextView telefono;
+            public TextView localidad;
+            public String selectedName;
+            public String selectedLatitude;
+            public String selectedLongitude;
+            public String selectedDireccion;
+            public String selectedTelefono;
+            public String selectedLocalidad;
+
+            public View view;
+
+            public CentrosEstudiosViewHolder(View v) {
+                super(v);
+                view = v;
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("Nombre + " + selectedName);
+                        System.out.println("Latitud + " + selectedLatitude);
+                        System.out.println("Longitud + " + selectedLongitude);
+                        System.out.println("Direccion + " + selectedDireccion);
+                        System.out.println("Telefono + " + selectedTelefono);
+                        System.out.println("Localidad + " + selectedLocalidad);
+
+                        // AQUI TOCARIA ABRIR UN NUEVO FRAGMENT CON EL MAPA CON ESA LATITUD
+                        // Y LONGITUD PONIENDO UN MARKER CON LOS MISMOS DATOS QUE EN CERCANAS
+
+                        String lat = selectedLatitude;
+                        lat = lat.replace(",", ".");
+                        String lon = selectedLongitude;
+                        lon = lon.replace(",", ".");
+
+                        ((MainActivity) getActivity()).abrirMapaBuscar();
+
+                        //MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
+                        //googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad")));
+
+                    }
+                });
+                nombre = (TextView) v.findViewById(R.id.nombre);
+                direccion = (TextView) v.findViewById(R.id.direccion);
+                telefono = (TextView) v.findViewById(R.id.telefono);
+                localidad = (TextView) v.findViewById(R.id.localidad);
+            }
+        }
+
+        public CentrosEstudiosAdapter(List<CentrosEstudios> items) {
+            this.items = items;
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        @Override
+        public CentrosEstudiosViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View v = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.centros_estudios, viewGroup, false);
+            return new CentrosEstudiosViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(CentrosEstudiosViewHolder viewHolder, int i) {
+            viewHolder.nombre.setText(items.get(i).getNombre());
+            viewHolder.direccion.setText(items.get(i).getDireccion());
+            viewHolder.telefono.setText(items.get(i).getTelefono());
+            viewHolder.localidad.setText(items.get(i).getLocalidad());
+            viewHolder.selectedName = items.get(i).getNombre();
+            viewHolder.selectedLatitude = items.get(i).getLatitud();
+            viewHolder.selectedLongitude = items.get(i).getLongitud();
+            viewHolder.selectedDireccion = items.get(i).getDireccion();
+            viewHolder.selectedTelefono = items.get(i).getTelefono();
+            viewHolder.selectedLocalidad = items.get(i).getLocalidad();
+        }
+    }
 
 }
