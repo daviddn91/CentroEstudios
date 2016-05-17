@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,6 +100,10 @@ public class FragmentContacta extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_contacta, container, false);
+
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
+        navigationView.getMenu().getItem(4).setChecked(true);
 
         requestPermission();
 

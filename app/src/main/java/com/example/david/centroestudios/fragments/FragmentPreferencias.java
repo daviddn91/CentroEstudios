@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.NavigationView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,6 +123,10 @@ public class FragmentPreferencias extends Fragment {
         getActivity().setTitle(R.string.preferencias);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_preferencias, container, false);
+
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
+        navigationView.getMenu().getItem(2).setChecked(true);
 
         /* Aqui empieza lo de actualizar switch y radiobuttons segun la BD */
 

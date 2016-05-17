@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
@@ -122,6 +123,10 @@ public class FragmentCercanas extends Fragment {
         zoominicial = true;
         View v = inflater.inflate(R.layout.fragment_cercanas, container,
                 false);
+
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         requestPermission();
         requestPermission2();

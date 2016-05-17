@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -103,6 +104,10 @@ public class FragmentFaqs extends Fragment {
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.faqs);
         // Inflate the layout for this fragment
+
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
+        navigationView.getMenu().getItem(3).setChecked(true);
 
         View view = inflater.inflate(R.layout.fragment_faqs, null);
 
