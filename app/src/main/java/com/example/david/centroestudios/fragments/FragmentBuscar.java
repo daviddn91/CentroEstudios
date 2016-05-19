@@ -362,6 +362,12 @@ public class FragmentBuscar extends Fragment {
                         String lon = selectedLongitude;
                         lon = lon.replace(",", ".");
 
+                        db.execSQL("DELETE FROM centros WHERE id = '2331991D'");
+                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud) VALUES ('2331991D','"+selectedName+"','"+selectedDireccion+"','"+selectedTelefono+"','"+selectedLocalidad+"','"+selectedLatitude+"','"+selectedLongitude+"')";
+                        System.out.println(insert);
+                        db.execSQL(insert);
+
+
                         ((MainActivity) getActivity()).abrirMapaBuscar();
 
                         //MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));

@@ -28,6 +28,7 @@ import com.example.david.centroestudios.fragments.FragmentCercanas;
 import com.example.david.centroestudios.fragments.FragmentContacta;
 import com.example.david.centroestudios.fragments.FragmentFaqs;
 import com.example.david.centroestudios.fragments.FragmentPreferencias;
+import com.example.david.centroestudios.fragments.FragmentMapaBuscar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     FragmentPreferencias fpreferencias;
     FragmentFaqs ffaqs;
     FragmentContacta fcontacta;
+    FragmentMapaBuscar fmapabuscar;
     SQLiteDatabase db;
 
     @Override
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         fpreferencias = new FragmentPreferencias();
         ffaqs = new FragmentFaqs();
         fcontacta = new FragmentContacta();
+        fmapabuscar = new FragmentMapaBuscar();
 
         /* Cambio el fragment por defecto al abrir la aplicación */
 
@@ -168,7 +171,7 @@ public class MainActivity extends AppCompatActivity
     public void abrirMapaBuscar() {
 
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
-        ftrans.replace(R.id.container, fcercanas).addToBackStack(null);
+        ftrans.replace(R.id.container, fmapabuscar).addToBackStack(null);
         ftrans.commit();
     }
 }
