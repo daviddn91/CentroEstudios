@@ -76,6 +76,8 @@ public class FragmentCercanas extends Fragment {
     double latituddatos = -10;
     double longituddatos = -10;
 
+    boolean actualiza = true;
+
     MapView mMapView;
     private GoogleMap googleMap;
     private OnFragmentInteractionListener mListener;
@@ -119,6 +121,7 @@ public class FragmentCercanas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        actualiza = true;
         getActivity().setTitle(R.string.cercanas);
         zoominicial = true;
         View v = inflater.inflate(R.layout.fragment_cercanas, container,
@@ -191,22 +194,23 @@ public class FragmentCercanas extends Fragment {
                             }
                         });
 
-                        if (Math.abs(latituddatos-arg0.getLatitude())>0.05 || Math.abs(longituddatos-arg0.getLongitude())>0.05) {
+                        if (actualiza) {
 
+                            actualiza = false;
                             latitud = arg0.getLatitude();
                             latituddatos = arg0.getLatitude();
                             longitud = arg0.getLongitude();
                             longituddatos = arg0.getLongitude();
-                            double longitudmin = longitud-0.15;
+                            double longitudmin = longitud-0.05;
                             String lonmin = String.valueOf(longitudmin);
                             lonmin = lonmin.replace(".",",");
-                            double longitudmax = longitud+0.15;
+                            double longitudmax = longitud+0.05;
                             String lonmax = String.valueOf(longitudmax);
                             lonmax = lonmax.replace(".",",");
-                            double latitudmin = latitud-0.15;
+                            double latitudmin = latitud-0.05;
                             String latmin = String.valueOf(latitudmin);
                             latmin = latmin.replace(".",",");
-                            double latitudmax = latitud+0.15;
+                            double latitudmax = latitud+0.05;
                             String latmax = String.valueOf(latitudmax);
                             latmax = latmax.replace(".",",");
 

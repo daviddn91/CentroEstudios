@@ -25,6 +25,10 @@ import android.widget.Toast;
 import com.example.david.centroestudios.MainActivity;
 import com.example.david.centroestudios.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -156,10 +160,66 @@ public class FragmentBuscar extends Fragment {
 
                     List<CentrosEstudios> items = new ArrayList<>();
 
-                    items.add(new CentrosEstudios("1","Centro 1","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-                    items.add(new CentrosEstudios("2", "Centro 2","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-                    items.add(new CentrosEstudios("3", "Centro 3","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
-                    items.add(new CentrosEstudios("4", "Centro 4","Calle la pantomima","Teléfono: "+"983281328","Canet de Mar","3","2"));
+                        double latitud = address.getLatitude();
+                        double longitud = address.getLongitude();
+                        double longitudmin = longitud - 0.02;
+                        String lonmin = String.valueOf(longitudmin);
+                        lonmin = lonmin.replace(".", ",");
+                        double longitudmax = longitud + 0.02;
+                        String lonmax = String.valueOf(longitudmax);
+                        lonmax = lonmax.replace(".", ",");
+                        double latitudmin = latitud - 0.02;
+                        String latmin = String.valueOf(latitudmin);
+                        latmin = latmin.replace(".", ",");
+                        double latitudmax = latitud + 0.02;
+                        String latmax = String.valueOf(latitudmax);
+                        latmax = latmax.replace(".", ",");
+
+
+                        // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
+
+                        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                        if (SDK_INT > 8) {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                    .permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
+                            //your codes here
+                            String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=" + lonmin + "&longitudmax=" + lonmax + "&latitudmin=" + latmin + "&latitudmax=" + latmax);
+                            //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
+
+                            if (data != null && !data.isEmpty()) {
+
+                                JSONObject datajson;
+
+                                try {
+                                    System.out.println("Data antes: " + data);
+                                    data = data.replace("[", "");
+                                    data = data.replace("]", "");
+                                    String[] parts = data.split("fininfo");
+
+                                    for (int i = 0; i < parts.length; i++) {
+                                        if (!parts[i].equals("\"}")) {
+                                            System.out.println("Parte cortada " + i + ": " + parts[i]);
+                                            String parte = parts[i] + "fininfo\"}";
+                                            parte = parte.replace("\"},", "");
+
+                                            //System.out.println("Parte puesta:"+parte);
+                                            //System.out.println("id:" + data2);
+                                            datajson = new JSONObject(parte);
+                                            String lat = datajson.getString("latitud");
+                                            lat = lat.replace(",", ".");
+                                            String lon = datajson.getString("longitud");
+                                            lon = lon.replace(",", ".");
+                                            System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+                                            items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion") ,"Tel: "+ datajson.getString("telefono"),datajson.getString("localidad"),lon,lat));
+                                        }
+                                    }
+                                    System.out.println("Fin de la carga de cards en buscar");
+                                } catch (JSONException e) {
+                                    System.out.println("JSON Exception");
+                                }
+                            }
+                        }
 
                     // Obtener el Recycler
                     recycler.setHasFixedSize(true);
