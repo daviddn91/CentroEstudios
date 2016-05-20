@@ -53,6 +53,10 @@ public class FragmentPreferencias extends Fragment {
     Integer idiomaingles;
     Integer idiomafrances;
     Integer idiomaaleman;
+    Integer educacioninfantil;
+    Integer educacionprimaria;
+    Integer educacionsecundaria;
+    Integer bachillerato;
 
     // Ids de los radiogroup para guardar en BD porque no puedo acceder directamente
     Integer idrb1;
@@ -110,6 +114,10 @@ public class FragmentPreferencias extends Fragment {
             idiomaingles = c.getInt(9);
             idiomafrances = c.getInt(10);
             idiomaaleman = c.getInt(11);
+            educacioninfantil = c.getInt(12);
+            educacionprimaria = c.getInt(13);
+            educacionsecundaria = c.getInt(14);
+            bachillerato = c.getInt(15);
         }
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.preferencias);
@@ -239,6 +247,42 @@ public class FragmentPreferencias extends Fragment {
         }
         else if (idiomafrances.equals(1)) {
             sw10.setChecked(true);
+        }
+
+        // Switch infantil
+        Switch sw15 = (Switch) view.findViewById(R.id.switch15);
+        if (educacioninfantil.equals(0)) {
+            sw15.setChecked(false);
+        }
+        else if (educacioninfantil.equals(1)) {
+            sw15.setChecked(true);
+        }
+
+        // Switch primaria
+        Switch sw16 = (Switch) view.findViewById(R.id.switch16);
+        if (educacionprimaria.equals(0)) {
+            sw16.setChecked(false);
+        }
+        else if (educacionprimaria.equals(1)) {
+            sw16.setChecked(true);
+        }
+
+        // Switch eso
+        Switch sw17 = (Switch) view.findViewById(R.id.switch17);
+        if (educacionsecundaria.equals(0)) {
+            sw17.setChecked(false);
+        }
+        else if (educacionsecundaria.equals(1)) {
+            sw17.setChecked(true);
+        }
+
+        // Switch bachillerato
+        Switch sw18 = (Switch) view.findViewById(R.id.switch18);
+        if (bachillerato.equals(0)) {
+            sw18.setChecked(false);
+        }
+        else if (bachillerato.equals(1)) {
+            sw18.setChecked(true);
         }
 
         /* Hacemos a la inversa, ahora modificamos la BD si tocamos los switch y raddiobuttons */
@@ -375,6 +419,54 @@ public class FragmentPreferencias extends Fragment {
                 }
                 else {
                     db.execSQL("UPDATE filtros SET aleman = 0;");
+                }
+            }
+        });
+
+        // Switch infantil
+        sw15.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET infantil = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET infantil = 0;");
+                }
+            }
+        });
+
+        // Switch primaria
+        sw16.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET primaria = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET primaria = 0;");
+                }
+            }
+        });
+
+        // Switch eso
+        sw17.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET eso = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET eso = 0;");
+                }
+            }
+        });
+
+        // Switch bachillerato
+        sw18.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET bachillerato = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET bachillerato = 0;");
                 }
             }
         });

@@ -37,4 +37,9 @@
     <string name="mixto">Mixed</string>
     <string name="texto_buscador">Search location here</string>
     <string name="boton_buscar">Search</string>
+    <string name="nivel">Education level</string>
+    <string name="bachillerato">High school</string>
+    <string name="eso">Secondary education</string>
+    <string name="primaria">Elementary education</string>
+    <string name="infantil">Childhood education</string>
 </resources>

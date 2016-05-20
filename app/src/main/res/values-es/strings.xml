@@ -37,4 +37,9 @@
     <string name="mixto">Mixto</string>
     <string name="texto_buscador">Introduce una localización</string>
     <string name="boton_buscar">Buscar</string>
+    <string name="nivel">Nivel de educación</string>
+    <string name="bachillerato">Bachillerato</string>
+    <string name="eso">Educación secundaria</string>
+    <string name="primaria">Educación primaria</string>
+    <string name="infantil">Educación infantil</string>
 </resources>

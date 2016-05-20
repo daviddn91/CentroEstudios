@@ -354,9 +354,6 @@ public class FragmentBuscar extends Fragment {
                         System.out.println("Telefono + " + selectedTelefono);
                         System.out.println("Localidad + " + selectedLocalidad);
 
-                        // AQUI TOCARIA ABRIR UN NUEVO FRAGMENT CON EL MAPA CON ESA LATITUD
-                        // Y LONGITUD PONIENDO UN MARKER CON LOS MISMOS DATOS QUE EN CERCANAS
-
                         String lat = selectedLatitude;
                         lat = lat.replace(",", ".");
                         String lon = selectedLongitude;

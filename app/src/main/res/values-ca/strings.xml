@@ -37,4 +37,9 @@
     <string name="mixto">Mixt</string>
     <string name="texto_buscador">Introdueix una localització</string>
     <string name="boton_buscar">Cercar</string>
+    <string name="nivel">Nivell d\'educació</string>
+    <string name="bachillerato">Batxillerat</string>
+    <string name="eso">Educació secundària</string>
+    <string name="primaria">Educació primària</string>
+    <string name="infantil">Educació infantil</string>
 </resources>
