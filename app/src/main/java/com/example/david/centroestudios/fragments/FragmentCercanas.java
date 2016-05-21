@@ -48,6 +48,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /*
  * A simple {@link Fragment} subclass.
@@ -120,6 +121,22 @@ public class FragmentCercanas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if (!gps_enabled || !network_enabled) {
+            Toast.makeText(getActivity().getApplicationContext(),R.string.activaelgps, Toast.LENGTH_LONG).show();
+        }
 
         actualiza = true;
         getActivity().setTitle(R.string.cercanas);
@@ -239,6 +256,7 @@ public class FragmentCercanas extends Fragment {
                                         data = data.replace("[","");
                                         data = data.replace("]","");
                                         String[] parts = data.split("fininfo");
+                                        ArrayList<String> lista = new ArrayList();
 
                                         for (int i = 0; i < parts.length; i++) {
                                             if (!parts[i].equals("\"}")) {
@@ -253,6 +271,7 @@ public class FragmentCercanas extends Fragment {
                                                 lat = lat.replace(",", ".");
                                                 String lon = datajson.getString("longitud");
                                                 lon = lon.replace(",", ".");
+                                                lista.add(datajson.getString("id"));
                                                 //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
                                                 MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
                                                 googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad")));
@@ -264,6 +283,9 @@ public class FragmentCercanas extends Fragment {
                                             System.out.println(datajson.getString("longitud"));
                                             */
                                             }
+                                        }
+                                        if (lista.size() == 0) {
+                                            Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoscercanas, Toast.LENGTH_SHORT).show();
                                         }
                                         System.out.println("Fin de la carga de markers");
                                     }
@@ -351,7 +373,7 @@ public class FragmentCercanas extends Fragment {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)){
 
-            Toast.makeText(getActivity().getApplicationContext(),"GPS permission allows us to access location data. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),R.string.gpspermiso, Toast.LENGTH_LONG).show();
 
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
@@ -367,7 +389,7 @@ public class FragmentCercanas extends Fragment {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)){
 
-            Toast.makeText(getActivity().getApplicationContext(),"GPS permission allows us to access location data. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),R.string.gpspermiso, Toast.LENGTH_LONG).show();
 
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
@@ -406,6 +428,8 @@ public class FragmentCercanas extends Fragment {
         }catch(IOException e){
             e.printStackTrace();
             System.out.println("Catch del GetHTTPData en FragmentBuscar");
+            Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+
         }finally {
             System.out.println("Finally del GetHTTPData en FragmentBuscar");
         }

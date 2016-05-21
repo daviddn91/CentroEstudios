@@ -1,9 +1,11 @@
 package com.example.david.centroestudios.fragments;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -111,6 +114,22 @@ public class FragmentBuscar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if (!gps_enabled || !network_enabled) {
+            Toast.makeText(getActivity().getApplicationContext(),R.string.activaelgps, Toast.LENGTH_LONG).show();
+        }
+
         getActivity().setTitle(R.string.buscar);
         // Inflate the layout for this fragment
 
@@ -140,6 +159,8 @@ public class FragmentBuscar extends Fragment {
             public void onClick(View v) {
                 String location = locationSearch.getText().toString();
                 List<Address> addressList = null;
+                // SI HAY INTERNET!!!
+
                 if (location != null || !location.equals("")) {
                     Geocoder geocoder = new Geocoder(getActivity());
                     try {
@@ -148,90 +169,104 @@ public class FragmentBuscar extends Fragment {
 
 
                     } catch (IOException e) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
-                    Address address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    System.out.println(address.getLatitude() + "-" + address.getLongitude());
 
-                    // HACER PETICION AL SERVIDOR CON LOS DATOS DE LA LONGITUD Y LATITUD CON LA API DE CERCANAS
+                    if (addressList != null) {
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        System.out.println(address.getLatitude() + "-" + address.getLongitude());
 
-                    // INSERTANDO CONTENIDO EN TARJETAS
+                        // HACER PETICION AL SERVIDOR CON LOS DATOS DE LA LONGITUD Y LATITUD CON LA API DE CERCANAS
 
-                    List<CentrosEstudios> items = new ArrayList<>();
+                        // INSERTANDO CONTENIDO EN TARJETAS
 
-                        double latitud = address.getLatitude();
-                        double longitud = address.getLongitude();
-                        double longitudmin = longitud - 0.02;
-                        String lonmin = String.valueOf(longitudmin);
-                        lonmin = lonmin.replace(".", ",");
-                        double longitudmax = longitud + 0.02;
-                        String lonmax = String.valueOf(longitudmax);
-                        lonmax = lonmax.replace(".", ",");
-                        double latitudmin = latitud - 0.02;
-                        String latmin = String.valueOf(latitudmin);
-                        latmin = latmin.replace(".", ",");
-                        double latitudmax = latitud + 0.02;
-                        String latmax = String.valueOf(latitudmax);
-                        latmax = latmax.replace(".", ",");
+                        List<CentrosEstudios> items = new ArrayList<>();
+
+                            double latitud = address.getLatitude();
+                            double longitud = address.getLongitude();
+                            double longitudmin = longitud - 0.02;
+                            String lonmin = String.valueOf(longitudmin);
+                            lonmin = lonmin.replace(".", ",");
+                            double longitudmax = longitud + 0.02;
+                            String lonmax = String.valueOf(longitudmax);
+                            lonmax = lonmax.replace(".", ",");
+                            double latitudmin = latitud - 0.02;
+                            String latmin = String.valueOf(latitudmin);
+                            latmin = latmin.replace(".", ",");
+                            double latitudmax = latitud + 0.02;
+                            String latmax = String.valueOf(latitudmax);
+                            latmax = latmax.replace(".", ",");
 
 
-                        // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
+                            // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
 
-                        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-                        if (SDK_INT > 8) {
-                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                                    .permitAll().build();
-                            StrictMode.setThreadPolicy(policy);
-                            //your codes here
-                            String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=" + lonmin + "&longitudmax=" + lonmax + "&latitudmin=" + latmin + "&latitudmax=" + latmax);
-                            //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
+                            int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                            if (SDK_INT > 8) {
+                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                        .permitAll().build();
+                                StrictMode.setThreadPolicy(policy);
+                                //your codes here
+                                String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=" + lonmin + "&longitudmax=" + lonmax + "&latitudmin=" + latmin + "&latitudmax=" + latmax);
+                                //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
 
-                            if (data != null && !data.isEmpty()) {
+                                if (data == null) {
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+                                }
+                                else if (data != null && !data.isEmpty()) {
 
-                                JSONObject datajson;
+                                    JSONObject datajson;
 
-                                try {
-                                    System.out.println("Data antes: " + data);
-                                    data = data.replace("[", "");
-                                    data = data.replace("]", "");
-                                    String[] parts = data.split("fininfo");
+                                    try {
+                                        System.out.println("Data antes: " + data);
+                                        data = data.replace("[", "");
+                                        data = data.replace("]", "");
+                                        String[] parts = data.split("fininfo");
 
-                                    for (int i = 0; i < parts.length; i++) {
-                                        if (!parts[i].equals("\"}")) {
-                                            System.out.println("Parte cortada " + i + ": " + parts[i]);
-                                            String parte = parts[i] + "fininfo\"}";
-                                            parte = parte.replace("\"},", "");
+                                        for (int i = 0; i < parts.length; i++) {
+                                            if (!parts[i].equals("\"}")) {
+                                                System.out.println("Parte cortada " + i + ": " + parts[i]);
+                                                String parte = parts[i] + "fininfo\"}";
+                                                parte = parte.replace("\"},", "");
 
-                                            //System.out.println("Parte puesta:"+parte);
-                                            //System.out.println("id:" + data2);
-                                            datajson = new JSONObject(parte);
-                                            String lat = datajson.getString("latitud");
-                                            lat = lat.replace(",", ".");
-                                            String lon = datajson.getString("longitud");
-                                            lon = lon.replace(",", ".");
-                                            System.out.println("PRINT JSON GENERADO: " +datajson.toString());
-                                            items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion") ,"Tel: "+ datajson.getString("telefono"),datajson.getString("localidad"),lon,lat));
+                                                //System.out.println("Parte puesta:"+parte);
+                                                //System.out.println("id:" + data2);
+                                                datajson = new JSONObject(parte);
+                                                String lat = datajson.getString("latitud");
+                                                lat = lat.replace(",", ".");
+                                                String lon = datajson.getString("longitud");
+                                                lon = lon.replace(",", ".");
+                                                System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+                                                items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": "+ datajson.getString("telefono"),datajson.getString("localidad"),lon,lat));
+                                            }
                                         }
+                                        System.out.println("Fin de la carga de cards en buscar");
+                                    } catch (JSONException e) {
+                                        System.out.println("JSON Exception");
+                                        Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoslocalizacion, Toast.LENGTH_SHORT).show();
                                     }
-                                    System.out.println("Fin de la carga de cards en buscar");
-                                } catch (JSONException e) {
-                                    System.out.println("JSON Exception");
                                 }
                             }
-                        }
 
-                    // Obtener el Recycler
-                    recycler.setHasFixedSize(true);
+                        // Obtener el Recycler
+                        recycler.setHasFixedSize(true);
 
-                    // Usar un administrador para LinearLayout
-                    lManager = new LinearLayoutManager(getActivity());
-                    recycler.setLayoutManager(lManager);
+                        // Usar un administrador para LinearLayout
+                        lManager = new LinearLayoutManager(getActivity());
+                        recycler.setLayoutManager(lManager);
 
-                    // Crear un nuevo adaptador
-                    adapter = new CentrosEstudiosAdapter(items);
-                    recycler.setAdapter(adapter);
+                        // Crear un nuevo adaptador
+                        adapter = new CentrosEstudiosAdapter(items);
+                        recycler.setAdapter(adapter);
 
+                    }
+                }
+                else if (location.equals("")) {
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.introducelocalizacion, Toast.LENGTH_SHORT).show();
+                }
+                else if (location == null) {
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.errorlocalizacion, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -306,6 +341,8 @@ public class FragmentBuscar extends Fragment {
         }catch(IOException e){
             e.printStackTrace();
             System.out.println("Catch del GetHTTPData en FragmentBuscar");
+            Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+
         }finally {
             System.out.println("Finally del GetHTTPData en FragmentBuscar");
         }
@@ -317,7 +354,7 @@ public class FragmentBuscar extends Fragment {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)){
 
-            Toast.makeText(getActivity().getApplicationContext(), "We need internet to obtain schools information", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.needinternet, Toast.LENGTH_LONG).show();
 
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);

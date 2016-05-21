@@ -42,5 +42,24 @@
     <string name="eso">Secondary education</string>
     <string name="primaria">Elementary education</string>
     <string name="infantil">Childhood education</string>
-    <string name="colaboracion">In collaboration with ESSI department from UPC</string>
+    <string name="colaboracion">In collaboration with ESSI department</string>
+    <string name="sinresultadoslocalizacion">There are not results for this location</string>
+    <string name="introducelocalizacion">Please introduce a location to search schools</string>
+    <string name="errorlocalizacion">There are some problems connecting with the Google location service. Check your connection or contact with the developer.</string>
+    <string name="needinternet">We need internet connection to obtain schools information</string>
+    <string name="errorconexion">Error obtaining schools. Please check the Internet connection or contact with david.delgado@est.fib.upc.edu.</string>
+    <string name="gpspermiso">GPS permission allows us to access location data. Please allow in App Settings for additional functionality.</string>
+    <string name="sinresultadoscercanas">There are not results near of your location</string>
+    <string name="mensajeenviado">Mensaje enviado correctamente.</string>
+    <string name="introducemail">Please input a correct mail</string>
+    <string name="llenacampos">Please fill all the fields to send the message</string>
+    <string name="mensajenoenviado">Message cannot be sent. Please check your Internet connection or contact with david.delgado@est.fib.upc.edu.</string>
+    <string name="faq_pregunta1">Does the application save some information about the user?</string>
+    <string name="telefono">Phone</string>
+    <string name="activaelgps">Enable the GPS and the Internet connection to use the application</string>
+    <string name="faq_pregunta2">Where we obtain the information about the schools?</string>
+    <string name="faq_pregunta3">I have any suggestion about the app, is it possible to contact with the developer?</string>
+    <string name="faq_respuesta1">No, all the information are locally stored and we won\'t send them to our servers.</string>
+    <string name="faq_respuesta2">All the information is obtained from public documents from la Generalitat de Catalunya and the Barcelona Hall</string>
+    <string name="faq_respuesta3">Of course! You can do it with the menu option \'Contact with the developer\'.</string>
 </resources>

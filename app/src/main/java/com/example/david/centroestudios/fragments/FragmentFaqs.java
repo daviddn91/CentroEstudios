@@ -113,9 +113,9 @@ public class FragmentFaqs extends Fragment {
 
         List<Faqs> items = new ArrayList<>();
 
-        items.add(new Faqs("¿La aplicación guarda algún tipo de información sobre el usuario?","No, toda la información se almacena localmente en los dispositivos y nunca llegan (ni llegarán) a nuestro servidor."));
-        items.add(new Faqs("¿De dónde se obtienen los datos de los centros educativos?","Toda la información proviene de documentos públicos de la Generalitat de Catalunya."));
-        items.add(new Faqs("Tengo alguna sugerencia o queja de la aplicación, ¿es posible contactar con vosotros?","¡Claro! Puedes hacerlo a través de la opción del menú 'Contactar con el desarrollador'."));
+        items.add(new Faqs(getResources().getString(R.string.faq_pregunta1),getResources().getString(R.string.faq_respuesta1)));
+        items.add(new Faqs(getResources().getString(R.string.faq_pregunta2),getResources().getString(R.string.faq_respuesta2)));
+        items.add(new Faqs(getResources().getString(R.string.faq_pregunta3),getResources().getString(R.string.faq_respuesta3)));
 
         // Obtener el Recycler
         recycler = (RecyclerView) view.findViewById(R.id.recicladorFaqs);
@@ -163,12 +163,12 @@ public class FragmentFaqs extends Fragment {
 
     public class SavedTabsListAdapter extends BaseExpandableListAdapter {
 
-        private String[] preguntas = { "¿La aplicación guarda algún tipo de información sobre el usuario?", "¿De dónde se obtienen los datos de los centros educativos?", "Tengo alguna sugerencia o queja de la aplicación, ¿es posible contactar con vosotros?" };
+        private String[] preguntas = { getResources().getString(R.string.faq_pregunta1), getResources().getString(R.string.faq_pregunta2), getResources().getString(R.string.faq_pregunta3)};
 
         private String[][] respuestas = {
-                { "No, toda la información se almacena localmente en los dispositivos y nunca llegan (ni llegarán) a nuestro servidor." },
-                { "Toda la información proviene de documentos públicos de la Generalitat de Catalunya y del Ayuntamiento de Barcelona." },
-                { "¡Claro! Puedes hacerlo a través de la opción del menú 'Contactar con el desarrollador'." }
+                { getResources().getString(R.string.faq_respuesta1) },
+                { getResources().getString(R.string.faq_respuesta2) },
+                { getResources().getString(R.string.faq_respuesta3) }
         };
 
         @Override

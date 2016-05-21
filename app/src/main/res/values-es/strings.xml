@@ -42,5 +42,24 @@
     <string name="eso">Educación secundaria</string>
     <string name="primaria">Educación primaria</string>
     <string name="infantil">Educación infantil</string>
-    <string name="colaboracion">In collaboration with ESSI department from UPC</string>
+    <string name="colaboracion">En colaboración con el dpt. de ESSI</string>
+    <string name="sinresultadoslocalizacion">No hay resultados para esta localización</string>
+    <string name="introducelocalizacion">Por favor introduce una localización para buscar centros de estudios cercanos</string>
+    <string name="errorlocalizacion">Ha habido un problema conectando con el servicio de Google para obtener la localización. Revise la conexión o contacte con el desarrollador.</string>
+    <string name="needinternet">La aplicación necesita Internet para obtener la información de las escuelas</string>
+    <string name="errorconexion">No se han obtenido centros de estudios. Por favor revisa la conexión a Internet y si el problema persiste por favor contacta en david.delgado@est.fib.upc.edu.</string>
+    <string name="gpspermiso">El permiso de GPS permite acceder a la localización del usuario. Por favor permítelo en las preferencias de la aplicación.</string>
+    <string name="sinresultadoscercanas">No hay resultados cercanos a tu localización</string>
+    <string name="mensajeenviado">Mensaje enviado correctamente</string>
+    <string name="introducemail">Por favor introduce un mail correcto</string>
+    <string name="llenacampos">Por favor rellena todos los campos para enviar el mensaje</string>
+    <string name="mensajenoenviado">No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet y si el problema persiste por favor contacta en david.delgado@est.fib.upc.edu.</string>
+    <string name="faq_pregunta1">¿La aplicación guarda algún tipo de información sobre el usuario?</string>
+    <string name="faq_respuesta1">No, toda la información se almacena localmente en los dispositivos y no llegan (ni llegarán) a nuestros servidores.</string>
+    <string name="faq_pregunta2">¿De dónde se obtienen los datos de los centros educativos?</string>
+    <string name="faq_pregunta3">Tengo alguna sugerencia o queja de la aplicación, ¿es posible contactar con vosotros?</string>
+    <string name="faq_respuesta2">Toda la información proviene de documentos públicos de la Generalitat de Catalunya y del Ayuntamiento de Barcelona.</string>
+    <string name="faq_respuesta3">¡Claro! Puedes hacerlo a través de la opción del menú \'Contactar con el desarrollador\'.</string>
+    <string name="telefono">Teléfono</string>
+    <string name="activaelgps">Activa el GPS y la conexión a Internet para usar la aplicación</string>
 </resources>

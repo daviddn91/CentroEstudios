@@ -1,7 +1,9 @@
 package com.example.david.centroestudios.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -95,6 +97,22 @@ public class FragmentContacta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if (!gps_enabled || !network_enabled) {
+            Toast.makeText(getActivity().getApplicationContext(),R.string.activaelgps, Toast.LENGTH_LONG).show();
+        }
+
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.contactar);
         // Inflate the layout for this fragment
@@ -128,9 +146,9 @@ public class FragmentContacta extends Fragment {
                     String data = "Data: Valor";
 
                     if (nombre.length() < 1 || mail.length() < 1 || comentario.length() < 1) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Por favor rellena todos los campos para enviar el mensaje.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.llenacampos, Toast.LENGTH_SHORT).show();
                     } else if (!mail.contains("@") || !mail.contains(".")) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Por favor introduce un mail correcto.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.introducemail, Toast.LENGTH_SHORT).show();
                     } else {
                         System.out.println("Nombre: " + nombre);
                         System.out.println("Mail: " + mail);
@@ -143,12 +161,12 @@ public class FragmentContacta extends Fragment {
                             e.printStackTrace();
                         }
                         if (!data.equals("0")) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Mensaje enviado correctamente.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.mensajeenviado, Toast.LENGTH_SHORT).show();
                             editNombre.setText("");
                             editMail.setText("");
                             editComentario.setText("");
                         } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "No se ha podido enviar el mensaje. Por favor revisa la conexión a Internet y si el problema persiste por favor contacta en david.delgado@est.fib.upc.edu.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.mensajenoenviado, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -190,7 +208,7 @@ public class FragmentContacta extends Fragment {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)){
 
-            Toast.makeText(getActivity().getApplicationContext(), "We need internet to obtain schools information", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.needinternet, Toast.LENGTH_LONG).show();
 
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
