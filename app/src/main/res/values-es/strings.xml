@@ -42,7 +42,7 @@
     <string name="eso">Educación secundaria</string>
     <string name="primaria">Educación primaria</string>
     <string name="infantil">Educación infantil</string>
-    <string name="colaboracion">En colaboración con el dpt. de ESSI</string>
+    <string name="colaboracion">Facultad de Informática de Barcelona</string>
     <string name="sinresultadoslocalizacion">No hay resultados para esta localización</string>
     <string name="introducelocalizacion">Por favor introduce una localización para buscar centros de estudios cercanos</string>
     <string name="errorlocalizacion">Ha habido un problema conectando con el servicio de Google para obtener la localización. Revise la conexión o contacte con el desarrollador.</string>
@@ -62,4 +62,8 @@
     <string name="faq_respuesta3">¡Claro! Puedes hacerlo a través de la opción del menú \'Contactar con el desarrollador\'.</string>
     <string name="telefono">Teléfono</string>
     <string name="activaelgps">Activa el GPS y la conexión a Internet para usar la aplicación</string>
+    <string name="faq_respuesta4">Realmente ninguno. Esta aplicación es un trabajo final de carrera y no tiene ningún objetivo comercial más allá de eso.</string>
+    <string name="faq_pregunta4">¿Qué beneficio obtiene el desarrollador con esta aplicación?</string>
+    <string name="faqs_pregunta5">¿Quién es el desarrollador de la aplicación?</string>
+    <string name="faqs_respuesta5">El desarrollador es David Delgado Núñez de la Facultad de Informática de Barcelona con la colaboración del Departamento de Ingeniería de Servicios y Sistemas de Información (ESSI).</string>
 </resources>

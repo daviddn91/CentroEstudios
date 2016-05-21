@@ -46,7 +46,7 @@
     <string name="eso">Secondary education</string>
     <string name="primaria">Elementary education</string>
     <string name="infantil">Childhood education</string>
-    <string name="colaboracion">In collaboration with ESSI department</string>
+    <string name="colaboracion">Barcelona School of Informatics</string>
     <string name="sinresultadoslocalizacion">There are not results for this location</string>
     <string name="introducelocalizacion">Please introduce a location to search schools</string>
     <string name="errorlocalizacion">There are some problems connecting with the Google location service. Check your connection or contact with the developer.</string>
@@ -66,4 +66,8 @@
     <string name="faq_respuesta3">Of course! You can do it with the menu option \'Contact with the developer\'.</string>
     <string name="telefono">Phone</string>
     <string name="activaelgps">Enable the GPS and the Internet connection to use the application</string>
+    <string name="faq_pregunta4">What benefit obtains the developer with this app?</string>
+    <string name="faq_respuesta4">Nothing. This app is a final degree work and it doesn\'t have any commercial objective.</string>
+    <string name="faqs_pregunta5">Who is the developer of the app?</string>
+    <string name="faqs_respuesta5">The developer is David Delgado Núñez from the Barcelona School of Informatics with the collaboration of Department of Service and Information System Engineering (ESSI).</string>
 </resources>

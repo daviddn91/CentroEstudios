@@ -42,7 +42,7 @@
     <string name="eso">Educació secundària</string>
     <string name="primaria">Educació primària</string>
     <string name="infantil">Educació infantil</string>
-    <string name="colaboracion">En col·laboració amb el dept. d\'ESSI</string>
+    <string name="colaboracion">Facultat d\'Informàtica de Barcelona</string>
     <string name="sinresultadoslocalizacion">No hi ha resultats per aquesta localització</string>
     <string name="introducelocalizacion">Si us plau introdueix una localització per cercar escoles</string>
     <string name="errorlocalizacion">Ha sorgit algun problema connectant amb el servei de Google per obtenir la localització. Si us plau revisa la connexió o contacta amb el desenvolupador.</string>
@@ -62,4 +62,8 @@
     <string name="faq_respuesta1">No, tota la informació és emmagatzemada localment als dispositius i no arriben (ni arribarán) als nostres servidors.</string>
     <string name="faq_respuesta2">Tota la informació prové de documents públics de la Generalitat de Catalunya i l\'Ajuntament de Barcelona.</string>
     <string name="faq_respuesta3">I tant! Pots fer-ho mitjançant l\'opció del menú \'Contactar amb el desenvolupador\'.</string>
+    <string name="faq_pregunta4">Quin benefici obté el desenvolupador amb aquesta aplicació?</string>
+    <string name="faq_respuesta4">Realment cap. Aquesta aplicació és un treball final de carrera i no té cap objectiu econòmic més enllà d\'això.</string>
+    <string name="faqs_pregunta5">Qui és el desenvolupador de l\'aplicació?</string>
+    <string name="faqs_respuesta5">El desenvolupador és en David Delgado Núñez de la Facultat d\'Informàtica de Barcelona amb la col·laboració del Departament d\'Enginyeria de Serveis i Sistemes d\'Informació (ESSI).</string>
 </resources>

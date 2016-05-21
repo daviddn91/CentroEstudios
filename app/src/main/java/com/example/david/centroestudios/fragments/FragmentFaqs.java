@@ -113,9 +113,12 @@ public class FragmentFaqs extends Fragment {
 
         List<Faqs> items = new ArrayList<>();
 
+        items.add(new Faqs(getResources().getString(R.string.faqs_pregunta5),getResources().getString(R.string.faqs_respuesta5)));
         items.add(new Faqs(getResources().getString(R.string.faq_pregunta1),getResources().getString(R.string.faq_respuesta1)));
         items.add(new Faqs(getResources().getString(R.string.faq_pregunta2),getResources().getString(R.string.faq_respuesta2)));
         items.add(new Faqs(getResources().getString(R.string.faq_pregunta3),getResources().getString(R.string.faq_respuesta3)));
+        items.add(new Faqs(getResources().getString(R.string.faq_pregunta4),getResources().getString(R.string.faq_respuesta4)));
+
 
         // Obtener el Recycler
         recycler = (RecyclerView) view.findViewById(R.id.recicladorFaqs);
