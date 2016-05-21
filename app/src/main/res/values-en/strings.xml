@@ -66,8 +66,8 @@
     <string name="faq_pregunta4">What benefit obtains the developer with this app?</string>
     <string name="faqs_pregunta5">Who is the developer of the app?</string>
     <string name="faqs_respuesta5">The developer is David Delgado Núñez from the Barcelona School of Informatics with the collaboration of Department of Service and Information System Engineering (ESSI).</string>
-    <string name="infantil1">Childhood education 1</string>
-    <string name="infantil2">Childhood education 2</string>
+    <string name="infantil1">Kindergarten</string>
+    <string name="infantil2">Childhood education</string>
     <string name="espublico">Public school</string>
     <string name="noespublico">Private school</string>
     <string name="nivel_B">Only high school</string>

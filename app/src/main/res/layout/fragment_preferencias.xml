@@ -313,8 +313,19 @@
                         <Switch
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/infantil"
+                            android:text="@string/infantil1"
                             android:id="@+id/switch15"
+                            android:checked="true"
+                            android:textSize="16sp"
+                            android:height="35dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <Switch
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/infantil2"
+                            android:id="@+id/switch19"
                             android:checked="true"
                             android:textSize="16sp"
                             android:height="35dp"

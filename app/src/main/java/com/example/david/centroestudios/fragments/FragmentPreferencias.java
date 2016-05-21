@@ -53,7 +53,8 @@ public class FragmentPreferencias extends Fragment {
     Integer idiomaingles;
     Integer idiomafrances;
     Integer idiomaaleman;
-    Integer educacioninfantil;
+    Integer educacioninfantil1;
+    Integer educacioninfantil2;
     Integer educacionprimaria;
     Integer educacionsecundaria;
     Integer bachillerato;
@@ -114,10 +115,11 @@ public class FragmentPreferencias extends Fragment {
             idiomaingles = c.getInt(9);
             idiomafrances = c.getInt(10);
             idiomaaleman = c.getInt(11);
-            educacioninfantil = c.getInt(12);
-            educacionprimaria = c.getInt(13);
-            educacionsecundaria = c.getInt(14);
-            bachillerato = c.getInt(15);
+            educacioninfantil1 = c.getInt(12);
+            educacioninfantil2 = c.getInt(13);
+            educacionprimaria = c.getInt(14);
+            educacionsecundaria = c.getInt(15);
+            bachillerato = c.getInt(16);
         }
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.preferencias);
@@ -249,14 +251,24 @@ public class FragmentPreferencias extends Fragment {
             sw10.setChecked(true);
         }
 
-        // Switch infantil
+        // Switch infantil1
         Switch sw15 = (Switch) view.findViewById(R.id.switch15);
-        if (educacioninfantil.equals(0)) {
+        if (educacioninfantil1.equals(0)) {
             sw15.setChecked(false);
         }
-        else if (educacioninfantil.equals(1)) {
+        else if (educacioninfantil1.equals(1)) {
             sw15.setChecked(true);
         }
+
+        // Switch infantil2
+        Switch sw19 = (Switch) view.findViewById(R.id.switch19);
+        if (educacioninfantil2.equals(0)) {
+            sw19.setChecked(false);
+        }
+        else if (educacioninfantil2.equals(1)) {
+            sw19.setChecked(true);
+        }
+
 
         // Switch primaria
         Switch sw16 = (Switch) view.findViewById(R.id.switch16);
@@ -423,14 +435,26 @@ public class FragmentPreferencias extends Fragment {
             }
         });
 
-        // Switch infantil
+        // Switch infantil1
         sw15.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    db.execSQL("UPDATE filtros SET infantil = 1;");
+                    db.execSQL("UPDATE filtros SET infantil1 = 1;");
                 }
                 else {
-                    db.execSQL("UPDATE filtros SET infantil = 0;");
+                    db.execSQL("UPDATE filtros SET infantil1 = 0;");
+                }
+            }
+        });
+
+        // Switch infantil2
+        sw19.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    db.execSQL("UPDATE filtros SET infantil2 = 1;");
+                }
+                else {
+                    db.execSQL("UPDATE filtros SET infantil2 = 0;");
                 }
             }
         });
