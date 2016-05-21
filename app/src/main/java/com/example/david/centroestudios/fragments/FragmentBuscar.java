@@ -157,6 +157,7 @@ public class FragmentBuscar extends Fragment {
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String location = locationSearch.getText().toString();
                 List<Address> addressList = null;
                 // SI HAY INTERNET!!!
@@ -259,6 +260,11 @@ public class FragmentBuscar extends Fragment {
                         // Crear un nuevo adaptador
                         adapter = new CentrosEstudiosAdapter(items);
                         recycler.setAdapter(adapter);
+
+                        if (v != null) {
+                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        }
 
                     }
                 }
