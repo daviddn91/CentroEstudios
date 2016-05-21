@@ -281,7 +281,7 @@ public class FragmentCercanas extends Fragment {
                                                 String nivel = "";
 
                                                 if (publico.equals("S")) {
-                                                    publico = getResources().getString(R.string.espublico);
+                                                    publico = getResources().getString(R.string.noespublico);
                                                 } else {
                                                     publico = getResources().getString(R.string.espublico);
                                                 }

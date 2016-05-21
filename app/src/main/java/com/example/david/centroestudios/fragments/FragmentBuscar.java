@@ -239,7 +239,7 @@ public class FragmentBuscar extends Fragment {
                                                 String lon = datajson.getString("longitud");
                                                 lon = lon.replace(",", ".");
                                                 System.out.println("PRINT JSON GENERADO: " +datajson.toString());
-                                                items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": "+ datajson.getString("telefono"),datajson.getString("localidad"),lon,lat));
+                                                items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": "+ datajson.getString("telefono"),datajson.getString("localidad"),datajson.getString("publico"),datajson.getString("infantil1"),datajson.getString("infantil2"),datajson.getString("primaria"),datajson.getString("eso"),datajson.getString("bachillerato"),lon,lat));
                                             }
                                         }
                                         System.out.println("Fin de la carga de cards en buscar");
@@ -382,10 +382,16 @@ public class FragmentBuscar extends Fragment {
         private String direccion;
         private String telefono;
         private String localidad;
+        private String publico;
+        private String infantil1;
+        private String infantil2;
+        private String primaria;
+        private String eso;
+        private String bachillerato;
         private String longitud;
         private String latitud;
 
-        public CentrosEstudios(String id, String nombre, String direccion, String telefono, String localidad, String longitud, String latitud) {
+        public CentrosEstudios(String id, String nombre, String direccion, String telefono, String localidad, String publico, String infantil1, String infantil2, String primaria, String eso, String bachillerato, String longitud, String latitud) {
             this.id = id;
             this.nombre = nombre;
             this.direccion = direccion;
@@ -393,6 +399,12 @@ public class FragmentBuscar extends Fragment {
             this.localidad = localidad;
             this.longitud = longitud;
             this.latitud = latitud;
+            this.publico = publico;
+            this.infantil1 = infantil1;
+            this.infantil2 = infantil2;
+            this.primaria = primaria;
+            this.eso = eso;
+            this.bachillerato = bachillerato;
         }
 
         public String getId() {
@@ -423,6 +435,30 @@ public class FragmentBuscar extends Fragment {
             return latitud;
         }
 
+        public String getPublico() {
+            return publico;
+        }
+
+        public String getInfantil1() {
+            return infantil1;
+        }
+
+        public String getInfantil2() {
+            return infantil2;
+        }
+
+        public String getPrimaria() {
+            return primaria;
+        }
+
+        public String getEso() {
+            return eso;
+        }
+
+        public String getBachillerato() {
+            return bachillerato;
+        }
+
     }
 
 
@@ -435,12 +471,20 @@ public class FragmentBuscar extends Fragment {
             public TextView direccion;
             public TextView telefono;
             public TextView localidad;
+            public TextView publico;
+            public TextView nivel;
             public String selectedName;
             public String selectedLatitude;
             public String selectedLongitude;
             public String selectedDireccion;
             public String selectedTelefono;
             public String selectedLocalidad;
+            public String selectedPublico;
+            public String selectedInfantil1;
+            public String selectedInfantil2;
+            public String selectedPrimaria;
+            public String selectedEso;
+            public String selectedBachillerato;
 
             public View view;
 
@@ -456,6 +500,12 @@ public class FragmentBuscar extends Fragment {
                         System.out.println("Direccion + " + selectedDireccion);
                         System.out.println("Telefono + " + selectedTelefono);
                         System.out.println("Localidad + " + selectedLocalidad);
+                        System.out.println("Publico + " + selectedPublico);
+                        System.out.println("Infantil1 + " + selectedInfantil1);
+                        System.out.println("Infantil2 + " + selectedInfantil2);
+                        System.out.println("Primaria + " + selectedPrimaria);
+                        System.out.println("ESO + " + selectedEso);
+                        System.out.println("Bachillerato + " + selectedBachillerato);
 
                         String lat = selectedLatitude;
                         lat = lat.replace(",", ".");
@@ -479,6 +529,9 @@ public class FragmentBuscar extends Fragment {
                 direccion = (TextView) v.findViewById(R.id.direccion);
                 telefono = (TextView) v.findViewById(R.id.telefono);
                 localidad = (TextView) v.findViewById(R.id.localidad);
+                publico = (TextView) v.findViewById(R.id.publico);
+                nivel = (TextView) v.findViewById(R.id.nivel);
+
             }
         }
 
@@ -504,6 +557,62 @@ public class FragmentBuscar extends Fragment {
             viewHolder.direccion.setText(items.get(i).getDireccion());
             viewHolder.telefono.setText(items.get(i).getTelefono());
             viewHolder.localidad.setText(items.get(i).getLocalidad());
+
+            if (items.get(i).getPublico().equals("S")) {
+                viewHolder.publico.setText(getResources().getString(R.string.noespublico));
+            } else {
+                viewHolder.publico.setText(getResources().getString(R.string.espublico));
+            }
+
+            String nivel = "";
+
+            if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_JB);
+            }
+            else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_JE);
+            }
+            else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_JP);
+            }
+            else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_JI);
+            }
+            else if (!items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_J);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_IB);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_IE);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_IP);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_I);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_PB);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_PE);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_P);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_EB);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_E);
+            }
+            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+                nivel = getResources().getString(R.string.nivel_B);
+            }
+
+            viewHolder.nivel.setText(nivel);
             viewHolder.selectedName = items.get(i).getNombre();
             viewHolder.selectedLatitude = items.get(i).getLatitud();
             viewHolder.selectedLongitude = items.get(i).getLongitud();
