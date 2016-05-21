@@ -66,4 +66,23 @@
     <string name="faq_respuesta4">Realment cap. Aquesta aplicació és un treball final de carrera i no té cap objectiu econòmic més enllà d\'això.</string>
     <string name="faqs_pregunta5">Qui és el desenvolupador de l\'aplicació?</string>
     <string name="faqs_respuesta5">El desenvolupador és en David Delgado Núñez de la Facultat d\'Informàtica de Barcelona amb la col·laboració del Departament d\'Enginyeria de Serveis i Sistemes d\'Informació (ESSI).</string>
+    <string name="infantil1">Educació infantil 1</string>
+    <string name="infantil2">Educació infantil 2</string>
+    <string name="espublico">Centre públic</string>
+    <string name="noespublico">Centre privat o concertat</string>
+    <string name="nivel_B">Només batxillerat</string>
+    <string name="nivel_E">Només ESO</string>
+    <string name="nivel_EB">D\'ESO fins batxillerat</string>
+    <string name="nivel_I">Només educació infantil</string>
+    <string name="nivel_PE">De primària a l\'ESO</string>
+    <string name="nivel_PB">De primària fins batxillerat</string>
+    <string name="nivel_P">Només primària</string>
+    <string name="nivel_JP">De jardí d\'infància a primària</string>
+    <string name="nivel_JI">De jardí d\'infància a infantil</string>
+    <string name="nivel_JE">De jardí d\'infància a l\'ESO</string>
+    <string name="nivel_IB">D\'infantil a batxillerat</string>
+    <string name="nivel_IE">D\'infantil a ESO</string>
+    <string name="nivel_IP">D\'infantil a primària</string>
+    <string name="nivel_J">Només jardí d\'infància</string>
+    <string name="nivel_JB">De jardí d\'infància fins batxillerat</string>
 </resources>

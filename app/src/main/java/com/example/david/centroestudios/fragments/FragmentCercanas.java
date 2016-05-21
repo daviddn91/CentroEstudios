@@ -272,9 +272,69 @@ public class FragmentCercanas extends Fragment {
                                                 String lon = datajson.getString("longitud");
                                                 lon = lon.replace(",", ".");
                                                 lista.add(datajson.getString("id"));
+                                                String publico = datajson.getString("publico");
+                                                String infantil1 = datajson.getString("infantil1");
+                                                String infantil2 = datajson.getString("infantil2");
+                                                String primaria = datajson.getString("primaria");
+                                                String eso = datajson.getString("eso");
+                                                String bachillerato = datajson.getString("bachillerato");
+                                                String nivel = "";
+
+                                                if (publico.equals("S")) {
+                                                    publico = getResources().getString(R.string.espublico);
+                                                } else {
+                                                    publico = getResources().getString(R.string.espublico);
+                                                }
+
+                                                if (!infantil1.equals("N") && !infantil2.equals("N") && !primaria.equals("N") && !eso.equals("N") && !bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_JB);
+                                                }
+                                                else if (!infantil1.equals("N") && !infantil2.equals("N") && !primaria.equals("N") && !eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_JE);
+                                                }
+                                                else if (!infantil1.equals("N") && !infantil2.equals("N") && !primaria.equals("N") && eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_JP);
+                                                }
+                                                else if (!infantil1.equals("N") && !infantil2.equals("N") && primaria.equals("N") && eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_JI);
+                                                }
+                                                else if (!infantil1.equals("N") && infantil2.equals("N") && primaria.equals("N") && eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_J);
+                                                }
+                                                else if (infantil1.equals("N") && !infantil2.equals("N") && !primaria.equals("N") && !eso.equals("N") && !bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_IB);
+                                                }
+                                                else if (infantil1.equals("N") && !infantil2.equals("N") && !primaria.equals("N") && !eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_IE);
+                                                }
+                                                else if (infantil1.equals("N") && !infantil2.equals("N") && !primaria.equals("N") && eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_IP);
+                                                }
+                                                else if (infantil1.equals("N") && !infantil2.equals("N") && primaria.equals("N") && eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_I);
+                                                }
+                                                else if (infantil1.equals("N") && infantil2.equals("N") && !primaria.equals("N") && !eso.equals("N") && !bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_PB);
+                                                }
+                                                else if (infantil1.equals("N") && infantil2.equals("N") && !primaria.equals("N") && !eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_PE);
+                                                }
+                                                else if (infantil1.equals("N") && infantil2.equals("N") && !primaria.equals("N") && eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_P);
+                                                }
+                                                else if (infantil1.equals("N") && infantil2.equals("N") && primaria.equals("N") && !eso.equals("N") && !bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_EB);
+                                                }
+                                                else if (infantil1.equals("N") && infantil2.equals("N") && primaria.equals("N") && !eso.equals("N") && bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_E);
+                                                }
+                                                else if (infantil1.equals("N") && infantil2.equals("N") && primaria.equals("N") && eso.equals("N") && !bachillerato.equals("N")) {
+                                                    nivel = getResources().getString(R.string.nivel_B);
+                                                }
+
                                                 //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
                                                 MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
-                                                googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad")));
+                                                googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel));
 
                                             /*
                                             System.out.println(datajson.getString("id"));

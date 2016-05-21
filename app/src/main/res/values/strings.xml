@@ -70,4 +70,23 @@
     <string name="faq_respuesta4">Nothing. This app is a final degree work and it doesn\'t have any commercial objective.</string>
     <string name="faqs_pregunta5">Who is the developer of the app?</string>
     <string name="faqs_respuesta5">The developer is David Delgado Núñez from the Barcelona School of Informatics with the collaboration of Department of Service and Information System Engineering (ESSI).</string>
+    <string name="infantil1">Childhood education 1</string>
+    <string name="infantil2">Childhood education 2</string>
+    <string name="espublico">Public school</string>
+    <string name="noespublico">Private school</string>
+    <string name="nivel_B">Only high school</string>
+    <string name="nivel_J">Only kindergarten</string>
+    <string name="nivel_I">Only childhood</string>
+    <string name="nivel_P">Only primary education</string>
+    <string name="nivel_E">Only secondary education</string>
+    <string name="nivel_JI">From kindergarten to childhood</string>
+    <string name="nivel_JP">From kindergarten to primary</string>
+    <string name="nivel_JE">From kindergarten to secondary</string>
+    <string name="nivel_JB">From kindergarten to high school</string>
+    <string name="nivel_IP">From childhood to primary</string>
+    <string name="nivel_IE">From childhood to secondary</string>
+    <string name="nivel_IB">From childhood to high school</string>
+    <string name="nivel_PE">From primary to secondary</string>
+    <string name="nivel_PB">From primary to high school</string>
+    <string name="nivel_EB">From secondary to high school</string>
 </resources>
