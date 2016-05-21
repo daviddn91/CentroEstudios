@@ -512,8 +512,64 @@ public class FragmentBuscar extends Fragment {
                         String lon = selectedLongitude;
                         lon = lon.replace(",", ".");
 
+                        String nivelestudios = "";
+
+                        if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_JB);
+                        }
+                        else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_JE);
+                        }
+                        else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_JP);
+                        }
+                        else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_JI);
+                        }
+                        else if (!selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_J);
+                        }
+                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_IB);
+                        }
+                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_IE);
+                        }
+                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_IP);
+                        }
+                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_I);
+                        }
+                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_PB);
+                        }
+                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_PE);
+                        }
+                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_P);
+                        }
+                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_EB);
+                        }
+                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_E);
+                        }
+                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                            nivelestudios = getResources().getString(R.string.nivel_B);
+                        }
+
+                        String esPublico = "";
+
+                        if (selectedPublico.equals("S")) {
+                            esPublico = getResources().getString(R.string.noespublico);
+                        } else {
+                            esPublico = getResources().getString(R.string.espublico);
+                        }
+
                         db.execSQL("DELETE FROM centros WHERE id = '2331991D'");
-                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud) VALUES ('2331991D','"+selectedName+"','"+selectedDireccion+"','"+selectedTelefono+"','"+selectedLocalidad+"','"+selectedLatitude+"','"+selectedLongitude+"')";
+                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud, infantil1, actualizado) VALUES ('2331991D','"+selectedName+"','"+selectedDireccion+"','"+selectedTelefono+"','"+selectedLocalidad+"','"+selectedLatitude+"','"+selectedLongitude+"','"+nivelestudios+"','"+esPublico+"')";
                         System.out.println(insert);
                         db.execSQL(insert);
 
@@ -619,6 +675,13 @@ public class FragmentBuscar extends Fragment {
             viewHolder.selectedDireccion = items.get(i).getDireccion();
             viewHolder.selectedTelefono = items.get(i).getTelefono();
             viewHolder.selectedLocalidad = items.get(i).getLocalidad();
+            viewHolder.selectedInfantil1 = items.get(i).getInfantil1();
+            viewHolder.selectedInfantil2 = items.get(i).getInfantil2();
+            viewHolder.selectedPrimaria = items.get(i).getPrimaria();
+            viewHolder.selectedEso = items.get(i).getEso();
+            viewHolder.selectedBachillerato = items.get(i).getBachillerato();
+            viewHolder.selectedPublico = items.get(i).getPublico();
+
         }
     }
 

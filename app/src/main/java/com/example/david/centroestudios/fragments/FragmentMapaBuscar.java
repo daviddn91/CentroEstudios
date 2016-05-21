@@ -144,7 +144,7 @@ public class FragmentMapaBuscar extends Fragment {
                 Cursor c = db.rawQuery("SELECT * FROM centros WHERE id = '2331991D'", null);
                 while(c.moveToNext()) {
                     MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(c.getString(12)), Double.parseDouble(c.getString(13)))).title(c.getString(1));
-                    googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5)));
+                    googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6)));
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(Double.parseDouble(c.getString(12)), Double.parseDouble(c.getString(13)))).zoom(16).build();
                     googleMap.animateCamera(CameraUpdateFactory
