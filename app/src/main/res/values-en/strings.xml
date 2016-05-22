@@ -24,7 +24,7 @@
     <string name="creencias_religiosas">Religious beliefs</string>
     <string name="publico">Public</string>
     <string name="concertado">Semi-private</string>
-    <string name="privado">Private</string>
+    <string name="privado">Private or semi-private</string>
     <string name="genero">Gender</string>
     <string name="solo_ninas">Only girls</string>
     <string name="solo_ninos">Only boys</string>

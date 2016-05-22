@@ -69,6 +69,25 @@ public class FragmentCercanas extends Fragment {
     private String mParam2;
 
     SQLiteDatabase db;
+
+    Integer filtrosoloninas;
+    Integer filtrosoloninos;
+    Integer filtrocentropublico;
+    Integer filtrocentroconcertado;
+    Integer filtrocentroprivado;
+    Integer filtroreligioso;
+    Integer filtrolaico;
+    Integer filtroidiomacastellano;
+    Integer filtroidiomacatalan;
+    Integer filtroidiomaingles;
+    Integer filtroidiomafrances;
+    Integer filtroidiomaaleman;
+    Integer filtroeducacioninfantil1;
+    Integer filtroeducacioninfantil2;
+    Integer filtroeducacionprimaria;
+    Integer filtroeducacionsecundaria;
+    Integer filtrobachillerato;
+
     boolean zoominicial = true;
 
     double latitud = 1;
@@ -212,6 +231,27 @@ public class FragmentCercanas extends Fragment {
                         });
 
                         if (actualiza) {
+                            // AQUI CONSULTAMOS LOS FILTROS DE BASE DE DATOS
+                            Cursor c = db.rawQuery("SELECT * FROM filtros", null);
+                            while(c.moveToNext()) {
+                                filtrosoloninas = c.getInt(0);
+                                filtrosoloninos = c.getInt(1);
+                                filtrocentropublico = c.getInt(2);
+                                filtrocentroconcertado = c.getInt(3);
+                                filtrocentroprivado = c.getInt(4);
+                                filtroreligioso = c.getInt(5);
+                                filtrolaico = c.getInt(6);
+                                filtroidiomacastellano = c.getInt(7);
+                                filtroidiomacatalan = c.getInt(8);
+                                filtroidiomaingles = c.getInt(9);
+                                filtroidiomafrances = c.getInt(10);
+                                filtroidiomaaleman = c.getInt(11);
+                                filtroeducacioninfantil1 = c.getInt(12);
+                                filtroeducacioninfantil2 = c.getInt(13);
+                                filtroeducacionprimaria = c.getInt(14);
+                                filtroeducacionsecundaria = c.getInt(15);
+                                filtrobachillerato = c.getInt(16);
+                            }
 
                             actualiza = false;
                             latitud = arg0.getLatitude();
@@ -332,9 +372,30 @@ public class FragmentCercanas extends Fragment {
                                                     nivel = getResources().getString(R.string.nivel_B);
                                                 }
 
-                                                //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
-                                                MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
-                                                googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel));
+                                                // AQUI COMPROBAMOS LOS FILTROS CON UN IF Y SI LOS PASA SE CREA EL MARKER, HAREMOS LO MISMO EN BUSCAR ESCUELA
+
+                                                Boolean inserta = true;
+
+                                                System.out.println("Nombre: " + datajson.getString("nombre"));
+                                                System.out.println("Centro publico: " + filtrocentropublico);
+                                                System.out.println("Centro privado: " + filtrocentroprivado);
+                                                System.out.println("Que nos llega: " + datajson.getString("publico"));
+
+                                                if (filtrocentropublico.equals(0) && filtrocentroprivado.equals(0)) {
+                                                    inserta = false;
+                                                }
+                                                else if (filtrocentropublico.equals(0) && datajson.getString("publico").equals("N")) {
+                                                    inserta = false;
+                                                }
+                                                else if (filtrocentroprivado.equals(0) && !datajson.getString("publico").equals("N")) {
+                                                    inserta = false;
+                                                }
+
+                                                if (inserta) {
+                                                    //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
+                                                    MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
+                                                    googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel));
+                                                }
 
                                             /*
                                             System.out.println(datajson.getString("id"));
