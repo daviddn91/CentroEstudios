@@ -390,6 +390,27 @@ public class FragmentCercanas extends Fragment {
                                                 else if (filtrocentroprivado.equals(0) && !datajson.getString("publico").equals("N")) {
                                                     inserta = false;
                                                 }
+                                                else if (filtroeducacioninfantil1.equals(0) && filtroeducacioninfantil2.equals(0) && filtroeducacionprimaria.equals(0) && filtroeducacionsecundaria.equals(0) && filtrobachillerato.equals(0)) {
+                                                    inserta = false;
+                                                }
+                                                else {
+                                                    inserta = false;
+                                                    if (filtroeducacioninfantil1.equals(1) && !datajson.getString("infantil1").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtroeducacioninfantil2.equals(1) && !datajson.getString("infantil2").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtroeducacionprimaria.equals(1) && !datajson.getString("primaria").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtroeducacionsecundaria.equals(1) && !datajson.getString("eso").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtrobachillerato.equals(1) && !datajson.getString("bachillerato").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                }
 
                                                 if (inserta) {
                                                     //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
