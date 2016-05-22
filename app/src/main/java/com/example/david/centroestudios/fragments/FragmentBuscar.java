@@ -2,6 +2,7 @@ package com.example.david.centroestudios.fragments;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
@@ -72,6 +73,24 @@ public class FragmentBuscar extends Fragment {
     private RecyclerView.LayoutManager lManager;
 
     SQLiteDatabase db;
+
+    Integer filtrosoloninas;
+    Integer filtrosoloninos;
+    Integer filtrocentropublico;
+    Integer filtrocentroconcertado;
+    Integer filtrocentroprivado;
+    Integer filtroreligioso;
+    Integer filtrolaico;
+    Integer filtroidiomacastellano;
+    Integer filtroidiomacatalan;
+    Integer filtroidiomaingles;
+    Integer filtroidiomafrances;
+    Integer filtroidiomaaleman;
+    Integer filtroeducacioninfantil1;
+    Integer filtroeducacioninfantil2;
+    Integer filtroeducacionprimaria;
+    Integer filtroeducacionsecundaria;
+    Integer filtrobachillerato;
 
     private OnFragmentInteractionListener mListener;
 
@@ -175,6 +194,29 @@ public class FragmentBuscar extends Fragment {
                     }
 
                     if (addressList != null) {
+
+                        // AQUI CONSULTAMOS LOS FILTROS DE BASE DE DATOS
+                        Cursor c = db.rawQuery("SELECT * FROM filtros", null);
+                        while(c.moveToNext()) {
+                            filtrosoloninas = c.getInt(0);
+                            filtrosoloninos = c.getInt(1);
+                            filtrocentropublico = c.getInt(2);
+                            filtrocentroconcertado = c.getInt(3);
+                            filtrocentroprivado = c.getInt(4);
+                            filtroreligioso = c.getInt(5);
+                            filtrolaico = c.getInt(6);
+                            filtroidiomacastellano = c.getInt(7);
+                            filtroidiomacatalan = c.getInt(8);
+                            filtroidiomaingles = c.getInt(9);
+                            filtroidiomafrances = c.getInt(10);
+                            filtroidiomaaleman = c.getInt(11);
+                            filtroeducacioninfantil1 = c.getInt(12);
+                            filtroeducacioninfantil2 = c.getInt(13);
+                            filtroeducacionprimaria = c.getInt(14);
+                            filtroeducacionsecundaria = c.getInt(15);
+                            filtrobachillerato = c.getInt(16);
+                        }
+
                         Address address = addressList.get(0);
                         LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                         System.out.println(address.getLatitude() + "-" + address.getLongitude());
@@ -187,16 +229,16 @@ public class FragmentBuscar extends Fragment {
 
                             double latitud = address.getLatitude();
                             double longitud = address.getLongitude();
-                            double longitudmin = longitud - 0.02;
+                            double longitudmin = longitud - 0.05;
                             String lonmin = String.valueOf(longitudmin);
                             lonmin = lonmin.replace(".", ",");
-                            double longitudmax = longitud + 0.02;
+                            double longitudmax = longitud + 0.05;
                             String lonmax = String.valueOf(longitudmax);
                             lonmax = lonmax.replace(".", ",");
-                            double latitudmin = latitud - 0.02;
+                            double latitudmin = latitud - 0.05;
                             String latmin = String.valueOf(latitudmin);
                             latmin = latmin.replace(".", ",");
-                            double latitudmax = latitud + 0.02;
+                            double latitudmax = latitud + 0.05;
                             String latmax = String.valueOf(latitudmax);
                             latmax = latmax.replace(".", ",");
 
@@ -239,8 +281,51 @@ public class FragmentBuscar extends Fragment {
                                                 String lon = datajson.getString("longitud");
                                                 lon = lon.replace(",", ".");
                                                 System.out.println("PRINT JSON GENERADO: " +datajson.toString());
-                                                items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": "+ datajson.getString("telefono"),datajson.getString("localidad"),datajson.getString("publico"),datajson.getString("infantil1"),datajson.getString("infantil2"),datajson.getString("primaria"),datajson.getString("eso"),datajson.getString("bachillerato"),lon,lat));
+
+                                                Boolean inserta = true;
+
+                                                System.out.println("Nombre: " + datajson.getString("nombre"));
+                                                System.out.println("Centro publico: " + filtrocentropublico);
+                                                System.out.println("Centro privado: " + filtrocentroprivado);
+                                                System.out.println("Que nos llega: " + datajson.getString("publico"));
+
+                                                if (filtrocentropublico.equals(0) && filtrocentroprivado.equals(0)) {
+                                                    inserta = false;
+                                                }
+                                                else if (filtrocentropublico.equals(0) && datajson.getString("publico").equals("N")) {
+                                                    inserta = false;
+                                                }
+                                                else if (filtrocentroprivado.equals(0) && !datajson.getString("publico").equals("N")) {
+                                                    inserta = false;
+                                                }
+                                                else if (filtroeducacioninfantil1.equals(0) && filtroeducacioninfantil2.equals(0) && filtroeducacionprimaria.equals(0) && filtroeducacionsecundaria.equals(0) && filtrobachillerato.equals(0)) {
+                                                    inserta = false;
+                                                }
+                                                else {
+                                                    inserta = false;
+                                                    if (filtroeducacioninfantil1.equals(1) && !datajson.getString("infantil1").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtroeducacioninfantil2.equals(1) && !datajson.getString("infantil2").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtroeducacionprimaria.equals(1) && !datajson.getString("primaria").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtroeducacionsecundaria.equals(1) && !datajson.getString("eso").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                    else if (filtrobachillerato.equals(1) && !datajson.getString("bachillerato").equals("N")) {
+                                                        inserta = true;
+                                                    }
+                                                }
+                                                if (inserta) {
+                                                    items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": "+ datajson.getString("telefono"),datajson.getString("localidad"),datajson.getString("publico"),datajson.getString("infantil1"),datajson.getString("infantil2"),datajson.getString("primaria"),datajson.getString("eso"),datajson.getString("bachillerato"),lon,lat));
+                                                }
                                             }
+                                        }
+                                        if (items.size() < 1) {
+                                            Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoslocalizacion, Toast.LENGTH_SHORT).show();
                                         }
                                         System.out.println("Fin de la carga de cards en buscar");
                                     } catch (JSONException e) {
