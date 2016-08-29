@@ -288,6 +288,8 @@ public class FragmentBuscar extends Fragment {
                                                 System.out.println("Centro publico: " + filtrocentropublico);
                                                 System.out.println("Centro privado: " + filtrocentroprivado);
                                                 System.out.println("Que nos llega: " + datajson.getString("publico"));
+                                                System.out.println("Nino: " + filtrosoloninas);
+                                                System.out.println("Nina: " + filtrosoloninos);
 
                                                 if (filtrocentropublico.equals(0) && filtrocentroprivado.equals(0)) {
                                                     inserta = false;
@@ -299,6 +301,9 @@ public class FragmentBuscar extends Fragment {
                                                     inserta = false;
                                                 }
                                                 else if (filtroeducacioninfantil1.equals(0) && filtroeducacioninfantil2.equals(0) && filtroeducacionprimaria.equals(0) && filtroeducacionsecundaria.equals(0) && filtrobachillerato.equals(0)) {
+                                                    inserta = false;
+                                                }
+                                                else if ((filtrosoloninas.equals(0) && filtrosoloninos.equals(1)) || (filtrosoloninas.equals(1) && filtrosoloninos.equals(0)) || (filtrosoloninas.equals(0) && filtrosoloninos.equals(0))) {
                                                     inserta = false;
                                                 }
                                                 else {
