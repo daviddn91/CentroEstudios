@@ -21,7 +21,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/relative1">
+            android:id="@+id/relative6">
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -51,48 +51,100 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/tipo_centro"
+                android:text="@string/centro_otro_hijo"
                 android:paddingLeft="5dp"
-                android:id="@+id/textView3"
+                android:id="@+id/textView23"
                 android:height="25dp" />
 
-            <Switch
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/publico"
-                android:id="@+id/switch3"
-                android:checked="true"
-                android:height="35dp"
-                android:textSize="16sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/concertado"
-                android:id="@+id/switch4"
-                android:checked="true"
-                android:height="35dp"
-                android:textSize="16sp"
-                android:paddingRight="10dp"
-                android:visibility="gone"
-                android:paddingLeft="10dp" />
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/privado"
-                android:id="@+id/switch5"
-                android:checked="true"
-                android:height="35dp"
-                android:textSize="16sp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:entries="@array/country_arrays"
+                android:prompt="@string/country_prompt"
+                android:id="@+id/spinner"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
 
         </LinearLayout>
         </android.support.v7.widget.CardView>
         </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative6"
+                android:id="@+id/relative1">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:background="#2b6f87"
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/tipo_centro"
+                            android:paddingLeft="5dp"
+                            android:id="@+id/textView3"
+                            android:height="25dp" />
+
+                        <Switch
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/publico"
+                            android:id="@+id/switch3"
+                            android:checked="true"
+                            android:height="35dp"
+                            android:textSize="16sp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <Switch
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/concertado"
+                            android:id="@+id/switch4"
+                            android:checked="true"
+                            android:height="35dp"
+                            android:textSize="16sp"
+                            android:paddingRight="10dp"
+                            android:visibility="gone"
+                            android:paddingLeft="10dp" />
+
+                        <Switch
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/privado"
+                            android:id="@+id/switch5"
+                            android:checked="true"
+                            android:height="35dp"
+                            android:textSize="16sp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"

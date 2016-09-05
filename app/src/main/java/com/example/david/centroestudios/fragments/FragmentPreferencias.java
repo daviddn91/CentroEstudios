@@ -8,12 +8,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.NavigationView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -66,6 +70,12 @@ public class FragmentPreferencias extends Fragment {
     Integer idrb4;
     Integer idrb5;
     Integer idrb6;
+
+    // Valores para escuela de otros hijos
+    String idescuela;
+    String nombreescuela;
+    String direccionescuela;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -121,6 +131,14 @@ public class FragmentPreferencias extends Fragment {
             educacionsecundaria = c.getInt(15);
             bachillerato = c.getInt(16);
         }
+
+        c = db.rawQuery("SELECT * FROM allcentros WHERE seleccionado = 1", null);
+        if(c.moveToNext()) {
+            idescuela = c.getString(0);
+            nombreescuela = c.getString(1);
+            direccionescuela = c.getString(2);
+        }
+
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.preferencias);
     }
@@ -492,6 +510,37 @@ public class FragmentPreferencias extends Fragment {
                 else {
                     db.execSQL("UPDATE filtros SET bachillerato = 0;");
                 }
+            }
+        });
+
+        Spinner spinner =  (Spinner) view.findViewById(R.id.spinner);
+
+        // Seteamos los valores del spinner
+
+
+        // Marcamos el seleccionado
+
+
+        // Listener para saber el item seleccionado del spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
+                db.execSQL("UPDATE allcentros SET seleccionado = 0;");
+                if (parent.getSelectedItemPosition() == 0) {
+                    db.execSQL("UPDATE allcentros SET seleccionado = 1 WHERE id = '0';");
+                    System.out.println("Es la posicion 0");
+                }
+                else {
+                    System.out.println("No es el 0)");
+                    //db.execSQL("UPDATE allcentros SET seleccionado = 1 WHERE nombre = '"+ parent.getItemAtPosition(position).toString() + "';");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

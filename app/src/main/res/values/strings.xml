@@ -89,4 +89,21 @@
     <string name="nivel_PE">From primary to secondary</string>
     <string name="nivel_PB">From primary to high school</string>
     <string name="nivel_EB">From secondary to high school</string>
+    <string name="centro_otro_hijo" translatable="false">Escuela de otro hijo</string>
+
+    <string-array name="country_arrays">
+        <item>Ninguno</item>
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New Zealand</item>
+        <item>India</item>
+    </string-array>
+
+    <string name="country_prompt" translatable="false">Choose a country</string>
+
+
 </resources>

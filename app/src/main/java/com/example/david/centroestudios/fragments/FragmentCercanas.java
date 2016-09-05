@@ -372,6 +372,7 @@ public class FragmentCercanas extends Fragment {
                                                     nivel = getResources().getString(R.string.nivel_B);
                                                 }
 
+
                                                 // AQUI COMPROBAMOS LOS FILTROS CON UN IF Y SI LOS PASA SE CREA EL MARKER, HAREMOS LO MISMO EN BUSCAR ESCUELA
 
                                                 Boolean inserta = true;
@@ -391,6 +392,9 @@ public class FragmentCercanas extends Fragment {
                                                     inserta = false;
                                                 }
                                                 else if (filtroeducacioninfantil1.equals(0) && filtroeducacioninfantil2.equals(0) && filtroeducacionprimaria.equals(0) && filtroeducacionsecundaria.equals(0) && filtrobachillerato.equals(0)) {
+                                                    inserta = false;
+                                                }
+                                                else if ((filtrosoloninas.equals(0) && filtrosoloninos.equals(1)) || (filtrosoloninas.equals(1) && filtrosoloninos.equals(0)) || (filtrosoloninas.equals(0) && filtrosoloninos.equals(0))) {
                                                     inserta = false;
                                                 }
                                                 else {
