@@ -195,6 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/religioso"
+                    android:clickable="false"
                     android:id="@+id/radioButton4"
                     android:checked="false"
                     android:textSize="16sp" />
@@ -203,6 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/laico"
+                    android:clickable="false"
                     android:id="@+id/radioButton5"
                     android:checked="false"
                     android:textSize="16sp" />
