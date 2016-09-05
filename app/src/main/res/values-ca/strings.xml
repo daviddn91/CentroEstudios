@@ -85,4 +85,6 @@
     <string name="nivel_IP">D\'infantil a primària</string>
     <string name="nivel_J">Només jardí d\'infància</string>
     <string name="nivel_JB">De jardí d\'infància fins batxillerat</string>
+    <string name="centro_otro_hijo" translatable="false">Tens altres fills escolaritzats?</string>
+    <string name="country_prompt">Choose a country</string>
 </resources>

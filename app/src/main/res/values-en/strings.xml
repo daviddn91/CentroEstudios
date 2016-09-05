@@ -85,4 +85,6 @@
     <string name="nivel_P">Only primary education</string>
     <string name="nivel_PB">From primary to high school</string>
     <string name="nivel_PE">From primary to secondary</string>
+    <string name="centro_otro_hijo">Have other children in school?</string>
+    <string name="country_prompt">Choose a country</string>
 </resources>

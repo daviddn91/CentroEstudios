@@ -85,4 +85,6 @@
     <string name="nivel_P">Solo primaria</string>
     <string name="nivel_PB">De primaria a bachillerato</string>
     <string name="nivel_PE">De primaria a ESO</string>
+    <string name="centro_otro_hijo">¿Tienes otros hijos escolarizados?</string>
+    <string name="country_prompt">Choose a country</string>
 </resources>
