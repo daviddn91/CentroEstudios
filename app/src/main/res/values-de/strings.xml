@@ -17,7 +17,7 @@
     <string name="colaboracion">Barcelona Fakultät für Informatik</string>
     <string name="concertado">Privatschule</string>
     <string name="contactar">Kontakt mit dem Entwickler</string>
-    <string name="creencias_religiosas">Religiösen Überzeugungen</string>
+    <string name="creencias_religiosas">Religiösen Überzeugungen (deaktiviert)</string>
     <string name="enviar">Senden</string>
     <string name="errorconexion">Keine Studienzentren wurden erhalten. Bitte überprüfen Sie Ihre Internetverbindung und wenn das Problem fortbesteht kontaktieren Sie bitte mit david.delgado@est.fib.upc.edu.</string>
     <string name="errorlocalizacion">Es gab ein Problem mit dem Google-Service verbindet den Standort zu erhalten. Überprüfen Sie die Verbindung oder wenden Sie sich an den Entwickler.</string>
@@ -38,7 +38,7 @@
     <string name="frances">Französisch</string>
     <string name="genero">Geschlecht</string>
     <string name="gpspermiso">GPS-Berechtigung ermöglicht den Zugriff auf Benutzer Lage. Bitte ermöglichen Sie es in Präferenzen Einreichplanung.</string>
-    <string name="idiomas">Sprachen</string>
+    <string name="idiomas">Sprachen (deaktiviert)</string>
     <string name="infantil">Kindliche Bildung</string>
     <string name="infantil1">Kindergarten</string>
     <string name="infantil2">Kindliche Bildung</string>

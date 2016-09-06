@@ -30,7 +30,7 @@
     <string name="primaria">Éducation primaire</string>
     <string name="preferencias">Changer les préférences</string>
     <string name="nombre">Nom</string>
-    <string name="creencias_religiosas">Croyances religieuses</string>
+    <string name="creencias_religiosas">Croyances religieuses (désactivé)</string>
     <string name="enviar">Envoyer</string>
     <string name="espublico">Centre public</string>
     <string name="estas_aqui">Vous êtes ici</string>
@@ -38,7 +38,7 @@
     <string name="faqs">Questions fréquentes</string>
     <string name="frances">Français</string>
     <string name="genero">Genre</string>
-    <string name="idiomas">Langues</string>
+    <string name="idiomas">Langues (désactivé)</string>
     <string name="infantil">Éducation infantile</string>
     <string name="infantil1">Jardin d\'enfants</string>
     <string name="infantil2">Éducation infantile</string>

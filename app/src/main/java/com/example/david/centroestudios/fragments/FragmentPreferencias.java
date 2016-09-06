@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import com.example.david.centroestudios.R;
 
+import java.util.ArrayList;
+
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
 
 /**
@@ -517,6 +519,25 @@ public class FragmentPreferencias extends Fragment {
 
         // Seteamos los valores del spinner
 
+        Cursor c = db.rawQuery("SELECT * FROM allcentros", null);
+        int i = 0;
+
+        String[] arraySpinner = new String[] {
+                "1", "2", "3", "4", "6", "6", "7", "8", "9"
+        };
+
+
+        while(c.moveToNext()) {
+             //nombres.add(c.getString(1));
+            arraySpinner[i] = c.getString(1);
+            ++i;
+        }
+
+
+        //nombres.toArray(arraySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),
+                android.R.layout.simple_selectable_list_item, arraySpinner);
+        spinner.setAdapter(adapter);
 
         // Marcamos el seleccionado
 

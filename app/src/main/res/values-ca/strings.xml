@@ -11,7 +11,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="ayuda">Ajuda</string>
     <string name="cercanas">Escoles properes</string>
-    <string name="idiomas">Idiomes</string>
+    <string name="idiomas">Idiomes (deshabilitat)</string>
     <string name="castellano">Castellà</string>
     <string name="catalan">Català</string>
     <string name="ingles">Anglès</string>
@@ -21,7 +21,7 @@
     <string name="ambos">Tots dos</string>
     <string name="laico">Laic</string>
     <string name="religioso">Religiós</string>
-    <string name="creencias_religiosas">Creences religioses</string>
+    <string name="creencias_religiosas">Creences religioses (deshabilitat)</string>
     <string name="publico">Públic</string>
     <string name="concertado">Concertat</string>
     <string name="privado">Privat o concertat</string>

@@ -97,9 +97,10 @@ public class MainActivity extends AppCompatActivity
 
         // Ahora miramos si no existe nada en la tabla e insertamos los valores por defecto
         Cursor c2 = db.rawQuery("SELECT * FROM allcentros", null);
-        if(!c.moveToFirst())
+        if(!c2.moveToFirst())
         {
-            db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('0','Ninguno','Ninguna','1');");
+            db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('0','---','Ninguna','1');");
+            db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('1','----','Ninguna','0');");
         }
 
 
