@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,9 +21,22 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
@@ -515,26 +529,72 @@ public class FragmentPreferencias extends Fragment {
             }
         });
 
+        // Spinner con los centros
+
         Spinner spinner =  (Spinner) view.findViewById(R.id.spinner);
 
-        // Seteamos los valores del spinner
+        // Descargamos los centros
 
-        Cursor c = db.rawQuery("SELECT * FROM allcentros", null);
-        int i = 0;
+        ArrayList<String> al = new ArrayList<>();
 
-        String[] arraySpinner = new String[] {
-                "1", "2", "3", "4", "6", "6", "7", "8", "9"
-        };
+        al.add("-");
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //your codes here
+            String data = GetHTTPData("http://raspi.cat/api.php?all=1");
+
+            if (data != null && !data.isEmpty()) {
+                // AQUI IR DIVIDIENDO EL STRING Y HACER UN BUCLE PARA PASAR A JSON
 
 
-        while(c.moveToNext()) {
-             //nombres.add(c.getString(1));
-            arraySpinner[i] = c.getString(1);
-            ++i;
+                //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
+
+
+                JSONObject datajson;
+                try {
+                    System.out.println("Data antes: "+ data);
+                    data = data.replace("[","");
+                    data = data.replace("]","");
+                    String[] parts = data.split("fininfo");
+                    ArrayList<String> lista = new ArrayList();
+
+                    for (int i = 0; i < parts.length; i++) {
+                        if (!parts[i].equals("\"}")) {
+                            //System.out.println("Parte cortada " + i + ": " + parts[i]);
+                            String parte = parts[i] + "fininfo\"}";
+                            parte = parte.replace("\"},", "");
+
+                            datajson = new JSONObject(parte);
+                            String id = datajson.getString("id");
+                            String nombre = datajson.getString("nombre");
+                            String localidad = datajson.getString("localidad");
+                            if (!id.equals(null) && !id.isEmpty() && !nombre.equals(null) && !nombre.isEmpty() && !localidad.equals(null) && !localidad.isEmpty()) {
+                                al.add(nombre + " (" + localidad + ")");
+                            }
+
+                        }
+                    }
+                    if (lista.size() == 0) {
+                        //Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoscercanas, Toast.LENGTH_SHORT).show();
+                    }
+                    System.out.println("Fin de la carga de todos los centros");
+                }
+                catch (JSONException e) {
+                    System.out.println("JSON Exception");
+                }
+            }
         }
 
 
-        //nombres.toArray(arraySpinner);
+        // Seteamos los valores del spinner
+
+
+        String[] arraySpinner = al.toArray(new String[al.size()]);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_selectable_list_item, arraySpinner);
         spinner.setAdapter(adapter);
@@ -548,13 +608,23 @@ public class FragmentPreferencias extends Fragment {
                                        int position, long id) {
 
                 System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
-                db.execSQL("UPDATE allcentros SET seleccionado = 0;");
+
+                idescuela = Integer.toString(position);
+
+                nombreescuela = parent.getItemAtPosition(position).toString();
+
+                direccionescuela = parent.getItemAtPosition(position).toString();
+
+                parent.setSelection(Integer.parseInt(idescuela));
+
+                db.execSQL("DELETE FROM allcentros;");
+                db.execSQL("INSERT INTO allcentros(id, nombre,localidad, seleccionado) values ('"+Integer.toString(parent.getSelectedItemPosition())+"','"+parent.getItemAtPosition(position).toString()+"','"+parent.getItemAtPosition(position).toString()+"','1')");
+                System.out.println("INSERT INTO allcentros(id, nombre,localidad, seleccionado) values ('"+parent.getSelectedItemPosition()+"','"+parent.getItemAtPosition(position).toString()+"','"+parent.getItemAtPosition(position).toString()+"','1')");
                 if (parent.getSelectedItemPosition() == 0) {
-                    db.execSQL("UPDATE allcentros SET seleccionado = 1 WHERE id = '0';");
                     System.out.println("Es la posicion 0");
                 }
                 else {
-                    System.out.println("No es el 0)");
+                    System.out.println("No es el 0");
                     //db.execSQL("UPDATE allcentros SET seleccionado = 1 WHERE nombre = '"+ parent.getItemAtPosition(position).toString() + "';");
                 }
             }
@@ -597,6 +667,45 @@ public class FragmentPreferencias extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public String GetHTTPData(String urlString){
+        String stream = null;
+        try{
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
+            // Check the connection status
+            if(urlConnection.getResponseCode() == 200)
+            {
+                // if response code = 200 ok
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                // Read the BufferedInputStream
+                BufferedReader r = new BufferedReader(new InputStreamReader(in));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    sb.append(line);
+                }
+                stream = sb.toString();
+                // End reading...............
+
+                // Disconnect the HttpURLConnection
+                urlConnection.disconnect();
+            }
+            else
+            {
+                System.out.println("Else del GetHTTPData en FragmentPreferencias");
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+            System.out.println("Catch del GetHTTPData en FragmentPreferencias");
+            Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+
+        }finally {
+            System.out.println("Finally del GetHTTPData en FragmentPreferencias");
+        }
+        // Return the data from specified url
+        return stream;
+    }
 
 }

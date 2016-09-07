@@ -95,14 +95,7 @@ public class MainActivity extends AppCompatActivity
         // Creamos la tabla por si tienen otros hijos en un centro
         db.execSQL("CREATE TABLE IF NOT EXISTS allcentros (id VARCHAR(100), nombre VARCHAR(100), localidad VARCHAR(100), seleccionado INTEGER(1));");
 
-        // Ahora miramos si no existe nada en la tabla e insertamos los valores por defecto
-        Cursor c2 = db.rawQuery("SELECT * FROM allcentros", null);
-        if(!c2.moveToFirst())
-        {
-            db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('0','---','Ninguna','1');");
-            db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('1','----','Ninguna','0');");
-        }
-
+        db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('0','-','-','1');");
 
     }
 

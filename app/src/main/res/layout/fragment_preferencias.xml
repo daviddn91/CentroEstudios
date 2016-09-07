@@ -61,6 +61,8 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/country_arrays"
                 android:prompt="@string/country_prompt"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:id="@+id/spinner"/>
 
         </LinearLayout>
