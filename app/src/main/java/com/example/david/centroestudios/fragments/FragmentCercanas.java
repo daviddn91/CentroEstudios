@@ -514,7 +514,7 @@ public class FragmentCercanas extends Fragment {
                                                         puntos = puntos + 40;
                                                     }
 
-                                                    // Comprobamos si la escuela es la antigua de otros familiares
+                                                    // Comprobamos si la escuela es la antigua de otros familiares y si no tiene algun hermano ya en el centro
                                                     if (nombreescuelaold.equals(datajson.getString("nombre")+" ("+datajson.getString("localidad")+")") && !nombreescuela.equals(nombreescuelaold)) {
                                                         puntos = puntos + 5;
                                                     }
@@ -524,7 +524,15 @@ public class FragmentCercanas extends Fragment {
 
                                                     // Cambiar color del marker segun los puntos
 
-                                                    googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos));
+                                                    if (puntos < 35) {
+                                                        googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos));
+                                                    }
+                                                    else if (puntos > 35 && puntos < 65) {
+                                                        googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                                                    }
+                                                    else if (puntos > 65) {
+                                                        googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                                    }
                                                 }
 
                                             /*
