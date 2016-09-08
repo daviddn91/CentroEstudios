@@ -70,6 +70,27 @@ public class FragmentCercanas extends Fragment {
 
     SQLiteDatabase db;
 
+    // Perfil del usuario
+
+    Integer rentaminima;
+    Integer discapacidad;
+    Integer familianumerosa;
+    Integer enfermedadcronica;
+
+    String direccioncasa;
+    String direcciontrabajo;
+
+    String idescuela;
+    String nombreescuela;
+    String direccionescuela;
+
+    String idescuelaold;
+    String nombreescuelaold;
+    String direccionescuelaold;
+
+
+    // Preferencias al buscar
+
     Integer filtrosoloninas;
     Integer filtrosoloninos;
     Integer filtrocentropublico;
@@ -271,6 +292,53 @@ public class FragmentCercanas extends Fragment {
                             String latmax = String.valueOf(latitudmax);
                             latmax = latmax.replace(".",",");
 
+                            // Aqui consultamos el perfil del usuario para el recuento de puntos
+
+                            c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'rentaminima'", null);
+                            while(c.moveToNext()) {
+                                rentaminima = c.getInt(0);
+                            }
+
+                            c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'discapacidad'", null);
+                            while(c.moveToNext()) {
+                                discapacidad = c.getInt(0);
+                            }
+
+                            c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'familianumerosa'", null);
+                            while(c.moveToNext()) {
+                                familianumerosa = c.getInt(0);
+                            }
+
+                            c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'enfermedadcronica'", null);
+                            while(c.moveToNext()) {
+                                enfermedadcronica = c.getInt(0);
+                            }
+
+                            c = db.rawQuery("SELECT spinner1, spinner2, spinner3 FROM perfil WHERE id = 'hermanosescolarizados'", null);
+                            while(c.moveToNext()) {
+                                idescuela = c.getString(0);
+                                nombreescuela = c.getString(1);
+                                direccionescuela = c.getString(2);
+                            }
+
+                            c = db.rawQuery("SELECT spinner1, spinner2, spinner3 FROM perfil WHERE id = 'escuelafamilia'", null);
+                            while(c.moveToNext()) {
+                                idescuelaold = c.getString(0);
+                                nombreescuelaold = c.getString(1);
+                                direccionescuelaold = c.getString(2);
+                            }
+
+                            c = db.rawQuery("SELECT textbox1 FROM perfil WHERE id = 'direccioncasa'", null);
+                            while(c.moveToNext()) {
+                                direccioncasa = c.getString(0);
+                            }
+
+                            c = db.rawQuery("SELECT textbox1 FROM perfil WHERE id = 'direcciontrabajo'", null);
+                            while(c.moveToNext()) {
+                                direcciontrabajo = c.getString(0);
+                            }
+
+
 
                             // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
 
@@ -279,7 +347,11 @@ public class FragmentCercanas extends Fragment {
                                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                                         .permitAll().build();
                                 StrictMode.setThreadPolicy(policy);
-                                //your codes here
+
+                                // Hacemos la peticion a Google para que nos de las coordenadas de casa y el trabajo y poder trabajar con ellas y ver si está muy lejos cada escuela
+
+
+                                // Peticion para los centros cercanos y comparamos con la escuela de hermanos y de antiguos familiares
                                 String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin="+lonmin+"&longitudmax="+lonmax+"&latitudmin="+latmin+"&latitudmax="+latmax);
                                 //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
 
@@ -319,6 +391,8 @@ public class FragmentCercanas extends Fragment {
                                                 String eso = datajson.getString("eso");
                                                 String bachillerato = datajson.getString("bachillerato");
                                                 String nivel = "";
+                                                String criterio_prioridad = getResources().getString(R.string.criterio_prioridad);
+                                                String traduccion_puntos = getResources().getString(R.string.puntos);
 
                                                 if (publico.equals("S")) {
                                                     publico = getResources().getString(R.string.noespublico);
@@ -417,9 +491,40 @@ public class FragmentCercanas extends Fragment {
                                                 }
 
                                                 if (inserta) {
+
+                                                    // Aqui calculamos el total de puntos para ese marker y segun eso cambiamos el color o no
+
+                                                    int puntos = 0;
+
+                                                    if (rentaminima == 1) {
+                                                        puntos = puntos + 10;
+                                                    }
+                                                    if (discapacidad == 1) {
+                                                        puntos = puntos + 10;
+                                                    }
+                                                    if (familianumerosa == 1) {
+                                                        puntos = puntos + 15;
+                                                    }
+                                                    if (enfermedadcronica == 1) {
+                                                        puntos = puntos + 10;
+                                                    }
+
+                                                    // Comprobamos si la escuela es la misma que el hermano
+                                                    if (nombreescuela.equals(datajson.getString("nombre")+" ("+datajson.getString("localidad")+")")) {
+                                                        puntos = puntos + 40;
+                                                    }
+
+                                                    // Comprobamos si la escuela es la antigua de otros familiares
+                                                    if (nombreescuelaold.equals(datajson.getString("nombre")+" ("+datajson.getString("localidad")+")") && !nombreescuela.equals(nombreescuelaold)) {
+                                                        puntos = puntos + 5;
+                                                    }
+
                                                     //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
                                                     MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon))).title(datajson.getString("nombre"));
-                                                    googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel));
+
+                                                    // Cambiar color del marker segun los puntos
+
+                                                    googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos));
                                                 }
 
                                             /*

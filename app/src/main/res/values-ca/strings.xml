@@ -103,4 +103,6 @@
     <string name="perfil_trabajo2">Introdueix la direcció de la feina</string>
     <string name="faqs_pregunta6">Com funcionen els criteris de prioritat?</string>
     <string name="faqs_respuesta6">Es concedeixen punts si la persona compleix unes condicions. Més informació a:\nhttp://queestudiar.gencat.cat/ca/preinscripcio/estudis/obligatoris/documentacio/</string>
+    <string name="criterio_prioridad">Criteri de prioritat</string>
+    <string name="puntos">punts</string>
 </resources>
