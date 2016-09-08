@@ -154,7 +154,7 @@ public class FragmentBuscar extends Fragment {
 
         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
-        navigationView.getMenu().getItem(1).setChecked(true);
+        navigationView.getMenu().getItem(2).setChecked(true);
 
 
         // Inflate the layout for this fragment

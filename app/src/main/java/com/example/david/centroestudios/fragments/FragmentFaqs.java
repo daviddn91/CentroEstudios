@@ -107,7 +107,7 @@ public class FragmentFaqs extends Fragment {
 
         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
-        navigationView.getMenu().getItem(3).setChecked(true);
+        navigationView.getMenu().getItem(4).setChecked(true);
 
         View view = inflater.inflate(R.layout.fragment_faqs, null);
 

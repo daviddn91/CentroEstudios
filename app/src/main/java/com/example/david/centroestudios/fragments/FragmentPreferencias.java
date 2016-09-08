@@ -148,12 +148,16 @@ public class FragmentPreferencias extends Fragment {
             bachillerato = c.getInt(16);
         }
 
+        /*
+
         c = db.rawQuery("SELECT * FROM allcentros WHERE seleccionado = 1", null);
         if(c.moveToNext()) {
             idescuela = c.getString(0);
             nombreescuela = c.getString(1);
             direccionescuela = c.getString(2);
         }
+
+        */
 
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.preferencias);
@@ -170,7 +174,7 @@ public class FragmentPreferencias extends Fragment {
 
         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
-        navigationView.getMenu().getItem(2).setChecked(true);
+        navigationView.getMenu().getItem(3).setChecked(true);
 
         /* Aqui empieza lo de actualizar switch y radiobuttons segun la BD */
 
@@ -529,6 +533,7 @@ public class FragmentPreferencias extends Fragment {
             }
         });
 
+        /*
         // Spinner con los centros
 
         Spinner spinner =  (Spinner) view.findViewById(R.id.spinner);
@@ -634,6 +639,8 @@ public class FragmentPreferencias extends Fragment {
 
             }
         });
+
+        */
 
         //return inflater.inflate(R.layout.fragment_preferencias, container, false);
         return view;

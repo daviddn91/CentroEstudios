@@ -11,7 +11,7 @@
     <string name="buscar">Schule suchen</string>
     <string name="castellano">Spanisch</string>
     <string name="catalan">Katalanisch</string>
-    <string name="centro_otro_hijo">Haben andere Kinder in der Schule?</string>
+    <string name="centro_otro_hijo">Haben Sie Brüder in der Schule?</string>
     <string name="country_prompt">Choose a country</string>
     <string name="cercanas">Nähe Schulen</string>
     <string name="colaboracion">Barcelona Fakultät für Informatik</string>
@@ -87,4 +87,19 @@
     <string name="nivel_B">Nur Abitur</string>
     <string name="nivel_E">Nur Hochschule</string>
     <string name="nivel_EB">Von Hochschule bis Abitur</string>
+    <string name="perfil">Benutzerprofil</string>
+    <string name="perfil_discapacidad">Behinderung</string>
+    <string name="perfil_renta">Hilfe für Mindesteinkommen</string>
+    <string name="perfil_monoparental">Große Familien oder Alleinerziehende</string>
+    <string name="perfil_cronica">Chronische Krankheit</string>
+    <string name="perfil_cronica2">Hat das Kind an einer chronischen Krankheit leidet?</string>
+    <string name="perfil_discapacidad2">Das Leiden mit einer Behinderung (+33%)?</string>
+    <string name="perfil_renta2">Haben Sie ein Mindesteinkommen Hilfe?</string>
+    <string name="perfil_monoparental2">Haben Sie eine große oder Ein-Eltern-Familie?</string>
+    <string name="centro_otro_familiar">Familie Schule</string>
+    <string name="perfil_domicilio">Heimatadresse</string>
+    <string name="perfil_domicilio2">Geben Sie Ihre Heimatadresse</string>
+    <string name="perfil_trabajo">Arbeitsplatz-Adresse</string>
+    <string name="perfil_trabajo2">Geben Sie Ihren Arbeitsplatz-Adresse</string>
+    <string name="faqs_pregunta6">Wie die Prioritätskriterien Arbeit?</string>
 </resources>

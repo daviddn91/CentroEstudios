@@ -21,6 +21,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:id="@+id/relative6">
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"

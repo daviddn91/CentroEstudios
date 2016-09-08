@@ -85,6 +85,21 @@
     <string name="nivel_P">Solo primaria</string>
     <string name="nivel_PB">De primaria a bachillerato</string>
     <string name="nivel_PE">De primaria a ESO</string>
-    <string name="centro_otro_hijo">¿Tienes otros hijos escolarizados?</string>
+    <string name="centro_otro_hijo">¿Tiene hermanos escolarizados?</string>
     <string name="country_prompt">Choose a country</string>
+    <string name="perfil">Perfil del usuario</string>
+    <string name="perfil_discapacidad">Discapacidad</string>
+    <string name="perfil_renta">Ayuda por renta mínima</string>
+    <string name="perfil_monoparental">Familia numerosa o monoparental</string>
+    <string name="perfil_cronica">Enfermedad crónica</string>
+    <string name="perfil_cronica2">¿Sufre alguna enfermedad crónica?</string>
+    <string name="perfil_discapacidad2">¿Sufre algún tipo de discapacidad (+33%)?</string>
+    <string name="perfil_renta2">¿Dispone de alguna ayuda por renta mínima?</string>
+    <string name="perfil_monoparental2">¿Dispone de un carné de familia numerosa o monoparental?</string>
+    <string name="centro_otro_familiar">Escuela de la familia</string>
+    <string name="perfil_domicilio">Dirección de casa</string>
+    <string name="perfil_domicilio2">Introduce la dirección de casa</string>
+    <string name="perfil_trabajo">Dirección del lugar de trabajo</string>
+    <string name="perfil_trabajo2">Introduce la dirección del trabajo</string>
+    <string name="faqs_pregunta6">¿Cómo funcionan los criterios de prioridad?</string>
 </resources>

@@ -1,0 +1,461 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#dedede"
+    android:padding="3dp"
+    tools:context="com.example.david.centroestudios.fragments.FragmentPerfil">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relative6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="#2b6f87" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="25dp"
+                            android:paddingLeft="5dp"
+                            android:text="@string/centro_otro_hijo"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/country_arrays"
+                            android:prompt="@string/country_prompt"
+                            android:scrollbarAlwaysDrawVerticalTrack="true"
+                            android:scrollbarFadeDuration="0" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative6">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="#2b6f87" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="25dp"
+                            android:paddingLeft="5dp"
+                            android:text="@string/centro_otro_familiar"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/country_arrays"
+                            android:prompt="@string/country_prompt"
+                            android:scrollbarAlwaysDrawVerticalTrack="true"
+                            android:scrollbarFadeDuration="0" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative7"
+                android:id="@+id/relative10">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:background="#2b6f87"
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="30dp"
+                            android:paddingLeft="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/perfil_domicilio"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/editTextBuscar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:hint="@string/perfil_domicilio2" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative10"
+                android:id="@+id/relative11">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:background="#2b6f87"
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="30dp"
+                            android:paddingLeft="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/perfil_trabajo"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
+                            android:id="@+id/editTextBuscar2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:hint="@string/perfil_trabajo2" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative11">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="#2b6f87" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        android:paddingBottom="25dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="30dp"
+                            android:paddingLeft="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/perfil_renta"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Switch
+                            android:id="@+id/switch1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:height="45dp"
+                            android:checked="true"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="@string/perfil_renta2"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative1">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="#2b6f87" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        android:paddingBottom="25dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="25dp"
+                            android:paddingLeft="5dp"
+                            android:text="@string/perfil_discapacidad"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Switch
+                            android:id="@+id/switch2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:height="45dp"
+                            android:checked="true"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="@string/perfil_discapacidad2"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative2">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="#2b6f87" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        android:paddingBottom="25dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="30dp"
+                            android:paddingLeft="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/perfil_monoparental"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Switch
+                            android:id="@+id/switch3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:height="45dp"
+                            android:checked="true"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="@string/perfil_monoparental2"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative3">
+
+                <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+
+                    <FrameLayout
+                        android:layout_width="4dp"
+                        android:layout_height="match_parent"
+                        android:background="#2b6f87" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        android:paddingBottom="25dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:height="25dp"
+                            android:paddingLeft="5dp"
+                            android:text="@string/perfil_cronica"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Switch
+                            android:id="@+id/switch4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:height="45dp"
+                            android:checked="true"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="@string/perfil_cronica2"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -27,6 +27,7 @@ import com.example.david.centroestudios.fragments.FragmentBuscar;
 import com.example.david.centroestudios.fragments.FragmentCercanas;
 import com.example.david.centroestudios.fragments.FragmentContacta;
 import com.example.david.centroestudios.fragments.FragmentFaqs;
+import com.example.david.centroestudios.fragments.FragmentPerfil;
 import com.example.david.centroestudios.fragments.FragmentPreferencias;
 import com.example.david.centroestudios.fragments.FragmentMapaBuscar;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     FragmentFaqs ffaqs;
     FragmentContacta fcontacta;
     FragmentMapaBuscar fmapabuscar;
+    FragmentPerfil fperfil;
     SQLiteDatabase db;
 
     @Override
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         ffaqs = new FragmentFaqs();
         fcontacta = new FragmentContacta();
         fmapabuscar = new FragmentMapaBuscar();
+        fperfil = new FragmentPerfil();
 
         /* Cambio el fragment por defecto al abrir la aplicación */
 
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         ftrans.commit();
 
         // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
-        navigationView.getMenu().getItem(0).setChecked(true);
+        navigationView.getMenu().getItem(1).setChecked(true);
 
         /* Base de datos */
         db = openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
@@ -92,10 +96,21 @@ public class MainActivity extends AppCompatActivity
 
         //db.execSQL("DELETE FROM centros WHERE actualizado < sysdate()-30;");
 
-        // Creamos la tabla por si tienen otros hijos en un centro
-        db.execSQL("CREATE TABLE IF NOT EXISTS allcentros (id VARCHAR(100), nombre VARCHAR(100), localidad VARCHAR(100), seleccionado INTEGER(1));");
+        db.execSQL("CREATE TABLE IF NOT EXISTS perfil (id VARCHAR(100), spinner1 VARCHAR(100), spinner2 VARCHAR(100), spinner3 VARCHAR(100), textbox1 VARCHAR(100), switch1 INTEGER(1));");
 
-        db.execSQL("INSERT INTO allcentros(id,nombre,localidad,seleccionado) values ('0','-','-','1');");
+        // Ahora miramos si no existe nada en la tabla e insertamos los valores por defecto
+        c = db.rawQuery("SELECT * FROM perfil", null);
+        if(!c.moveToFirst())
+        {
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('hermanosescolarizados','0','-','-','-','1');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('escuelafamilia','0','-','-','-','1');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('direccioncasa','-','-','-','','1');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('direcciontrabajo','-','-','-','','1');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('rentaminima','-','-','-','-','0');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('discapacidad','-','-','-','-','0');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('familianumerosa','-','-','-','-','0');");
+            db.execSQL("INSERT INTO perfil (id, spinner1, spinner2, spinner3, textbox1, switch1) VALUES ('enfermedadcronica','-','-','-','-','0');");
+        }
 
     }
 
@@ -159,6 +174,8 @@ public class MainActivity extends AppCompatActivity
             ftrans.replace(R.id.container, fcercanas).addToBackStack(null);
         } else if (id == R.id.nav_buscar) {
             ftrans.replace(R.id.container, fbuscar).addToBackStack(null);
+        } else if (id == R.id.nav_perfil) {
+            ftrans.replace(R.id.container, fperfil).addToBackStack(null);
         } else if (id == R.id.nav_manage) {
             ftrans.replace(R.id.container, fpreferencias).addToBackStack(null);
         } else if (id == R.id.nav_share) {

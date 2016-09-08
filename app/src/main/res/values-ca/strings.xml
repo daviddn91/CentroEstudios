@@ -85,6 +85,21 @@
     <string name="nivel_IP">D\'infantil a primària</string>
     <string name="nivel_J">Només jardí d\'infància</string>
     <string name="nivel_JB">De jardí d\'infància fins batxillerat</string>
-    <string name="centro_otro_hijo" translatable="false">Tens altres fills escolaritzats?</string>
+    <string name="centro_otro_hijo" translatable="false">Té germans escolaritzats?</string>
     <string name="country_prompt">Choose a country</string>
+    <string name="perfil">Perfil de l\'usuari</string>
+    <string name="perfil_discapacidad">Discapacitat</string>
+    <string name="perfil_renta">Ajuda per renda mínima</string>
+    <string name="perfil_monoparental">Família nombrosa o monoparental</string>
+    <string name="perfil_cronica">Malaltia crònica</string>
+    <string name="perfil_cronica2">Pateix alguna malaltia crònica?</string>
+    <string name="perfil_discapacidad2">Patiu algun tipus de discapacitat (+33%)?</string>
+    <string name="perfil_renta2">Disposa d\'alguna ajuda per renda mínima?</string>
+    <string name="perfil_monoparental2">Disposa d\'un carnet de família nombrosa o monoparental?</string>
+    <string name="centro_otro_familiar">Escola de la família</string>
+    <string name="perfil_domicilio">Direcció de casa</string>
+    <string name="perfil_domicilio2">Introdueix la direcció de casa</string>
+    <string name="perfil_trabajo">Direcció del lloc de feina</string>
+    <string name="perfil_trabajo2">Introdueix la direcció de la feina</string>
+    <string name="faqs_pregunta6">Com funcionen els criteris de prioritat?</string>
 </resources>

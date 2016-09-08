@@ -2,7 +2,7 @@
 <resources>
     <string name="action_settings">Paramètres</string>
     <string name="aleman">Allemand</string>
-    <string name="centro_otro_hijo">Avoir d\'autres enfants à l\'école?</string>
+    <string name="centro_otro_hijo">Avez-vous des frères à l\'école?</string>
     <string name="country_prompt">Choose a country</string>
     <string name="ambos">Les deux</string>
     <string name="app_name">Rechercher écoles</string>
@@ -87,4 +87,19 @@
     <string name="nivel_JE">Du jardin d\'enfants au secondaire</string>
     <string name="nivel_JI">Du jardin d\'enfants au infantile</string>
     <string name="nivel_JP">Du jardin d\'enfants au primaire</string>
+    <string name="perfil">Profil de l\'utilisateur</string>
+    <string name="perfil_discapacidad">Invalidité</string>
+    <string name="perfil_renta">Aide pour le revenu minimum</string>
+    <string name="perfil_monoparental">Famille nombreuse ou famille monoparentale</string>
+    <string name="perfil_cronica">Maladie chronique</string>
+    <string name="perfil_cronica2">Est-ce que l\'enfant souffre d\'une maladie chronique?</string>
+    <string name="perfil_discapacidad2">Souffrant d\'un handicap (+33%)?</string>
+    <string name="perfil_renta2">Avez-vous une aide au revenu minimum?</string>
+    <string name="perfil_monoparental2">Avez-vous une grande ou monoparentale famille?</string>
+    <string name="centro_otro_familiar">École de famille</string>
+    <string name="perfil_domicilio">Adresse de domicile</string>
+    <string name="perfil_domicilio2">Entrez votre adresse de domicile</string>
+    <string name="perfil_trabajo">Adresse de travail</string>
+    <string name="perfil_trabajo2">Entrez votre adresse de travail</string>
+    <string name="faqs_pregunta6">Comment le travail des critères de priorité?</string>
 </resources>
