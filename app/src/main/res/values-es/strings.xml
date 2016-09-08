@@ -102,4 +102,5 @@
     <string name="perfil_trabajo">Dirección del lugar de trabajo</string>
     <string name="perfil_trabajo2">Introduce la dirección del trabajo</string>
     <string name="faqs_pregunta6">¿Cómo funcionan los criterios de prioridad?</string>
+    <string name="faqs_respuesta6">Se conceden puntos si la persona cumple unas condiciones. Más información en:\nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
 </resources>

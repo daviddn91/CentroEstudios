@@ -118,6 +118,7 @@ public class FragmentFaqs extends Fragment {
         items.add(new Faqs(getResources().getString(R.string.faq_pregunta2),getResources().getString(R.string.faq_respuesta2)));
         items.add(new Faqs(getResources().getString(R.string.faq_pregunta3),getResources().getString(R.string.faq_respuesta3)));
         items.add(new Faqs(getResources().getString(R.string.faq_pregunta4),getResources().getString(R.string.faq_respuesta4)));
+        items.add(new Faqs(getResources().getString(R.string.faqs_pregunta6),getResources().getString(R.string.faqs_respuesta6)));
 
 
         // Obtener el Recycler

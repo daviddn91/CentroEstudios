@@ -119,7 +119,7 @@
     <string name="perfil_trabajo">Workplace address</string>
     <string name="perfil_trabajo2">Enter your workplace address</string>
     <string name="faqs_pregunta6">How the priority criteria work?</string>
-    <string name="faqs_respuesta6">Poner por puntos y tal</string>
+    <string name="faqs_respuesta6">If the person meets conditions, it is granted some points. More information: \nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
 
 
 </resources>
