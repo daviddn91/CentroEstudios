@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -49,6 +51,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * A simple {@link Fragment} subclass.
@@ -338,6 +341,62 @@ public class FragmentCercanas extends Fragment {
                                 direcciontrabajo = c.getString(0);
                             }
 
+                            // Comprobamos si la escuela está cerca del lugar de casa y del trabajo
+
+                            double latitudcasa = 0.0;
+                            double longitudcasa = 0.0;
+                            double latitudtrabajo = 0.0;
+                            double longitudtrabajo = 0.0;
+
+                            // Llamadas a la API de Google para las direcciones
+
+                            List<Address> addressListCasa = null;
+                            List<Address> addressListTrabajo = null;
+
+                            // Llamada API para direccion de casa
+
+                            if (direccioncasa != null || !direccioncasa.equals("")) {
+                                Geocoder geocoder = new Geocoder(getActivity());
+                                try {
+                                    System.out.println("Valor del location = " + direccioncasa);
+                                    addressListCasa = geocoder.getFromLocationName(direccioncasa, 1);
+
+
+                                } catch (IOException e) {
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
+
+                                if (addressListCasa != null) {
+                                    Address address = addressListCasa.get(0);
+                                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                                    System.out.println(address.getLatitude() + "-" + address.getLongitude());
+                                    latitudcasa = address.getLatitude();
+                                    longitudcasa = address.getLongitude();
+                                }
+                            }
+
+                            if (direcciontrabajo != null || !direcciontrabajo.equals("")) {
+                                Geocoder geocoder = new Geocoder(getActivity());
+                                try {
+                                    System.out.println("Valor del location = " + direccioncasa);
+                                    addressListTrabajo = geocoder.getFromLocationName(direccioncasa, 1);
+
+
+                                } catch (IOException e) {
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
+
+                                if (addressListTrabajo != null) {
+                                    Address address = addressListTrabajo.get(0);
+                                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                                    System.out.println(address.getLatitude() + "-" + address.getLongitude());
+                                    latitudtrabajo = address.getLatitude();
+                                    longitudtrabajo = address.getLongitude();
+                                }
+                            }
+
 
 
                             // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
@@ -517,6 +576,21 @@ public class FragmentCercanas extends Fragment {
                                                     // Comprobamos si la escuela es la antigua de otros familiares y si no tiene algun hermano ya en el centro
                                                     if (nombreescuelaold.equals(datajson.getString("nombre")+" ("+datajson.getString("localidad")+")") && !nombreescuela.equals(nombreescuelaold)) {
                                                         puntos = puntos + 5;
+                                                    }
+
+
+                                                    // Comprobamos si la direccion de casa y la del trabajo nos dan puntos
+                                                    if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.1) {
+                                                        puntos = puntos + 30;
+                                                        // Centro en el area de influencia
+                                                    }
+                                                    else if (Math.abs(latitudtrabajo-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudtrabajo-Double.parseDouble(lon)) < 0.1) {
+                                                        puntos = puntos + 20;
+                                                        // Centro cerca del area de influencia del trabajo, mirar con cariño
+                                                    }
+                                                    else if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 1 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 1) {
+                                                        puntos = puntos + 10;
+                                                        // Mirar con cuidado porque es si estan en el municipio pero no en el area de influencia
                                                     }
 
                                                     //System.out.println("PRINT JSON GENERADO: " +datajson.toString());
