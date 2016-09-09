@@ -89,6 +89,9 @@ public class FragmentPerfil extends Fragment {
     private AutoCompleteTextView mACTVAddress2;
 
 
+    ArrayList<String> al = new ArrayList<>();
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -315,6 +318,8 @@ public class FragmentPerfil extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
+
+
         // Spinner con los centros
 
         Spinner spinner =  (Spinner) view.findViewById(R.id.spinner);
@@ -324,9 +329,10 @@ public class FragmentPerfil extends Fragment {
 
         // Descargamos los centros
 
-        ArrayList<String> al = new ArrayList<>();
+        al = new ArrayList<>();
 
         al.add("-");
+
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -367,8 +373,8 @@ public class FragmentPerfil extends Fragment {
 
                         }
                     }
-                    if (lista.size() == 0) {
-                        //Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoscercanas, Toast.LENGTH_SHORT).show();
+                    if (al.size() < 2) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoscercanas, Toast.LENGTH_SHORT).show();
                     }
                     System.out.println("Fin de la carga de todos los centros");
                 }
@@ -377,6 +383,7 @@ public class FragmentPerfil extends Fragment {
                 }
             }
         }
+
 
 
         // Seteamos los valores del spinner
@@ -390,10 +397,23 @@ public class FragmentPerfil extends Fragment {
         spinner.setAdapter(adapter);
         spinner2.setAdapter(adapter);
 
+
+        System.out.println("idescuela: " + idescuela);
+        System.out.println("idescuelaold: " + idescuelaold);
+
+        // Condicion para evitar null pointer en el spinner cuando no hay internet
+        if (al.size() < 2) {
+            idescuela = "0";
+            idescuelaold = "0";
+        }
+
+
+
         // Marcamos el seleccionado
 
         spinner.setSelection(Integer.parseInt(idescuela));
         spinner2.setSelection(Integer.parseInt(idescuelaold));
+
 
         // Listener para saber el item seleccionado del spinner de hermanos escolarizados
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -402,17 +422,21 @@ public class FragmentPerfil extends Fragment {
 
                 System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
 
-                idescuela = Integer.toString(position);
+                // Condicion para evitar machacar datos cuando no hay internet
+                if (al.size() > 1) {
 
-                nombreescuela = parent.getItemAtPosition(position).toString();
+                    idescuela = Integer.toString(position);
 
-                direccionescuela = parent.getItemAtPosition(position).toString();
+                    nombreescuela = parent.getItemAtPosition(position).toString();
 
-                parent.setSelection(Integer.parseInt(idescuela));
+                    direccionescuela = parent.getItemAtPosition(position).toString();
 
-                db.execSQL("DELETE FROM perfil WHERE id = 'hermanosescolarizados';");
-                db.execSQL("INSERT INTO perfil(id, spinner1,spinner2, spinner3) values ('hermanosescolarizados','"+Integer.toString(parent.getSelectedItemPosition())+"','"+parent.getItemAtPosition(position).toString()+"','"+parent.getItemAtPosition(position).toString()+"')");
-                System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('hermanosescolarizados','"+parent.getSelectedItemPosition()+"','"+parent.getItemAtPosition(position).toString()+"','"+parent.getItemAtPosition(position).toString()+"')");
+                    parent.setSelection(Integer.parseInt(idescuela));
+
+                    db.execSQL("DELETE FROM perfil WHERE id = 'hermanosescolarizados';");
+                    db.execSQL("INSERT INTO perfil(id, spinner1,spinner2, spinner3) values ('hermanosescolarizados','" + Integer.toString(parent.getSelectedItemPosition()) + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
+                    System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('hermanosescolarizados','" + parent.getSelectedItemPosition() + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
+                }
                 if (parent.getSelectedItemPosition() == 0) {
                     System.out.println("Es la posicion 0");
                 }
@@ -435,17 +459,22 @@ public class FragmentPerfil extends Fragment {
 
                 System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
 
-                idescuelaold = Integer.toString(position);
+                // Condicion para evitar machacar datos cuando no hay internet
+                if (al.size() > 1) {
+                    idescuelaold = Integer.toString(position);
 
-                nombreescuelaold = parent.getItemAtPosition(position).toString();
+                    nombreescuelaold = parent.getItemAtPosition(position).toString();
 
-                direccionescuelaold = parent.getItemAtPosition(position).toString();
+                    direccionescuelaold = parent.getItemAtPosition(position).toString();
 
-                parent.setSelection(Integer.parseInt(idescuelaold));
+                    parent.setSelection(Integer.parseInt(idescuelaold));
 
-                db.execSQL("DELETE FROM perfil WHERE id = 'escuelafamilia';");
-                db.execSQL("INSERT INTO perfil(id, spinner1,spinner2, spinner3) values ('escuelafamilia','"+Integer.toString(parent.getSelectedItemPosition())+"','"+parent.getItemAtPosition(position).toString()+"','"+parent.getItemAtPosition(position).toString()+"')");
-                System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('escuelafamilia',"+parent.getSelectedItemPosition()+"','"+parent.getItemAtPosition(position).toString()+"','"+parent.getItemAtPosition(position).toString()+"')");
+                    db.execSQL("DELETE FROM perfil WHERE id = 'escuelafamilia';");
+                    db.execSQL("INSERT INTO perfil(id, spinner1,spinner2, spinner3) values ('escuelafamilia','" + Integer.toString(parent.getSelectedItemPosition()) + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
+                    System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('escuelafamilia'," + parent.getSelectedItemPosition() + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
+
+                }
+
                 if (parent.getSelectedItemPosition() == 0) {
                     System.out.println("Es la posicion 0");
                 }
@@ -460,6 +489,8 @@ public class FragmentPerfil extends Fragment {
 
             }
         });
+
+
 
         //return inflater.inflate(R.layout.fragment_preferencias, container, false);
         return view;
