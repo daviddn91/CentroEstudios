@@ -1,5 +1,7 @@
 package com.example.david.centroestudios.fragments;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,8 +23,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +50,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -114,6 +122,8 @@ public class FragmentBuscar extends Fragment {
     Integer filtroeducacionprimaria;
     Integer filtroeducacionsecundaria;
     Integer filtrobachillerato;
+
+    private AutoCompleteTextView mACTVAddress;
 
     private OnFragmentInteractionListener mListener;
 
@@ -194,15 +204,20 @@ public class FragmentBuscar extends Fragment {
 
         }
         botonBuscar = (Button) view.findViewById(R.id.botonBuscar);
-        locationSearch = (EditText) view.findViewById(R.id.editTextBuscar);
+        //locationSearch = (EditText) view.findViewById(R.id.editTextBuscar);
+        mACTVAddress = (AutoCompleteTextView) view.findViewById(R.id.editTextBuscar);
+
+        // Address AutoCompleteTextView
+        mACTVAddress.setAdapter(new AutoCompleteAdapter(getActivity()));
 
         recycler = (RecyclerView) view.findViewById(R.id.reciclador);
+
 
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String location = locationSearch.getText().toString();
+                String location = mACTVAddress.getText().toString();
                 List<Address> addressList = null;
                 // SI HAY INTERNET!!!
 
@@ -919,6 +934,89 @@ public class FragmentBuscar extends Fragment {
             viewHolder.selectedPublico = items.get(i).getPublico();
             viewHolder.selectedPuntos = items.get(i).getPuntos();
 
+        }
+    }
+
+    private class AutoCompleteAdapter extends ArrayAdapter<Address> implements Filterable {
+
+        private LayoutInflater mInflater;
+        private Geocoder mGeocoder;
+        private StringBuilder mSb = new StringBuilder();
+
+        public AutoCompleteAdapter(final Context context) {
+            super(context, -1);
+            mInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            mGeocoder = new Geocoder(context);
+        }
+
+        @Override
+        public View getView(final int position, final View convertView, final ViewGroup parent) {
+            final TextView tv;
+            if (convertView != null) {
+                tv = (TextView) convertView;
+            } else {
+                tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+            }
+
+            tv.setText(createFormattedAddressFromAddress(getItem(position)));
+            return tv;
+        }
+
+        private String createFormattedAddressFromAddress(final Address address) {
+            mSb.setLength(0);
+            final int addressLineSize = address.getMaxAddressLineIndex();
+            for (int i = 0; i < addressLineSize; i++) {
+                mSb.append(address.getAddressLine(i));
+                if (i != addressLineSize - 1) {
+                    mSb.append(", ");
+                }
+            }
+            return mSb.toString();
+        }
+
+        @Override
+        public Filter getFilter() {
+            Filter myFilter = new Filter() {
+                @Override
+                protected FilterResults performFiltering(final CharSequence constraint) {
+                    List<Address> addressList = null;
+                    if (constraint != null) {
+                        try {
+                            addressList = mGeocoder.getFromLocationName((String) constraint, 5);
+                        } catch (IOException e) {
+                        }
+                    }
+                    if (addressList == null) {
+                        addressList = new ArrayList<Address>();
+                    }
+
+                    final FilterResults filterResults = new FilterResults();
+                    filterResults.values = addressList;
+                    filterResults.count = addressList.size();
+
+                    return filterResults;
+                }
+
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void publishResults(final CharSequence contraint, final FilterResults results) {
+                    clear();
+                    for (Address address : (List<Address>) results.values) {
+                        add(address);
+                    }
+                    if (results.count > 0) {
+                        notifyDataSetChanged();
+                    } else {
+                        notifyDataSetInvalidated();
+                    }
+                }
+
+                @Override
+                public CharSequence convertResultToString(final Object resultValue) {
+                    return resultValue == null ? "" : createFormattedAddressFromAddress((Address) resultValue);
+                }
+            };
+            return myFilter;
         }
     }
 
