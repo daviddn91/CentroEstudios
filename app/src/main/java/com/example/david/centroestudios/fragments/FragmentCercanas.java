@@ -580,15 +580,15 @@ public class FragmentCercanas extends Fragment {
 
 
                                                     // Comprobamos si la direccion de casa y la del trabajo nos dan puntos
-                                                    if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.1) {
+                                                    if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.05 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.05) {
                                                         puntos = puntos + 30;
                                                         // Centro en el area de influencia
                                                     }
-                                                    else if (Math.abs(latitudtrabajo-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudtrabajo-Double.parseDouble(lon)) < 0.1) {
+                                                    else if (Math.abs(latitudtrabajo-Double.parseDouble(lat)) < 0.05 && Math.abs(longitudtrabajo-Double.parseDouble(lon)) < 0.05) {
                                                         puntos = puntos + 20;
                                                         // Centro cerca del area de influencia del trabajo, mirar con cariño
                                                     }
-                                                    else if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.5 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.5) {
+                                                    else if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.1) {
                                                         puntos = puntos + 10;
                                                         // Mirar con cuidado porque es si estan en el municipio pero no en el area de influencia
                                                     }
