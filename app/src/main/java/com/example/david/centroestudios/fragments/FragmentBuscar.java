@@ -767,7 +767,7 @@ public class FragmentBuscar extends Fragment {
                         System.out.println("Primaria + " + selectedPrimaria);
                         System.out.println("ESO + " + selectedEso);
                         System.out.println("Bachillerato + " + selectedBachillerato);
-                        System.out.println("Puntos + " + puntos);
+                        System.out.println("Puntos + " + selectedPuntos);
 
                         String lat = selectedLatitude;
                         lat = lat.replace(",", ".");
@@ -817,7 +817,7 @@ public class FragmentBuscar extends Fragment {
                         }
 
                         db.execSQL("DELETE FROM centros WHERE id = '2331991D'");
-                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud, infantil1, actualizado) VALUES ('2331991D','" + selectedName + "','" + selectedDireccion + "','" + selectedTelefono + "','" + selectedLocalidad + "','" + selectedLatitude + "','" + selectedLongitude + "','" + nivelestudios + "','" + esPublico + "')";
+                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud, infantil1, codigopostal, actualizado) VALUES ('2331991D','" + selectedName + "','" + selectedDireccion + "','" + selectedTelefono + "','" + selectedLocalidad + "','" + selectedLatitude + "','" + selectedLongitude + "','" + nivelestudios + "','" + selectedPuntos + "','" + esPublico + "')";
                         System.out.println(insert);
                         db.execSQL(insert);
 
