@@ -42,6 +42,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -490,6 +492,15 @@ public class FragmentBuscar extends Fragment {
                                     if (items.size() < 1) {
                                         Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoslocalizacion, Toast.LENGTH_SHORT).show();
                                     }
+
+                                    Collections.sort(items, new Comparator<CentrosEstudios>() {
+                                        @Override
+                                        public int compare(CentrosEstudios escuela1, CentrosEstudios escuela2)
+                                        {
+                                            return  escuela2.getPuntos().compareTo(escuela1.getPuntos());
+                                        }
+                                    });
+
                                     System.out.println("Fin de la carga de cards en buscar");
                                 } catch (JSONException e) {
                                     System.out.println("JSON Exception");
