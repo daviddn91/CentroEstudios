@@ -28,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -143,8 +144,20 @@ public class FragmentMapaBuscar extends Fragment {
                 // Sacar de BD
                 Cursor c = db.rawQuery("SELECT * FROM centros WHERE id = '2331991D'", null);
                 while(c.moveToNext()) {
+
                     MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(c.getString(12)), Double.parseDouble(c.getString(13)))).title(c.getString(1));
-                    googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)));
+
+                    // Cambiar color del marker segun los puntos
+                    if (Integer.parseInt(c.getString(3)) < 35) {
+                        googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)));
+                    }
+                    else if (Integer.parseInt(c.getString(3)) > 35 && Integer.parseInt(c.getString(3)) < 65) {
+                        googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                    }
+                    else if (Integer.parseInt(c.getString(3)) > 65) {
+                        googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    }
+
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(Double.parseDouble(c.getString(12)), Double.parseDouble(c.getString(13)))).zoom(16).build();
                     googleMap.animateCamera(CameraUpdateFactory

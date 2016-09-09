@@ -955,7 +955,7 @@ public class FragmentBuscar extends Fragment {
             if (convertView != null) {
                 tv = (TextView) convertView;
             } else {
-                tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+                tv = (TextView) mInflater.inflate(android.R.layout.simple_selectable_list_item, parent, false);
             }
 
             tv.setText(createFormattedAddressFromAddress(getItem(position)));
