@@ -24,6 +24,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -319,6 +320,7 @@ public class FragmentPerfil extends Fragment {
         Spinner spinner =  (Spinner) view.findViewById(R.id.spinner);
 
         Spinner spinner2 = (Spinner) view.findViewById(R.id.spinner2);
+
 
         // Descargamos los centros
 

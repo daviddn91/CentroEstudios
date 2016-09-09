@@ -126,6 +126,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative7"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
                 android:id="@+id/relative10">
 
                 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -180,6 +182,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative10"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
                 android:id="@+id/relative11">
 
                 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
