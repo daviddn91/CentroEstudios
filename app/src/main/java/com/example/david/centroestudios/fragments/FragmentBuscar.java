@@ -74,6 +74,27 @@ public class FragmentBuscar extends Fragment {
 
     SQLiteDatabase db;
 
+    // Perfil del usuario
+
+    Integer rentaminima;
+    Integer discapacidad;
+    Integer familianumerosa;
+    Integer enfermedadcronica;
+
+    String direccioncasa;
+    String direcciontrabajo;
+
+    String idescuela;
+    String nombreescuela;
+    String direccionescuela;
+
+    String idescuelaold;
+    String nombreescuelaold;
+    String direccionescuelaold;
+
+
+    // Preferencias al buscar
+
     Integer filtrosoloninas;
     Integer filtrosoloninos;
     Integer filtrocentropublico;
@@ -123,7 +144,7 @@ public class FragmentBuscar extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        db = getActivity().openOrCreateDatabase("BaseDeDatos",android.content.Context.MODE_PRIVATE ,null);
+        db = getActivity().openOrCreateDatabase("BaseDeDatos", android.content.Context.MODE_PRIVATE, null);
         // Cambia el texto del titulo al nombre de la seccion
         getActivity().setTitle(R.string.buscar);
         // Inicializar Animes
@@ -133,20 +154,22 @@ public class FragmentBuscar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;
         boolean network_enabled = false;
 
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
+        } catch (Exception ex) {
+        }
 
         try {
             network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch(Exception ex) {}
+        } catch (Exception ex) {
+        }
 
         if (!gps_enabled || !network_enabled) {
-            Toast.makeText(getActivity().getApplicationContext(),R.string.activaelgps, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), R.string.activaelgps, Toast.LENGTH_LONG).show();
         }
 
         getActivity().setTitle(R.string.buscar);
@@ -197,7 +220,7 @@ public class FragmentBuscar extends Fragment {
 
                         // AQUI CONSULTAMOS LOS FILTROS DE BASE DE DATOS
                         Cursor c = db.rawQuery("SELECT * FROM filtros", null);
-                        while(c.moveToNext()) {
+                        while (c.moveToNext()) {
                             filtrosoloninas = c.getInt(0);
                             filtrosoloninos = c.getInt(1);
                             filtrocentropublico = c.getInt(2);
@@ -227,118 +250,253 @@ public class FragmentBuscar extends Fragment {
 
                         List<CentrosEstudios> items = new ArrayList<>();
 
-                            double latitud = address.getLatitude();
-                            double longitud = address.getLongitude();
-                            double longitudmin = longitud - 0.05;
-                            String lonmin = String.valueOf(longitudmin);
-                            lonmin = lonmin.replace(".", ",");
-                            double longitudmax = longitud + 0.05;
-                            String lonmax = String.valueOf(longitudmax);
-                            lonmax = lonmax.replace(".", ",");
-                            double latitudmin = latitud - 0.05;
-                            String latmin = String.valueOf(latitudmin);
-                            latmin = latmin.replace(".", ",");
-                            double latitudmax = latitud + 0.05;
-                            String latmax = String.valueOf(latitudmax);
-                            latmax = latmax.replace(".", ",");
+                        double latitud = address.getLatitude();
+                        double longitud = address.getLongitude();
+                        double longitudmin = longitud - 0.05;
+                        String lonmin = String.valueOf(longitudmin);
+                        lonmin = lonmin.replace(".", ",");
+                        double longitudmax = longitud + 0.05;
+                        String lonmax = String.valueOf(longitudmax);
+                        lonmax = lonmax.replace(".", ",");
+                        double latitudmin = latitud - 0.05;
+                        String latmin = String.valueOf(latitudmin);
+                        latmin = latmin.replace(".", ",");
+                        double latitudmax = latitud + 0.05;
+                        String latmax = String.valueOf(latitudmax);
+                        latmax = latmax.replace(".", ",");
+
+                        // Aqui consultamos el perfil del usuario para el recuento de puntos
+
+                        c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'rentaminima'", null);
+                        while (c.moveToNext()) {
+                            rentaminima = c.getInt(0);
+                        }
+
+                        c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'discapacidad'", null);
+                        while (c.moveToNext()) {
+                            discapacidad = c.getInt(0);
+                        }
+
+                        c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'familianumerosa'", null);
+                        while (c.moveToNext()) {
+                            familianumerosa = c.getInt(0);
+                        }
+
+                        c = db.rawQuery("SELECT switch1 FROM perfil WHERE id = 'enfermedadcronica'", null);
+                        while (c.moveToNext()) {
+                            enfermedadcronica = c.getInt(0);
+                        }
+
+                        c = db.rawQuery("SELECT spinner1, spinner2, spinner3 FROM perfil WHERE id = 'hermanosescolarizados'", null);
+                        while (c.moveToNext()) {
+                            idescuela = c.getString(0);
+                            nombreescuela = c.getString(1);
+                            direccionescuela = c.getString(2);
+                        }
+
+                        c = db.rawQuery("SELECT spinner1, spinner2, spinner3 FROM perfil WHERE id = 'escuelafamilia'", null);
+                        while (c.moveToNext()) {
+                            idescuelaold = c.getString(0);
+                            nombreescuelaold = c.getString(1);
+                            direccionescuelaold = c.getString(2);
+                        }
+
+                        c = db.rawQuery("SELECT textbox1 FROM perfil WHERE id = 'direccioncasa'", null);
+                        while (c.moveToNext()) {
+                            direccioncasa = c.getString(0);
+                        }
+
+                        c = db.rawQuery("SELECT textbox1 FROM perfil WHERE id = 'direcciontrabajo'", null);
+                        while (c.moveToNext()) {
+                            direcciontrabajo = c.getString(0);
+                        }
+
+                        // Comprobamos si la escuela está cerca del lugar de casa y del trabajo
+
+                        double latitudcasa = 0.0;
+                        double longitudcasa = 0.0;
+                        double latitudtrabajo = 0.0;
+                        double longitudtrabajo = 0.0;
+
+                        // Llamadas a la API de Google para las direcciones
+
+                        List<Address> addressListCasa = null;
+                        List<Address> addressListTrabajo = null;
+
+                        // Llamada API para direccion de casa
+
+                        if (direccioncasa != null || !direccioncasa.equals("")) {
+                            geocoder = new Geocoder(getActivity());
+                            try {
+                                System.out.println("Valor del location = " + direccioncasa);
+                                addressListCasa = geocoder.getFromLocationName(direccioncasa, 1);
 
 
-                            // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
+                            } catch (IOException e) {
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
 
-                            int SDK_INT = android.os.Build.VERSION.SDK_INT;
-                            if (SDK_INT > 8) {
-                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                                        .permitAll().build();
-                                StrictMode.setThreadPolicy(policy);
-                                //your codes here
-                                String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=" + lonmin + "&longitudmax=" + lonmax + "&latitudmin=" + latmin + "&latitudmax=" + latmax);
-                                //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
+                            if (addressListCasa != null) {
+                                address = addressListCasa.get(0);
+                                latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                                System.out.println(address.getLatitude() + "-" + address.getLongitude());
+                                latitudcasa = address.getLatitude();
+                                longitudcasa = address.getLongitude();
+                            }
+                        }
 
-                                if (data == null) {
-                                    Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
-                                }
-                                else if (data != null && !data.isEmpty()) {
+                        if (direcciontrabajo != null || !direcciontrabajo.equals("")) {
+                            geocoder = new Geocoder(getActivity());
+                            try {
+                                System.out.println("Valor del location = " + direccioncasa);
+                                addressListTrabajo = geocoder.getFromLocationName(direccioncasa, 1);
 
-                                    JSONObject datajson;
 
-                                    try {
-                                        System.out.println("Data antes: " + data);
-                                        data = data.replace("[", "");
-                                        data = data.replace("]", "");
-                                        String[] parts = data.split("fininfo");
+                            } catch (IOException e) {
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
 
-                                        for (int i = 0; i < parts.length; i++) {
-                                            if (!parts[i].equals("\"}")) {
-                                                System.out.println("Parte cortada " + i + ": " + parts[i]);
-                                                String parte = parts[i] + "fininfo\"}";
-                                                parte = parte.replace("\"},", "");
+                            if (addressListTrabajo != null) {
+                                address = addressListTrabajo.get(0);
+                                latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                                System.out.println(address.getLatitude() + "-" + address.getLongitude());
+                                latitudtrabajo = address.getLatitude();
+                                longitudtrabajo = address.getLongitude();
+                            }
+                        }
 
-                                                //System.out.println("Parte puesta:"+parte);
-                                                //System.out.println("id:" + data2);
-                                                datajson = new JSONObject(parte);
-                                                String lat = datajson.getString("latitud");
-                                                lat = lat.replace(",", ".");
-                                                String lon = datajson.getString("longitud");
-                                                lon = lon.replace(",", ".");
-                                                System.out.println("PRINT JSON GENERADO: " +datajson.toString());
 
-                                                Boolean inserta = true;
+                        // BAJAMOS INFO NUEVA DE LOS CENTROS Y COLOCAMOS LOS MARCADORES
 
-                                                System.out.println("Nombre: " + datajson.getString("nombre"));
-                                                System.out.println("Centro publico: " + filtrocentropublico);
-                                                System.out.println("Centro privado: " + filtrocentroprivado);
-                                                System.out.println("Que nos llega: " + datajson.getString("publico"));
-                                                System.out.println("Nino: " + filtrosoloninas);
-                                                System.out.println("Nina: " + filtrosoloninos);
+                        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                        if (SDK_INT > 8) {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                    .permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
+                            //your codes here
+                            String data = GetHTTPData("http://raspi.cat/api.php?cerca=1&longitudmin=" + lonmin + "&longitudmax=" + lonmax + "&latitudmin=" + latmin + "&latitudmax=" + latmax);
+                            //String data2 = GetHTTPData("http://raspi.cat/api.php?id=8045641");
 
-                                                if (filtrocentropublico.equals(0) && filtrocentroprivado.equals(0)) {
-                                                    inserta = false;
-                                                }
-                                                else if (filtrocentropublico.equals(0) && datajson.getString("publico").equals("N")) {
-                                                    inserta = false;
-                                                }
-                                                else if (filtrocentroprivado.equals(0) && !datajson.getString("publico").equals("N")) {
-                                                    inserta = false;
-                                                }
-                                                else if (filtroeducacioninfantil1.equals(0) && filtroeducacioninfantil2.equals(0) && filtroeducacionprimaria.equals(0) && filtroeducacionsecundaria.equals(0) && filtrobachillerato.equals(0)) {
-                                                    inserta = false;
-                                                }
-                                                else if ((filtrosoloninas.equals(0) && filtrosoloninos.equals(1)) || (filtrosoloninas.equals(1) && filtrosoloninos.equals(0)) || (filtrosoloninas.equals(0) && filtrosoloninos.equals(0))) {
-                                                    inserta = false;
-                                                }
-                                                else {
-                                                    inserta = false;
-                                                    if (filtroeducacioninfantil1.equals(1) && !datajson.getString("infantil1").equals("N")) {
-                                                        inserta = true;
-                                                    }
-                                                    else if (filtroeducacioninfantil2.equals(1) && !datajson.getString("infantil2").equals("N")) {
-                                                        inserta = true;
-                                                    }
-                                                    else if (filtroeducacionprimaria.equals(1) && !datajson.getString("primaria").equals("N")) {
-                                                        inserta = true;
-                                                    }
-                                                    else if (filtroeducacionsecundaria.equals(1) && !datajson.getString("eso").equals("N")) {
-                                                        inserta = true;
-                                                    }
-                                                    else if (filtrobachillerato.equals(1) && !datajson.getString("bachillerato").equals("N")) {
-                                                        inserta = true;
-                                                    }
-                                                }
-                                                if (inserta) {
-                                                    items.add(new CentrosEstudios(datajson.getString("id"),datajson.getString("nombre"),datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": "+ datajson.getString("telefono"),datajson.getString("localidad"),datajson.getString("publico"),datajson.getString("infantil1"),datajson.getString("infantil2"),datajson.getString("primaria"),datajson.getString("eso"),datajson.getString("bachillerato"),lon,lat));
+                            if (data == null) {
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
+                            } else if (data != null && !data.isEmpty()) {
+
+                                JSONObject datajson;
+
+                                try {
+                                    System.out.println("Data antes: " + data);
+                                    data = data.replace("[", "");
+                                    data = data.replace("]", "");
+                                    String[] parts = data.split("fininfo");
+
+                                    for (int i = 0; i < parts.length; i++) {
+                                        if (!parts[i].equals("\"}")) {
+                                            System.out.println("Parte cortada " + i + ": " + parts[i]);
+                                            String parte = parts[i] + "fininfo\"}";
+                                            parte = parte.replace("\"},", "");
+
+                                            //System.out.println("Parte puesta:"+parte);
+                                            //System.out.println("id:" + data2);
+                                            datajson = new JSONObject(parte);
+                                            String lat = datajson.getString("latitud");
+                                            lat = lat.replace(",", ".");
+                                            String lon = datajson.getString("longitud");
+                                            lon = lon.replace(",", ".");
+                                            System.out.println("PRINT JSON GENERADO: " + datajson.toString());
+
+                                            Boolean inserta = true;
+
+                                            System.out.println("Nombre: " + datajson.getString("nombre"));
+                                            System.out.println("Centro publico: " + filtrocentropublico);
+                                            System.out.println("Centro privado: " + filtrocentroprivado);
+                                            System.out.println("Que nos llega: " + datajson.getString("publico"));
+                                            System.out.println("Nino: " + filtrosoloninas);
+                                            System.out.println("Nina: " + filtrosoloninos);
+
+                                            if (filtrocentropublico.equals(0) && filtrocentroprivado.equals(0)) {
+                                                inserta = false;
+                                            } else if (filtrocentropublico.equals(0) && datajson.getString("publico").equals("N")) {
+                                                inserta = false;
+                                            } else if (filtrocentroprivado.equals(0) && !datajson.getString("publico").equals("N")) {
+                                                inserta = false;
+                                            } else if (filtroeducacioninfantil1.equals(0) && filtroeducacioninfantil2.equals(0) && filtroeducacionprimaria.equals(0) && filtroeducacionsecundaria.equals(0) && filtrobachillerato.equals(0)) {
+                                                inserta = false;
+                                            } else if ((filtrosoloninas.equals(0) && filtrosoloninos.equals(1)) || (filtrosoloninas.equals(1) && filtrosoloninos.equals(0)) || (filtrosoloninas.equals(0) && filtrosoloninos.equals(0))) {
+                                                inserta = false;
+                                            } else {
+                                                inserta = false;
+                                                if (filtroeducacioninfantil1.equals(1) && !datajson.getString("infantil1").equals("N")) {
+                                                    inserta = true;
+                                                } else if (filtroeducacioninfantil2.equals(1) && !datajson.getString("infantil2").equals("N")) {
+                                                    inserta = true;
+                                                } else if (filtroeducacionprimaria.equals(1) && !datajson.getString("primaria").equals("N")) {
+                                                    inserta = true;
+                                                } else if (filtroeducacionsecundaria.equals(1) && !datajson.getString("eso").equals("N")) {
+                                                    inserta = true;
+                                                } else if (filtrobachillerato.equals(1) && !datajson.getString("bachillerato").equals("N")) {
+                                                    inserta = true;
                                                 }
                                             }
+                                            if (inserta) {
+
+                                                // Aqui calculamos el total de puntos para ese marker y segun eso cambiamos el color o no
+
+                                                int puntos = 0;
+
+                                                if (rentaminima == 1) {
+                                                    puntos = puntos + 10;
+                                                }
+                                                if (discapacidad == 1) {
+                                                    puntos = puntos + 10;
+                                                }
+                                                if (familianumerosa == 1) {
+                                                    puntos = puntos + 15;
+                                                }
+                                                if (enfermedadcronica == 1) {
+                                                    puntos = puntos + 10;
+                                                }
+
+                                                // Comprobamos si la escuela es la misma que el hermano
+                                                if (nombreescuela.equals(datajson.getString("nombre")+" ("+datajson.getString("localidad")+")")) {
+                                                    puntos = puntos + 40;
+                                                }
+
+                                                // Comprobamos si la escuela es la antigua de otros familiares y si no tiene algun hermano ya en el centro
+                                                if (nombreescuelaold.equals(datajson.getString("nombre")+" ("+datajson.getString("localidad")+")") && !nombreescuela.equals(nombreescuelaold)) {
+                                                    puntos = puntos + 5;
+                                                }
+
+
+                                                // Comprobamos si la direccion de casa y la del trabajo nos dan puntos
+                                                if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.1) {
+                                                    puntos = puntos + 30;
+                                                    // Centro en el area de influencia
+                                                }
+                                                else if (Math.abs(latitudtrabajo-Double.parseDouble(lat)) < 0.1 && Math.abs(longitudtrabajo-Double.parseDouble(lon)) < 0.1) {
+                                                    puntos = puntos + 20;
+                                                    // Centro cerca del area de influencia del trabajo, mirar con cariño
+                                                }
+                                                else if (Math.abs(latitudcasa-Double.parseDouble(lat)) < 0.5 && Math.abs(longitudcasa-Double.parseDouble(lon)) < 0.5) {
+                                                    puntos = puntos + 10;
+                                                    // Mirar con cuidado porque es si estan en el municipio pero no en el area de influencia
+                                                }
+
+                                                items.add(new CentrosEstudios(datajson.getString("id"), datajson.getString("nombre"), datajson.getString("direccion"), getResources().getString(R.string.telefono) + ": " + datajson.getString("telefono"), datajson.getString("localidad"), datajson.getString("publico"), datajson.getString("infantil1"), datajson.getString("infantil2"), datajson.getString("primaria"), datajson.getString("eso"), datajson.getString("bachillerato"), lon, lat, Integer.toString(puntos)));
+                                            }
                                         }
-                                        if (items.size() < 1) {
-                                            Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoslocalizacion, Toast.LENGTH_SHORT).show();
-                                        }
-                                        System.out.println("Fin de la carga de cards en buscar");
-                                    } catch (JSONException e) {
-                                        System.out.println("JSON Exception");
+                                    }
+                                    if (items.size() < 1) {
                                         Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoslocalizacion, Toast.LENGTH_SHORT).show();
                                     }
+                                    System.out.println("Fin de la carga de cards en buscar");
+                                } catch (JSONException e) {
+                                    System.out.println("JSON Exception");
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoslocalizacion, Toast.LENGTH_SHORT).show();
                                 }
                             }
+                        }
 
                         // Obtener el Recycler
                         recycler.setHasFixedSize(true);
@@ -352,21 +510,18 @@ public class FragmentBuscar extends Fragment {
                         recycler.setAdapter(adapter);
 
                         if (v != null) {
-                            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                         }
 
                     }
-                }
-                else if (location.equals("")) {
+                } else if (location.equals("")) {
                     Toast.makeText(getActivity().getApplicationContext(), R.string.introducelocalizacion, Toast.LENGTH_SHORT).show();
-                }
-                else if (location == null) {
+                } else if (location == null) {
                     Toast.makeText(getActivity().getApplicationContext(), R.string.errorlocalizacion, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
 
         return view;
@@ -405,15 +560,14 @@ public class FragmentBuscar extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public String GetHTTPData(String urlString){
+    public String GetHTTPData(String urlString) {
         String stream = null;
-        try{
+        try {
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             // Check the connection status
-            if(urlConnection.getResponseCode() == 200)
-            {
+            if (urlConnection.getResponseCode() == 200) {
                 // if response code = 200 ok
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -429,35 +583,33 @@ public class FragmentBuscar extends Fragment {
 
                 // Disconnect the HttpURLConnection
                 urlConnection.disconnect();
-            }
-            else
-            {
+            } else {
                 System.out.println("Else del GetHTTPData en FragmentBuscar");
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Catch del GetHTTPData en FragmentBuscar");
             Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
 
-        }finally {
+        } finally {
             System.out.println("Finally del GetHTTPData en FragmentBuscar");
         }
         // Return the data from specified url
         return stream;
     }
 
-    private void requestPermission(){
+    private void requestPermission() {
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)) {
 
             Toast.makeText(getActivity().getApplicationContext(), R.string.needinternet, Toast.LENGTH_LONG).show();
 
         } else {
-            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.INTERNET}, 1);
         }
     }
 
-    private boolean checkPermission(){
+    private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.INTERNET);
         return result == PackageManager.PERMISSION_GRANTED;
     }
@@ -480,8 +632,9 @@ public class FragmentBuscar extends Fragment {
         private String bachillerato;
         private String longitud;
         private String latitud;
+        private String puntos;
 
-        public CentrosEstudios(String id, String nombre, String direccion, String telefono, String localidad, String publico, String infantil1, String infantil2, String primaria, String eso, String bachillerato, String longitud, String latitud) {
+        public CentrosEstudios(String id, String nombre, String direccion, String telefono, String localidad, String publico, String infantil1, String infantil2, String primaria, String eso, String bachillerato, String longitud, String latitud, String puntos) {
             this.id = id;
             this.nombre = nombre;
             this.direccion = direccion;
@@ -495,6 +648,7 @@ public class FragmentBuscar extends Fragment {
             this.primaria = primaria;
             this.eso = eso;
             this.bachillerato = bachillerato;
+            this.puntos = puntos;
         }
 
         public String getId() {
@@ -549,6 +703,10 @@ public class FragmentBuscar extends Fragment {
             return bachillerato;
         }
 
+        public String getPuntos() {
+            return puntos;
+        }
+
     }
 
 
@@ -563,6 +721,7 @@ public class FragmentBuscar extends Fragment {
             public TextView localidad;
             public TextView publico;
             public TextView nivel;
+            public TextView puntos;
             public String selectedName;
             public String selectedLatitude;
             public String selectedLongitude;
@@ -575,6 +734,7 @@ public class FragmentBuscar extends Fragment {
             public String selectedPrimaria;
             public String selectedEso;
             public String selectedBachillerato;
+            public String selectedPuntos;
 
             public View view;
 
@@ -596,6 +756,7 @@ public class FragmentBuscar extends Fragment {
                         System.out.println("Primaria + " + selectedPrimaria);
                         System.out.println("ESO + " + selectedEso);
                         System.out.println("Bachillerato + " + selectedBachillerato);
+                        System.out.println("Puntos + " + puntos);
 
                         String lat = selectedLatitude;
                         lat = lat.replace(",", ".");
@@ -606,47 +767,33 @@ public class FragmentBuscar extends Fragment {
 
                         if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_JB);
-                        }
-                        else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_JE);
-                        }
-                        else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_JP);
-                        }
-                        else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (!selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_JI);
-                        }
-                        else if (!selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (!selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_J);
-                        }
-                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_IB);
-                        }
-                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_IE);
-                        }
-                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_IP);
-                        }
-                        else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && !selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_I);
-                        }
-                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_PB);
-                        }
-                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_PE);
-                        }
-                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && !selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_P);
-                        }
-                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_EB);
-                        }
-                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && !selectedBachillerato.equals("N") && selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_E);
-                        }
-                        else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
+                        } else if (selectedInfantil1.equals("N") && selectedInfantil2.equals("N") && selectedPrimaria.equals("N") && selectedBachillerato.equals("N") && !selectedBachillerato.equals("N")) {
                             nivelestudios = getResources().getString(R.string.nivel_B);
                         }
 
@@ -659,7 +806,7 @@ public class FragmentBuscar extends Fragment {
                         }
 
                         db.execSQL("DELETE FROM centros WHERE id = '2331991D'");
-                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud, infantil1, actualizado) VALUES ('2331991D','"+selectedName+"','"+selectedDireccion+"','"+selectedTelefono+"','"+selectedLocalidad+"','"+selectedLatitude+"','"+selectedLongitude+"','"+nivelestudios+"','"+esPublico+"')";
+                        String insert = "INSERT INTO centros (id, nombre, direccion, telefono, localidad, latitud, longitud, infantil1, actualizado) VALUES ('2331991D','" + selectedName + "','" + selectedDireccion + "','" + selectedTelefono + "','" + selectedLocalidad + "','" + selectedLatitude + "','" + selectedLongitude + "','" + nivelestudios + "','" + esPublico + "')";
                         System.out.println(insert);
                         db.execSQL(insert);
 
@@ -677,6 +824,7 @@ public class FragmentBuscar extends Fragment {
                 localidad = (TextView) v.findViewById(R.id.localidad);
                 publico = (TextView) v.findViewById(R.id.publico);
                 nivel = (TextView) v.findViewById(R.id.nivel);
+                puntos = (TextView) v.findViewById(R.id.puntos);
 
             }
         }
@@ -714,51 +862,38 @@ public class FragmentBuscar extends Fragment {
 
             if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_JB);
-            }
-            else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_JE);
-            }
-            else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_JP);
-            }
-            else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (!items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_JI);
-            }
-            else if (!items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (!items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_J);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_IB);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_IE);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_IP);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && !items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_I);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_PB);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_PE);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && !items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_P);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_EB);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && !items.get(i).getBachillerato().equals("N") && items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_E);
-            }
-            else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
+            } else if (items.get(i).getInfantil1().equals("N") && items.get(i).getInfantil2().equals("N") && items.get(i).getPrimaria().equals("N") && items.get(i).getBachillerato().equals("N") && !items.get(i).getBachillerato().equals("N")) {
                 nivel = getResources().getString(R.string.nivel_B);
             }
 
             viewHolder.nivel.setText(nivel);
+            viewHolder.puntos.setText(items.get(i).getPuntos() + " " + getResources().getString(R.string.puntos));
             viewHolder.selectedName = items.get(i).getNombre();
             viewHolder.selectedLatitude = items.get(i).getLatitud();
             viewHolder.selectedLongitude = items.get(i).getLongitud();
@@ -771,6 +906,7 @@ public class FragmentBuscar extends Fragment {
             viewHolder.selectedEso = items.get(i).getEso();
             viewHolder.selectedBachillerato = items.get(i).getBachillerato();
             viewHolder.selectedPublico = items.get(i).getPublico();
+            viewHolder.selectedPuntos = items.get(i).getPuntos();
 
         }
     }
