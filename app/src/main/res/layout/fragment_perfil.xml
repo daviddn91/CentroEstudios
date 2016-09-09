@@ -162,11 +162,12 @@
                             android:text="@string/perfil_domicilio"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <EditText
+                        <AutoCompleteTextView
                             android:id="@+id/editTextBuscar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
+                            android:completionThreshold="3"
                             android:hint="@string/perfil_domicilio2" />
 
                     </LinearLayout>
@@ -215,11 +216,12 @@
                             android:text="@string/perfil_trabajo"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <EditText
+                        <AutoCompleteTextView
                             android:id="@+id/editTextBuscar2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
+                            android:completionThreshold="3"
                             android:hint="@string/perfil_trabajo2" />
 
                     </LinearLayout>

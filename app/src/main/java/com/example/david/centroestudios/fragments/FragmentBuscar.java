@@ -342,7 +342,7 @@ public class FragmentBuscar extends Fragment {
 
                         // Llamada API para direccion de casa
 
-                        if (direccioncasa != null || !direccioncasa.equals("")) {
+                        if (direccioncasa != null && !direccioncasa.equals("")) {
                             geocoder = new Geocoder(getActivity());
                             try {
                                 System.out.println("Valor del location = " + direccioncasa);
@@ -354,7 +354,7 @@ public class FragmentBuscar extends Fragment {
                                 e.printStackTrace();
                             }
 
-                            if (addressListCasa != null) {
+                            if (addressListCasa != null && !addressListCasa.equals("")) {
                                 address = addressListCasa.get(0);
                                 latLng = new LatLng(address.getLatitude(), address.getLongitude());
                                 System.out.println(address.getLatitude() + "-" + address.getLongitude());
@@ -363,7 +363,7 @@ public class FragmentBuscar extends Fragment {
                             }
                         }
 
-                        if (direcciontrabajo != null || !direcciontrabajo.equals("")) {
+                        if (direcciontrabajo != null && !direcciontrabajo.equals("")) {
                             geocoder = new Geocoder(getActivity());
                             try {
                                 System.out.println("Valor del location = " + direccioncasa);
@@ -375,7 +375,7 @@ public class FragmentBuscar extends Fragment {
                                 e.printStackTrace();
                             }
 
-                            if (addressListTrabajo != null) {
+                            if (addressListTrabajo != null && !addressListTrabajo.equals("")) {
                                 address = addressListTrabajo.get(0);
                                 latLng = new LatLng(address.getLatitude(), address.getLongitude());
                                 System.out.println(address.getLatitude() + "-" + address.getLongitude());

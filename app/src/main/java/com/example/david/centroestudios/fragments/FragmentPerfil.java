@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -15,12 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
@@ -36,6 +42,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +82,10 @@ public class FragmentPerfil extends Fragment {
     // Direcciones
     String direccioncasa;
     String direcciontrabajo;
+
+    // Autocompletar
+    private AutoCompleteTextView mACTVAddress;
+    private AutoCompleteTextView mACTVAddress2;
 
 
 
@@ -173,6 +184,16 @@ public class FragmentPerfil extends Fragment {
         // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        mACTVAddress = (AutoCompleteTextView) view.findViewById(R.id.editTextBuscar);
+
+        // Address AutoCompleteTextView
+        mACTVAddress.setAdapter(new AutoCompleteAdapter(getActivity()));
+
+        mACTVAddress2 = (AutoCompleteTextView) view.findViewById(R.id.editTextBuscar2);
+
+        // Address AutoCompleteTextView
+        mACTVAddress2.setAdapter(new AutoCompleteAdapter(getActivity()));
+
         /* Aqui empieza lo de actualizar switch y radiobuttons segun la BD */
 
         // Switch renta minima
@@ -259,8 +280,8 @@ public class FragmentPerfil extends Fragment {
 
         // Edit text con direcciones
 
-        EditText casa = (EditText) view.findViewById(R.id.editTextBuscar);
-        EditText trabajo = (EditText) view.findViewById(R.id.editTextBuscar2);
+        AutoCompleteTextView casa = (AutoCompleteTextView) view.findViewById(R.id.editTextBuscar);
+        AutoCompleteTextView trabajo = (AutoCompleteTextView) view.findViewById(R.id.editTextBuscar2);
 
         if (!direccioncasa.equals("")) {
             casa.setText(direccioncasa);
@@ -509,6 +530,89 @@ public class FragmentPerfil extends Fragment {
         }
         // Return the data from specified url
         return stream;
+    }
+
+    private class AutoCompleteAdapter extends ArrayAdapter<Address> implements Filterable {
+
+        private LayoutInflater mInflater;
+        private Geocoder mGeocoder;
+        private StringBuilder mSb = new StringBuilder();
+
+        public AutoCompleteAdapter(final Context context) {
+            super(context, -1);
+            mInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            mGeocoder = new Geocoder(context);
+        }
+
+        @Override
+        public View getView(final int position, final View convertView, final ViewGroup parent) {
+            final TextView tv;
+            if (convertView != null) {
+                tv = (TextView) convertView;
+            } else {
+                tv = (TextView) mInflater.inflate(android.R.layout.simple_selectable_list_item, parent, false);
+            }
+
+            tv.setText(createFormattedAddressFromAddress(getItem(position)));
+            return tv;
+        }
+
+        private String createFormattedAddressFromAddress(final Address address) {
+            mSb.setLength(0);
+            final int addressLineSize = address.getMaxAddressLineIndex();
+            for (int i = 0; i < addressLineSize; i++) {
+                mSb.append(address.getAddressLine(i));
+                if (i != addressLineSize - 1) {
+                    mSb.append(", ");
+                }
+            }
+            return mSb.toString();
+        }
+
+        @Override
+        public Filter getFilter() {
+            Filter myFilter = new Filter() {
+                @Override
+                protected FilterResults performFiltering(final CharSequence constraint) {
+                    List<Address> addressList = null;
+                    if (constraint != null) {
+                        try {
+                            addressList = mGeocoder.getFromLocationName((String) constraint, 5);
+                        } catch (IOException e) {
+                        }
+                    }
+                    if (addressList == null) {
+                        addressList = new ArrayList<Address>();
+                    }
+
+                    final FilterResults filterResults = new FilterResults();
+                    filterResults.values = addressList;
+                    filterResults.count = addressList.size();
+
+                    return filterResults;
+                }
+
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void publishResults(final CharSequence contraint, final FilterResults results) {
+                    clear();
+                    for (Address address : (List<Address>) results.values) {
+                        add(address);
+                    }
+                    if (results.count > 0) {
+                        notifyDataSetChanged();
+                    } else {
+                        notifyDataSetInvalidated();
+                    }
+                }
+
+                @Override
+                public CharSequence convertResultToString(final Object resultValue) {
+                    return resultValue == null ? "" : createFormattedAddressFromAddress((Address) resultValue);
+                }
+            };
+            return myFilter;
+        }
     }
 
 }
