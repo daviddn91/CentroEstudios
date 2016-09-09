@@ -366,8 +366,8 @@ public class FragmentBuscar extends Fragment {
                         if (direcciontrabajo != null && !direcciontrabajo.equals("")) {
                             geocoder = new Geocoder(getActivity());
                             try {
-                                System.out.println("Valor del location = " + direccioncasa);
-                                addressListTrabajo = geocoder.getFromLocationName(direccioncasa, 1);
+                                System.out.println("Valor del location = " + direcciontrabajo);
+                                addressListTrabajo = geocoder.getFromLocationName(direcciontrabajo, 1);
 
 
                             } catch (IOException e) {
