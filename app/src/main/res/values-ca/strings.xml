@@ -7,7 +7,7 @@
     <string name="buscar">Cercar escoles</string>
     <string name="contactar">Contactar amb el desenvolupador</string>
     <string name="faqs">Preguntes freqüents</string>
-    <string name="preferencias">Canviar les preferències</string>
+    <string name="preferencias">Preferències de cerca</string>
     <string name="title_activity_maps">Map</string>
     <string name="ayuda">Ajuda</string>
     <string name="cercanas">Escoles properes</string>

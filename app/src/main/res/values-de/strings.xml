@@ -69,7 +69,7 @@
     <string name="publico">Öffentliche Schule</string>
     <string name="privado">Privatschule</string>
     <string name="primaria">Grundschule</string>
-    <string name="preferencias">Einstellungen ändern</string>
+    <string name="preferencias">Sucheinstellungen</string>
     <string name="nombre">Name</string>
     <string name="noespublico">Privatschule</string>
     <string name="nivel_PE">Von Grundschule bis Hochschule</string>
