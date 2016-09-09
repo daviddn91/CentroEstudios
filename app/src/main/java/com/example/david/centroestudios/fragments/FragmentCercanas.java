@@ -756,15 +756,15 @@ public class FragmentCercanas extends Fragment {
             }
             else
             {
-                System.out.println("Else del GetHTTPData en FragmentBuscar");
+                System.out.println("Else del GetHTTPData en FragmentCercanas");
             }
         }catch(IOException e){
             e.printStackTrace();
-            System.out.println("Catch del GetHTTPData en FragmentBuscar");
+            System.out.println("Catch del GetHTTPData en FragmentCercanas");
             Toast.makeText(getActivity().getApplicationContext(), R.string.errorconexion, Toast.LENGTH_SHORT).show();
 
         }finally {
-            System.out.println("Finally del GetHTTPData en FragmentBuscar");
+            System.out.println("Finally del GetHTTPData en FragmentCercanas");
         }
         // Return the data from specified url
         return stream;
