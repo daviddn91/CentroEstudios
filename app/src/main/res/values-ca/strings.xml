@@ -96,7 +96,6 @@
     <string name="perfil_discapacidad2">Patiu algun tipus de discapacitat (+33%)?</string>
     <string name="perfil_renta2">Disposa d\'alguna ajuda per renda mínima?</string>
     <string name="perfil_monoparental2">Disposa d\'un carnet de família nombrosa o monoparental?</string>
-    <string name="centro_otro_familiar">Escola de la família</string>
     <string name="perfil_domicilio">Direcció de casa</string>
     <string name="perfil_domicilio2">Introdueix la direcció de casa</string>
     <string name="perfil_trabajo">Direcció del lloc de feina</string>
@@ -105,4 +104,5 @@
     <string name="faqs_respuesta6">Es concedeixen punts si la persona compleix unes condicions. Més informació a:\nhttp://queestudiar.gencat.cat/ca/preinscripcio/estudis/obligatoris/documentacio/</string>
     <string name="criterio_prioridad">Criteri de prioritat</string>
     <string name="puntos">punts</string>
+    <string name="centro_otro_familiar">A quina escola van anar altres familiars?</string>
 </resources>

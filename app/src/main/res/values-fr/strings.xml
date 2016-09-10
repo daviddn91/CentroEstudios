@@ -96,7 +96,7 @@
     <string name="perfil_discapacidad2">Souffrant d\'un handicap (+33%)?</string>
     <string name="perfil_renta2">Avez-vous une aide au revenu minimum?</string>
     <string name="perfil_monoparental2">Avez-vous une grande ou monoparentale famille?</string>
-    <string name="centro_otro_familiar">École de famille</string>
+    <string name="centro_otro_familiar">Dans quelle école était la famille?</string>
     <string name="perfil_domicilio">Adresse de domicile</string>
     <string name="perfil_domicilio2">Entrez votre adresse de domicile</string>
     <string name="perfil_trabajo">Adresse de travail</string>

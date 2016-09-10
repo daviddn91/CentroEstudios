@@ -96,7 +96,7 @@
     <string name="perfil_discapacidad2">¿Sufre algún tipo de discapacidad (+33%)?</string>
     <string name="perfil_renta2">¿Dispone de alguna ayuda por renta mínima?</string>
     <string name="perfil_monoparental2">¿Dispone de un carné de familia numerosa o monoparental?</string>
-    <string name="centro_otro_familiar">Escuela de la familia</string>
+    <string name="centro_otro_familiar">¿A qué escuela fueron otros familiares?</string>
     <string name="perfil_domicilio">Dirección de casa</string>
     <string name="perfil_domicilio2">Introduce la dirección de casa</string>
     <string name="perfil_trabajo">Dirección del lugar de trabajo</string>
