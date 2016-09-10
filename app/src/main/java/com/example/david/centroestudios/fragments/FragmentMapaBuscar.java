@@ -148,13 +148,13 @@ public class FragmentMapaBuscar extends Fragment {
                     MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.parseDouble(c.getString(12)), Double.parseDouble(c.getString(13)))).title(c.getString(1));
 
                     // Cambiar color del marker segun los puntos
-                    if (Integer.parseInt(c.getString(3)) < 35) {
+                    if (Integer.parseInt(c.getString(3)) <= 35) {
                         googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)));
                     }
                     else if (Integer.parseInt(c.getString(3)) > 35 && Integer.parseInt(c.getString(3)) < 65) {
                         googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                     }
-                    else if (Integer.parseInt(c.getString(3)) > 65) {
+                    else if (Integer.parseInt(c.getString(3)) >= 65) {
                         googleMap.addMarker(marker.snippet(c.getString(2) + "\n" + c.getString(4) + "\n" + c.getString(5) + "\n" + c.getString(11) + "\n" + c.getString(6) + "\n" + c.getString(3) + " " + getResources().getString(R.string.puntos)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     }
 

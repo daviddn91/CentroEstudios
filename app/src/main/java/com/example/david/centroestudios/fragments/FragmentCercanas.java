@@ -598,13 +598,13 @@ public class FragmentCercanas extends Fragment {
 
                                                     // Cambiar color del marker segun los puntos
 
-                                                    if (puntos < 35) {
+                                                    if (puntos <= 35) {
                                                         googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos));
                                                     }
                                                     else if (puntos > 35 && puntos < 65) {
                                                         googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                                                     }
-                                                    else if (puntos > 65) {
+                                                    else if (puntos >= 65) {
                                                         googleMap.addMarker(marker.snippet(datajson.getString("direccion") + "\n" + datajson.getString("telefono") + "\n" + datajson.getString("localidad") + "\n" + publico + "\n" + nivel + "\n" + criterio_prioridad + ": " + puntos + " " + traduccion_puntos).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                                                     }
                                                 }
