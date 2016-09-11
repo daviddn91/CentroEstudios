@@ -39,17 +39,17 @@
     <string name="boton_buscar">Search</string>
     <string name="nivel">Education level</string>
     <string name="bachillerato">High school</string>
-    <string name="eso">Secondary education</string>
+    <string name="eso">High school</string>
     <string name="primaria">Elementary education</string>
     <string name="infantil">Childhood education</string>
     <string name="colaboracion">Barcelona School of Informatics</string>
-    <string name="sinresultadoslocalizacion">There are not results for this location</string>
+    <string name="sinresultadoslocalizacion">There are no results for this location</string>
     <string name="introducelocalizacion">Please introduce a location to search schools</string>
     <string name="errorlocalizacion">There are some problems connecting with the Google location service. Check your connection or contact with the developer.</string>
     <string name="needinternet">We need internet connection to obtain schools information</string>
     <string name="errorconexion">Error obtaining schools. Please check the Internet connection or contact with david.delgado@est.fib.upc.edu.</string>
     <string name="gpspermiso">GPS permission allows us to access location data. Please allow in App Settings for additional functionality.</string>
-    <string name="sinresultadoscercanas">There are not results near of your location</string>
+    <string name="sinresultadoscercanas">There are no results near your location</string>
     <string name="mensajeenviado">Mensaje enviado correctamente.</string>
     <string name="introducemail">Please input a correct mail</string>
     <string name="llenacampos">Please fill all the fields to send the message</string>
@@ -57,7 +57,7 @@
     <string name="faq_pregunta1">Does the application save some information about the user?</string>
     <string name="telefono">Phone</string>
     <string name="activaelgps">Enable the GPS and the Internet connection to use the application</string>
-    <string name="faq_pregunta2">Where we obtain the information about the schools?</string>
+    <string name="faq_pregunta2">Where do we obtain the information about the schools?</string>
     <string name="faq_pregunta3">I have any suggestion about the app, is it possible to contact with the developer?</string>
     <string name="faq_respuesta1">No, all the information are locally stored and we won\'t send them to our servers.</string>
     <string name="faq_respuesta2">All the information is obtained from public documents from la Generalitat de Catalunya and the Barcelona Hall</string>
@@ -73,7 +73,7 @@
     <string name="nivel_B">Only high school</string>
     <string name="nivel_E">Only secondary education</string>
     <string name="nivel_EB">From secondary to high school</string>
-    <string name="nivel_I">Only childhood</string>
+    <string name="nivel_I">Only Kindergarten</string>
     <string name="nivel_IB">From childhood to high school</string>
     <string name="nivel_IE">From childhood to secondary</string>
     <string name="nivel_IP">From childhood to primary</string>
@@ -85,7 +85,7 @@
     <string name="nivel_P">Only primary education</string>
     <string name="nivel_PB">From primary to high school</string>
     <string name="nivel_PE">From primary to secondary</string>
-    <string name="centro_otro_hijo">Brothers in school?</string>
+    <string name="centro_otro_hijo">Do you have brothers or sisters at school?</string>
     <string name="country_prompt">Choose a country</string>
     <string name="perfil">User profile</string>
     <string name="perfil_discapacidad">Disability</string>
@@ -96,13 +96,13 @@
     <string name="perfil_discapacidad2">Do you suffer a disability (+33%)?</string>
     <string name="perfil_renta2">Do you have a minimum income assistance?</string>
     <string name="perfil_monoparental2">Do you have large family or single-parent family?</string>
-    <string name="centro_otro_familiar">What school were the family?</string>
+    <string name="centro_otro_familiar">Which school did the family study?</string>
     <string name="perfil_domicilio">Home address</string>
     <string name="perfil_domicilio2">Enter your home address</string>
     <string name="perfil_trabajo">Workplace address</string>
     <string name="perfil_trabajo2">Enter your workplace address</string>
-    <string name="faqs_pregunta6">How the priority criteria work?</string>
-    <string name="faqs_respuesta6">If the person meets conditions, it is granted some points. More information: \nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
+    <string name="faqs_pregunta6">How does the priority criteria work?</string>
     <string name="criterio_prioridad">Priority criteria</string>
     <string name="puntos">points</string>
+    <string name="faqs_respuesta6">If the person gets conditions, it is granted some points. More information: \nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
 </resources>

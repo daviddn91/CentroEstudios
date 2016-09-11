@@ -11,7 +11,7 @@
     <string name="buscar">Schule suchen</string>
     <string name="castellano">Spanisch</string>
     <string name="catalan">Katalanisch</string>
-    <string name="centro_otro_hijo">Haben Sie Brüder in der Schule?</string>
+    <string name="centro_otro_hijo">Haben Sie Brüder oder Schwestern in der Schule?</string>
     <string name="country_prompt">Choose a country</string>
     <string name="cercanas">Nähe Schulen</string>
     <string name="colaboracion">Barcelona Fakultät für Informatik</string>
@@ -24,7 +24,7 @@
     <string name="eso">Hochschule</string>
     <string name="espublico">Öffentliche Schule</string>
     <string name="estas_aqui">Sie sind hier</string>
-    <string name="faq_pregunta1">Speichert die Anwendung einige Informationen über den Anwender?</string>
+    <string name="faq_pregunta1">Speichert die Anwendung einige Informationüber den Anwender?</string>
     <string name="faq_pregunta2">Wo werden die Schuldaten erhalten?</string>
     <string name="faq_pregunta3">Ich habe einen Vorschlag oder eine Beschwerde über die Anwendung, ist es möglich mit Ihnen Kontakt aufnehmen?</string>
     <string name="faq_pregunta4">Welchen Nutzen hat der Entwickler mit dieser Anwendung?</string>
@@ -43,7 +43,6 @@
     <string name="infantil1">Kindergarten</string>
     <string name="infantil2">Kindliche Bildung</string>
     <string name="ingles">Englisch</string>
-    <string name="introducelocalizacion">Bitte geben Sie einen Speicherort für in der Nähe Forschungszentren zu suchen</string>
     <string name="introducemail">Bitte geben Sie eine korrekte E-Mail weltlich</string>
     <string name="laico">Laie</string>
     <string name="llenacampos">Bitte füllen Sie alle Felder, um die Nachricht zu senden</string>
@@ -92,17 +91,18 @@
     <string name="perfil_renta">Hilfe für Mindesteinkommen</string>
     <string name="perfil_monoparental">Große Familien oder Alleinerziehende</string>
     <string name="perfil_cronica">Chronische Krankheit</string>
-    <string name="perfil_cronica2">Hat das Kind an einer chronischen Krankheit leidet?</string>
-    <string name="perfil_discapacidad2">Das Leiden mit einer Behinderung (+33%)?</string>
-    <string name="perfil_renta2">Haben Sie ein Mindesteinkommen Hilfe?</string>
+    <string name="perfil_cronica2">Leidet das Kind an einer chronischen Krankheit?</string>
+    <string name="perfil_discapacidad2">Leiden mit einer Behinderung (+33%)?</string>
+    <string name="perfil_renta2">Haben Sie ein Mindesteinkommende Hilfe?</string>
     <string name="perfil_monoparental2">Haben Sie eine große oder Ein-Eltern-Familie?</string>
-    <string name="centro_otro_familiar">In Welcher Schule war die Familie?</string>
-    <string name="perfil_domicilio">Heimatadresse</string>
-    <string name="perfil_domicilio2">Geben Sie Ihre Heimatadresse</string>
+    <string name="centro_otro_familiar">In welcher Schule studierte die Familie?</string>
+    <string name="perfil_domicilio">Hausadresse</string>
+    <string name="perfil_domicilio2">Geben Sie Ihre Hausadresse</string>
     <string name="perfil_trabajo">Arbeitsplatz-Adresse</string>
     <string name="perfil_trabajo2">Geben Sie Ihren Arbeitsplatz-Adresse</string>
-    <string name="faqs_pregunta6">Wie die Prioritätskriterien Arbeit?</string>
+    <string name="faqs_pregunta6">Wie arbeiten die Prioritätskriterien?</string>
     <string name="faqs_respuesta6">Wenn die Person Bedingungen erfüllt, wird es einige Punkte gewährt. Weitere Informationen: \nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
     <string name="criterio_prioridad">Prioritätskriterien</string>
     <string name="puntos">Punkte</string>
+    <string name="introducelocalizacion">Bitte geben Sie einen Speicherort um Forschungszentren in der Nähe zu suchen</string>
 </resources>
