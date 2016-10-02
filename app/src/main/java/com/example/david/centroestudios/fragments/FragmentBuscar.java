@@ -84,6 +84,9 @@ public class FragmentBuscar extends Fragment {
 
     SQLiteDatabase db;
 
+    double latitud = 0.0;
+    double longitud = 0.0;
+
     // Perfil del usuario
 
     Integer rentaminima;
@@ -267,18 +270,18 @@ public class FragmentBuscar extends Fragment {
 
                         List<CentrosEstudios> items = new ArrayList<>();
 
-                        double latitud = address.getLatitude();
-                        double longitud = address.getLongitude();
-                        double longitudmin = longitud - 0.05;
+                        latitud = address.getLatitude();
+                        longitud = address.getLongitude();
+                        double longitudmin = longitud - 0.01;
                         String lonmin = String.valueOf(longitudmin);
                         lonmin = lonmin.replace(".", ",");
-                        double longitudmax = longitud + 0.05;
+                        double longitudmax = longitud + 0.01;
                         String lonmax = String.valueOf(longitudmax);
                         lonmax = lonmax.replace(".", ",");
-                        double latitudmin = latitud - 0.05;
+                        double latitudmin = latitud - 0.01;
                         String latmin = String.valueOf(latitudmin);
                         latmin = latmin.replace(".", ",");
-                        double latitudmax = latitud + 0.05;
+                        double latitudmax = latitud + 0.01;
                         String latmax = String.valueOf(latitudmax);
                         latmax = latmax.replace(".", ",");
 
@@ -512,7 +515,15 @@ public class FragmentBuscar extends Fragment {
                                         @Override
                                         public int compare(CentrosEstudios escuela1, CentrosEstudios escuela2)
                                         {
-                                            return  escuela2.getPuntos().compareTo(escuela1.getPuntos());
+                                            int stringResult = escuela2.getPuntos().compareTo(escuela1.getPuntos());
+                                            if (stringResult == 0) {
+                                                // Comprobamos latitud y longitud
+                                                stringResult = String.valueOf((Math.abs(latitud-Double.parseDouble(escuela1.getLatitud()))+Math.abs(longitud-Double.parseDouble(escuela1.getLongitud())))).compareTo(String.valueOf((Math.abs(latitud-Double.parseDouble(escuela2.getLatitud()))+ Math.abs(longitud-Double.parseDouble(escuela2.getLongitud())))));
+                                                System.out.println("Nombre: " + escuela1.getNombre() + " Valor: " + (Math.abs(latitud-Double.parseDouble(escuela1.getLatitud()))+Math.abs(longitud-Double.parseDouble(escuela1.getLongitud()))));
+                                                System.out.println("Nombre: " + escuela2.getNombre() + " Valor: " + (Math.abs(latitud-Double.parseDouble(escuela2.getLatitud()))+Math.abs(longitud-Double.parseDouble(escuela2.getLongitud()))));
+                                                System.out.println("StringResult: " + stringResult);
+                                            }
+                                            return stringResult;
                                         }
                                     });
 
