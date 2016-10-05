@@ -2,14 +2,19 @@ package com.example.david.centroestudios.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.david.centroestudios.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +49,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -90,7 +98,6 @@ public class FragmentPerfil extends Fragment {
 
 
     ArrayList<String> al = new ArrayList<>();
-
 
 
     private OnFragmentInteractionListener mListener;
@@ -197,6 +204,11 @@ public class FragmentPerfil extends Fragment {
 
         // Address AutoCompleteTextView
         mACTVAddress2.setAdapter(new AutoCompleteAdapter(getActivity()));
+
+        Geocoder geocoder = new Geocoder(getActivity());
+
+        requestPermission();
+        requestPermission2();
 
         /* Aqui empieza lo de actualizar switch y radiobuttons segun la BD */
 
@@ -339,8 +351,65 @@ public class FragmentPerfil extends Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            //your codes here
-            String data = GetHTTPData("http://raspi.cat/api.php?all=1");
+
+            String data = "";
+
+            boolean tienecasa = false;
+            boolean tienetrabajo = false;
+            boolean tieneusuario = false;
+
+
+
+            List<Address> addressList = null;
+
+            // Primero ordeno por dirección de casa
+            // Luego ordeno por dirección del trabajo si no tiene casa o trabajo
+            // Luego ordeno por la posición del móvil si no tiene casa o trabajo
+            // Luego ordeno alfabéticamente para los que quedan
+
+            if (direccioncasa.length()>3) {
+                System.out.println("Entra con direcc de casa");
+                try {
+                    addressList = geocoder.getFromLocationName(direccioncasa, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Fallo en el geocoder obteniendo direccion de casa en Fragment Perfil");
+                }
+                if (addressList != null) {
+                    Address address = addressList.get(0);
+                    data = GetHTTPData("http://raspi.cat/api.php?allcoordenadas=1&longitud="+address.getLongitude()+"&latitud="+address.getLatitude());
+                    tienecasa = true;
+                }
+            }
+            if (direcciontrabajo.length() > 3 && !tienecasa) {
+                System.out.println("Entra con direcc de trabajo");
+                try {
+                    addressList = geocoder.getFromLocationName(direcciontrabajo, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Fallo en el geocoder obteniendo direccion de trabajo en Fragment Perfil");
+                }
+                if (addressList != null) {
+                    Address address = addressList.get(0);
+                    data = GetHTTPData("http://raspi.cat/api.php?allcoordenadas=1&longitud="+address.getLongitude()+"&latitud="+address.getLatitude());
+                    tienetrabajo = true;
+                }
+            }
+
+            if (!tienecasa && !tienetrabajo) {
+                System.out.println("Entra en el que no tiene nada pero si coordenadas");
+                LocationManager lm = (LocationManager) getActivity().getApplicationContext()
+                        .getSystemService(Context.LOCATION_SERVICE);
+
+                if (checkPermission()) {
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    data = GetHTTPData("http://raspi.cat/api.php?allcoordenadas=1&longitud="+location.getLongitude()+"&latitud="+location.getLatitude());
+                    tieneusuario = true;
+                }
+            }
+            if (!tienecasa && !tienetrabajo && !tieneusuario) {
+                data = GetHTTPData("http://raspi.cat/api.php?all=1");
+            }
 
             if (data != null && !data.isEmpty()) {
                 // AQUI IR DIVIDIENDO EL STRING Y HACER UN BUCLE PARA PASAR A JSON
@@ -348,14 +417,12 @@ public class FragmentPerfil extends Fragment {
 
                 //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
 
-
                 JSONObject datajson;
                 try {
                     System.out.println("Data antes: "+ data);
                     data = data.replace("[","");
                     data = data.replace("]","");
                     String[] parts = data.split("fininfo");
-                    ArrayList<String> lista = new ArrayList();
 
                     for (int i = 0; i < parts.length; i++) {
                         if (!parts[i].equals("\"}")) {
@@ -364,13 +431,11 @@ public class FragmentPerfil extends Fragment {
                             parte = parte.replace("\"},", "");
 
                             datajson = new JSONObject(parte);
-                            String id = datajson.getString("id");
                             String nombre = datajson.getString("nombre");
                             String localidad = datajson.getString("localidad");
-                            if (!id.equals(null) && !id.isEmpty() && !nombre.equals(null) && !nombre.isEmpty() && !localidad.equals(null) && !localidad.isEmpty()) {
+                            if (!nombre.equals(null) && !nombre.equals("null") && !nombre.isEmpty() && !localidad.equals(null) && !localidad.isEmpty() && !localidad.equals("null")) {
                                 al.add(nombre + " (" + localidad + ")");
                             }
-
                         }
                     }
                     if (al.size() < 2) {
@@ -385,9 +450,7 @@ public class FragmentPerfil extends Fragment {
         }
 
 
-
         // Seteamos los valores del spinner
-
 
         String[] arraySpinner = al.toArray(new String[al.size()]);
 
@@ -645,6 +708,33 @@ public class FragmentPerfil extends Fragment {
                 }
             };
             return myFilter;
+        }
+    }
+
+    private void requestPermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)){
+
+            Toast.makeText(getActivity().getApplicationContext(),R.string.gpspermiso, Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
+        }
+    }
+
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission2(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.INTERNET)){
+
+            Toast.makeText(getActivity().getApplicationContext(),R.string.gpspermiso, Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
         }
     }
 
