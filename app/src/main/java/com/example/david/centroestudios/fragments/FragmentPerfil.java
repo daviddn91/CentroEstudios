@@ -89,8 +89,10 @@ public class FragmentPerfil extends Fragment {
     String direccionescuelaold;
 
     // Direcciones
-    String direccioncasa;
-    String direcciontrabajo;
+    String direccioncasa = "";
+    String direcciontrabajo = "";
+    String direccioncasaold = "";
+    String direcciontrabajoold = "";
 
     // Autocompletar
     private AutoCompleteTextView mACTVAddress;
@@ -337,8 +339,11 @@ public class FragmentPerfil extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    direccioncasaold = direccioncasa;
                 }else {
-                    actualizaSpinner();
+                    if (!direccioncasaold.equals(direccioncasa)) {
+                        actualizaSpinner();
+                    }
                     //Toast.makeText(getActivity(), "Focus perdido, actualiza spinner", Toast.LENGTH_LONG).show();
                 }
             }
@@ -349,8 +354,11 @@ public class FragmentPerfil extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    direcciontrabajoold = direcciontrabajo;
                 }else {
-                    actualizaSpinner();
+                    if (!direcciontrabajoold.equals(direcciontrabajo)) {
+                        actualizaSpinner();
+                    }
                     //Toast.makeText(getActivity(), "Focus perdido, actualiza spinner", Toast.LENGTH_LONG).show();
                 }
             }
