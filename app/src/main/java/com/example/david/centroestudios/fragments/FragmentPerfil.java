@@ -311,6 +311,7 @@ public class FragmentPerfil extends Fragment {
             public void afterTextChanged(Editable s) {
                 db.execSQL("DELETE FROM perfil WHERE id = 'direccioncasa';");
                 db.execSQL("INSERT INTO perfil(id, textbox1) values ('direccioncasa','"+s.toString()+"')");
+                direccioncasa = s.toString();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -323,6 +324,7 @@ public class FragmentPerfil extends Fragment {
             public void afterTextChanged(Editable s) {
                 db.execSQL("DELETE FROM perfil WHERE id = 'direcciontrabajo';");
                 db.execSQL("INSERT INTO perfil(id, textbox1) values ('direcciontrabajo','"+s.toString()+"')");
+                direcciontrabajo = s.toString();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -330,6 +332,29 @@ public class FragmentPerfil extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
+        // AQUI QUE CUANDO PIERDA EL FOCUS ACTUALICE EL SPINNER
+        casa.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                }else {
+                    actualizaSpinner();
+                    //Toast.makeText(getActivity(), "Focus perdido, actualiza spinner", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        // AQUI QUE CUANDO PIERDA EL FOCUS ACTUALICE EL SPINNER SI CASA NO ESTA INFORMADO
+        trabajo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                }else {
+                    actualizaSpinner();
+                    //Toast.makeText(getActivity(), "Focus perdido, actualiza spinner", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         // Spinner con los centros
@@ -382,7 +407,6 @@ public class FragmentPerfil extends Fragment {
                 }
             }
             if (direcciontrabajo.length() > 3 && !tienecasa) {
-                System.out.println("Entra con direcc de trabajo");
                 try {
                     addressList = geocoder.getFromLocationName(direcciontrabajo, 1);
                 } catch (IOException e) {
@@ -419,7 +443,7 @@ public class FragmentPerfil extends Fragment {
 
                 JSONObject datajson;
                 try {
-                    System.out.println("Data antes: "+ data);
+                    //System.out.println("Data antes: "+ data);
                     data = data.replace("[","");
                     data = data.replace("]","");
                     String[] parts = data.split("fininfo");
@@ -441,7 +465,7 @@ public class FragmentPerfil extends Fragment {
                     if (al.size() < 2) {
                         Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoscercanas, Toast.LENGTH_SHORT).show();
                     }
-                    System.out.println("Fin de la carga de todos los centros");
+                    //System.out.println("Fin de la carga de todos los centros");
                 }
                 catch (JSONException e) {
                     System.out.println("JSON Exception");
@@ -461,8 +485,8 @@ public class FragmentPerfil extends Fragment {
         spinner2.setAdapter(adapter);
 
 
-        System.out.println("idescuela: " + idescuela);
-        System.out.println("idescuelaold: " + idescuelaold);
+        //System.out.println("idescuela: " + idescuela);
+        //System.out.println("idescuelaold: " + idescuelaold);
 
         // Condicion para evitar null pointer en el spinner cuando no hay internet
         if (al.size() < 2) {
@@ -483,7 +507,7 @@ public class FragmentPerfil extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
 
-                System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
+                //System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
 
                 // Condicion para evitar machacar datos cuando no hay internet
                 if (al.size() > 1) {
@@ -498,15 +522,16 @@ public class FragmentPerfil extends Fragment {
 
                     db.execSQL("DELETE FROM perfil WHERE id = 'hermanosescolarizados';");
                     db.execSQL("INSERT INTO perfil(id, spinner1,spinner2, spinner3) values ('hermanosescolarizados','" + Integer.toString(parent.getSelectedItemPosition()) + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
-                    System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('hermanosescolarizados','" + parent.getSelectedItemPosition() + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
+                    //System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('hermanosescolarizados','" + parent.getSelectedItemPosition() + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
                 }
+                /*
                 if (parent.getSelectedItemPosition() == 0) {
                     System.out.println("Es la posicion 0");
                 }
                 else {
                     System.out.println("No es el 0");
                     //db.execSQL("UPDATE allcentros SET seleccionado = 1 WHERE nombre = '"+ parent.getItemAtPosition(position).toString() + "';");
-                }
+                }*/
             }
 
             @Override
@@ -520,7 +545,7 @@ public class FragmentPerfil extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
 
-                System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
+                //System.out.println("Spinner: " + parent.getItemAtPosition(position).toString());
 
                 // Condicion para evitar machacar datos cuando no hay internet
                 if (al.size() > 1) {
@@ -534,17 +559,17 @@ public class FragmentPerfil extends Fragment {
 
                     db.execSQL("DELETE FROM perfil WHERE id = 'escuelafamilia';");
                     db.execSQL("INSERT INTO perfil(id, spinner1,spinner2, spinner3) values ('escuelafamilia','" + Integer.toString(parent.getSelectedItemPosition()) + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
-                    System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('escuelafamilia'," + parent.getSelectedItemPosition() + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
+                    //System.out.println("INSERT INTO perfil(id, spinner1, spinner2, spinner3) values ('escuelafamilia'," + parent.getSelectedItemPosition() + "','" + parent.getItemAtPosition(position).toString() + "','" + parent.getItemAtPosition(position).toString() + "')");
 
                 }
-
+                /*
                 if (parent.getSelectedItemPosition() == 0) {
                     System.out.println("Es la posicion 0");
                 }
                 else {
                     System.out.println("No es el 0");
                     //db.execSQL("UPDATE allcentros SET seleccionado = 1 WHERE nombre = '"+ parent.getItemAtPosition(position).toString() + "';");
-                }
+                }*/
             }
 
             @Override
@@ -564,6 +589,145 @@ public class FragmentPerfil extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void actualizaSpinner() {
+
+        Geocoder geocoder = new Geocoder(getActivity());
+
+        // Spinner con los centros
+
+        Spinner spinner =  (Spinner) getActivity().findViewById(R.id.spinner);
+
+        Spinner spinner2 = (Spinner) getActivity().findViewById(R.id.spinner2);
+
+
+        // Descargamos los centros
+
+        al = new ArrayList<>();
+
+        al.add("-");
+
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            String data = "";
+
+            boolean tienecasa = false;
+            boolean tienetrabajo = false;
+            boolean tieneusuario = false;
+
+
+
+            List<Address> addressList = null;
+
+            // Primero ordeno por dirección de casa
+            // Luego ordeno por dirección del trabajo si no tiene casa o trabajo
+            // Luego ordeno por la posición del móvil si no tiene casa o trabajo
+            // Luego ordeno alfabéticamente para los que quedan
+
+            if (direccioncasa.length()>3) {
+                System.out.println("Entra con direcc de casa");
+                try {
+                    //System.out.println("Direccion casa: " + direccioncasa);
+                    addressList = geocoder.getFromLocationName(direccioncasa, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //System.out.println("Fallo en el geocoder obteniendo direccion de casa en Fragment Perfil");
+                }
+                if (addressList != null) {
+                    Address address = addressList.get(0);
+                    data = GetHTTPData("http://raspi.cat/api.php?allcoordenadas=1&longitud="+address.getLongitude()+"&latitud="+address.getLatitude());
+                    tienecasa = true;
+                }
+            }
+            if (direcciontrabajo.length() > 3 && !tienecasa) {
+                //System.out.println("Entra con direcc de trabajo");
+                try {
+                    addressList = geocoder.getFromLocationName(direcciontrabajo, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //System.out.println("Fallo en el geocoder obteniendo direccion de trabajo en Fragment Perfil");
+                }
+                if (addressList != null) {
+                    Address address = addressList.get(0);
+                    data = GetHTTPData("http://raspi.cat/api.php?allcoordenadas=1&longitud="+address.getLongitude()+"&latitud="+address.getLatitude());
+                    tienetrabajo = true;
+                }
+            }
+
+            if (!tienecasa && !tienetrabajo) {
+                //System.out.println("Entra en el que no tiene nada pero si coordenadas");
+                LocationManager lm = (LocationManager) getActivity().getApplicationContext()
+                        .getSystemService(Context.LOCATION_SERVICE);
+
+                if (checkPermission()) {
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    data = GetHTTPData("http://raspi.cat/api.php?allcoordenadas=1&longitud="+location.getLongitude()+"&latitud="+location.getLatitude());
+                    tieneusuario = true;
+                }
+            }
+            if (!tienecasa && !tienetrabajo && !tieneusuario) {
+                data = GetHTTPData("http://raspi.cat/api.php?all=1");
+            }
+
+            if (data != null && !data.isEmpty()) {
+                // AQUI IR DIVIDIENDO EL STRING Y HACER UN BUCLE PARA PASAR A JSON
+
+
+                //AuthMsg msg = new Gson().fromJson(data, AuthMsg.class);
+
+                JSONObject datajson;
+                try {
+                    //System.out.println("Data antes: "+ data);
+                    data = data.replace("[","");
+                    data = data.replace("]","");
+                    String[] parts = data.split("fininfo");
+
+                    for (int i = 0; i < parts.length; i++) {
+                        if (!parts[i].equals("\"}")) {
+                            //System.out.println("Parte cortada " + i + ": " + parts[i]);
+                            String parte = parts[i] + "fininfo\"}";
+                            parte = parte.replace("\"},", "");
+
+                            datajson = new JSONObject(parte);
+                            String nombre = datajson.getString("nombre");
+                            String localidad = datajson.getString("localidad");
+                            if (!nombre.equals(null) && !nombre.equals("null") && !nombre.isEmpty() && !localidad.equals(null) && !localidad.isEmpty() && !localidad.equals("null")) {
+                                al.add(nombre + " (" + localidad + ")");
+                            }
+                        }
+                    }
+                    if (al.size() < 2) {
+                        Toast.makeText(getActivity().getApplicationContext(), R.string.sinresultadoscercanas, Toast.LENGTH_SHORT).show();
+                    }
+                    //System.out.println("Fin de la carga de todos los centros");
+                }
+                catch (JSONException e) {
+                    System.out.println("JSON Exception");
+                }
+            }
+        }
+
+
+        // Seteamos los valores del spinner
+
+        String[] arraySpinner = al.toArray(new String[al.size()]);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_selectable_list_item, arraySpinner);
+
+        spinner.setAdapter(adapter);
+        spinner2.setAdapter(adapter);
+
+        // Marcamos el seleccionado
+
+        spinner.setSelection(Integer.parseInt("0"));
+        spinner2.setSelection(Integer.parseInt("0"));
     }
 
     @Override
