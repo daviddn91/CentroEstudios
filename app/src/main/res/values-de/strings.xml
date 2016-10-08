@@ -105,4 +105,8 @@
     <string name="criterio_prioridad">Prioritätskriterien</string>
     <string name="puntos">Punkte</string>
     <string name="introducelocalizacion">Bitte geben Sie einen Speicherort um Forschungszentren in der Nähe zu suchen</string>
+
+    <string-array name="country_arrays">
+        <item>-</item>
+    </string-array>
 </resources>

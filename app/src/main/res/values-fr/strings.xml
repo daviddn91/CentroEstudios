@@ -105,4 +105,7 @@
     <string name="faqs_respuesta6">Si la personne remplit les conditions, il est accordé quelques points. Plus d\'informations:\nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
     <string name="criterio_prioridad">Critères de priorité</string>
     <string name="puntos">points</string>
+    <string-array name="country_arrays">
+        <item>-</item>
+    </string-array>
 </resources>

@@ -105,4 +105,8 @@
     <string name="criterio_prioridad">Priority criteria</string>
     <string name="puntos">points</string>
     <string name="faqs_respuesta6">If the person gets conditions, it is granted some points. More information: \nhttp://queestudiar.gencat.cat/es/preinscripcio/estudis/obligatoris/documentacio/</string>
+
+    <string-array name="country_arrays">
+        <item>-</item>
+    </string-array>
 </resources>

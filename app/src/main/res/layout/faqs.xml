@@ -23,7 +23,6 @@
             android:text="Pregunta"
             android:textColor="#000000"
             android:id="@+id/pregunta"
-            android:layout_toRightOf="@+id/imagen"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -37,7 +36,6 @@
             android:text="Respuesta"
             android:layout_below="@+id/pregunta"
             android:id="@+id/respuesta"
-            android:layout_toRightOf="@+id/imagen"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp"/>

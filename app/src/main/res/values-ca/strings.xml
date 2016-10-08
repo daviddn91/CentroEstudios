@@ -85,7 +85,7 @@
     <string name="nivel_IP">D\'infantil a primària</string>
     <string name="nivel_J">Només jardí d\'infància</string>
     <string name="nivel_JB">De jardí d\'infància fins batxillerat</string>
-    <string name="centro_otro_hijo" translatable="false">Té germans escolaritzats?</string>
+    <string name="centro_otro_hijo">Té germans escolaritzats?</string>
     <string name="country_prompt">Choose a country</string>
     <string name="perfil">Perfil de l\'usuari</string>
     <string name="perfil_discapacidad">Discapacitat</string>
@@ -105,4 +105,8 @@
     <string name="criterio_prioridad">Criteri de prioritat</string>
     <string name="puntos">punts</string>
     <string name="centro_otro_familiar">A quina escola van anar altres familiars?</string>
+
+    <string-array name="country_arrays">
+        <item>-</item>
+    </string-array>
 </resources>
