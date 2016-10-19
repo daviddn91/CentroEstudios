@@ -97,7 +97,7 @@
             android:background="#2b6f87"
             android:minHeight="50dp"
             android:minWidth="50dp"
-            android:clickable="true" />
+            android:clickable="false" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
