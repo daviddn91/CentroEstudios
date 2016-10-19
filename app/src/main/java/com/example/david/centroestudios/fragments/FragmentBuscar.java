@@ -272,16 +272,16 @@ public class FragmentBuscar extends Fragment {
 
                         latitud = address.getLatitude();
                         longitud = address.getLongitude();
-                        double longitudmin = longitud - 0.01;
+                        double longitudmin = longitud - 0.015;
                         String lonmin = String.valueOf(longitudmin);
                         lonmin = lonmin.replace(".", ",");
-                        double longitudmax = longitud + 0.01;
+                        double longitudmax = longitud + 0.015;
                         String lonmax = String.valueOf(longitudmax);
                         lonmax = lonmax.replace(".", ",");
-                        double latitudmin = latitud - 0.01;
+                        double latitudmin = latitud - 0.015;
                         String latmin = String.valueOf(latitudmin);
                         latmin = latmin.replace(".", ",");
-                        double latitudmax = latitud + 0.01;
+                        double latitudmax = latitud + 0.015;
                         String latmax = String.valueOf(latitudmax);
                         latmax = latmax.replace(".", ",");
 
