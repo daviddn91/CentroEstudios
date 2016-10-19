@@ -165,6 +165,8 @@ public class FragmentCercanas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        requestPermission();
+        requestPermission2();
         LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;
         boolean network_enabled = false;
@@ -191,8 +193,6 @@ public class FragmentCercanas extends Fragment {
         // Esta linea es importante y hace que quede marcada la primera opcion del menu cuando abramos la app
         navigationView.getMenu().getItem(1).setChecked(true);
 
-        requestPermission();
-        requestPermission2();
         mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -205,7 +205,16 @@ public class FragmentCercanas extends Fragment {
         }
 
         googleMap = mMapView.getMap();
+
         if (checkPermission()) {
+            System.out.println("Check");
+        }
+        else {
+            System.out.println("No check");
+        }
+
+        if (checkPermission()) {
+            System.out.println("Tengo permisos");
             googleMap.setMyLocationEnabled(true);
             if (googleMap != null) {
 
@@ -358,7 +367,7 @@ public class FragmentCercanas extends Fragment {
                             if (direccioncasa != null && !direccioncasa.equals("")) {
                                 Geocoder geocoder = new Geocoder(getActivity());
                                 try {
-                                    System.out.println("Valor del location = " + direccioncasa);
+                                    //System.out.println("Valor del location = " + direccioncasa);
                                     addressListCasa = geocoder.getFromLocationName(direccioncasa, 1);
 
 
@@ -370,7 +379,7 @@ public class FragmentCercanas extends Fragment {
                                 if (addressListCasa != null && !addressListCasa.equals("")) {
                                     Address address = addressListCasa.get(0);
                                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                                    System.out.println(address.getLatitude() + "-" + address.getLongitude());
+                                    //System.out.println(address.getLatitude() + "-" + address.getLongitude());
                                     latitudcasa = address.getLatitude();
                                     longitudcasa = address.getLongitude();
                                 }
@@ -379,7 +388,7 @@ public class FragmentCercanas extends Fragment {
                             if (direcciontrabajo != null && !direcciontrabajo.equals("")) {
                                 Geocoder geocoder = new Geocoder(getActivity());
                                 try {
-                                    System.out.println("Valor del location = " + direcciontrabajo);
+                                    //System.out.println("Valor del location = " + direcciontrabajo);
                                     addressListTrabajo = geocoder.getFromLocationName(direcciontrabajo, 1);
 
 
@@ -391,7 +400,7 @@ public class FragmentCercanas extends Fragment {
                                 if (addressListTrabajo != null && !addressListTrabajo.equals("")) {
                                     Address address = addressListTrabajo.get(0);
                                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                                    System.out.println(address.getLatitude() + "-" + address.getLongitude());
+                                    //System.out.println(address.getLatitude() + "-" + address.getLongitude());
                                     latitudtrabajo = address.getLatitude();
                                     longitudtrabajo = address.getLongitude();
                                 }
@@ -423,7 +432,7 @@ public class FragmentCercanas extends Fragment {
 
                                     JSONObject datajson;
                                     try {
-                                        System.out.println("Data antes: "+ data);
+                                        //System.out.println("Data antes: "+ data);
                                         data = data.replace("[","");
                                         data = data.replace("]","");
                                         String[] parts = data.split("fininfo");
@@ -431,7 +440,7 @@ public class FragmentCercanas extends Fragment {
 
                                         for (int i = 0; i < parts.length; i++) {
                                             if (!parts[i].equals("\"}")) {
-                                                System.out.println("Parte cortada " + i + ": " + parts[i]);
+                                                //System.out.println("Parte cortada " + i + ": " + parts[i]);
                                                 String parte = parts[i] + "fininfo\"}";
                                                 parte = parte.replace("\"},", "");
 
@@ -510,10 +519,10 @@ public class FragmentCercanas extends Fragment {
 
                                                 Boolean inserta = true;
 
-                                                System.out.println("Nombre: " + datajson.getString("nombre"));
-                                                System.out.println("Centro publico: " + filtrocentropublico);
-                                                System.out.println("Centro privado: " + filtrocentroprivado);
-                                                System.out.println("Que nos llega: " + datajson.getString("publico"));
+                                                //System.out.println("Nombre: " + datajson.getString("nombre"));
+                                                //System.out.println("Centro publico: " + filtrocentropublico);
+                                                //System.out.println("Centro privado: " + filtrocentroprivado);
+                                                //System.out.println("Que nos llega: " + datajson.getString("publico"));
 
                                                 if (filtrocentropublico.equals(0) && filtrocentroprivado.equals(0)) {
                                                     inserta = false;
@@ -711,7 +720,10 @@ public class FragmentCercanas extends Fragment {
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
+
+        return;
     }
+
 
     private boolean checkPermission(){
         int result = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION);
@@ -727,6 +739,8 @@ public class FragmentCercanas extends Fragment {
         } else {
             ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.INTERNET},1);
         }
+
+        return;
     }
 
     public String GetHTTPData(String urlString){

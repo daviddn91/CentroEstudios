@@ -3,12 +3,15 @@ package com.example.david.centroestudios;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +25,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.david.centroestudios.fragments.FragmentBuscar;
 import com.example.david.centroestudios.fragments.FragmentCercanas;
@@ -46,6 +50,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestPermission();
+        requestPermission2();
+        while (!checkPermission()) {
+
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -81,7 +90,8 @@ public class MainActivity extends AppCompatActivity
         /* Base de datos */
         db = openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
 
-        Cursor c = db.rawQuery("SELECT * FROM centros WHERE id = '123456789'", null);
+        Cursor c = db.rawQuery("SELECT * FROM centros WHERE id = '12345678'", null);
+
         if(!c.moveToFirst())
         {
             db.execSQL("DROP TABLE perfil");
@@ -102,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         // Creamos la tabla con la info de los colegios y borramos los que sean muy antiguos
         db.execSQL("CREATE TABLE IF NOT EXISTS centros (id VARCHAR(100), nombre VARCHAR(100), direccion VARCHAR(1000), codigopostal VARCHAR(10), telefono VARCHAR(15), localidad VARCHAR(100), infantil1 VARCHAR(1), infantil2 VARCHAR(1), primaria VARCHAR(1), eso VARCHAR(1), bachillerato VARCHAR(1), actualizado VARCHAR(100), latitud VARCHAR(1000), longitud VARCHAR(1000));");
 
-        db.execSQL("INSERT INTO centros (id) VALUES ('123456789');");
+        db.execSQL("INSERT INTO centros (id) VALUES ('12345678');");
 
         //db.execSQL("DELETE FROM centros WHERE actualizado < sysdate()-30;");
 
@@ -205,5 +215,36 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
         ftrans.replace(R.id.container, fmapabuscar).addToBackStack(null);
         ftrans.commit();
+    }
+
+    private void requestPermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+
+            Toast.makeText(this.getApplicationContext(),R.string.gpspermiso, Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
+        }
+
+        return;
+    }
+
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission2(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.INTERNET)){
+
+            Toast.makeText(this.getApplicationContext(),R.string.gpspermiso, Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.INTERNET},1);
+        }
+
+        return;
     }
 }
