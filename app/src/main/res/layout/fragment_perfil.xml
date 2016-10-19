@@ -65,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:completionThreshold="3"
+                            android:completionThreshold="6"
                             android:hint="@string/perfil_domicilio2" />
 
                     </LinearLayout>
@@ -121,7 +121,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:completionThreshold="3"
+                            android:completionThreshold="6"
                             android:hint="@string/perfil_trabajo2" />
 
                     </LinearLayout>
