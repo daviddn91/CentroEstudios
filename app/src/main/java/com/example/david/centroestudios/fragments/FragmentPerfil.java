@@ -172,12 +172,12 @@ public class FragmentPerfil extends Fragment {
 
         c = db.rawQuery("SELECT textbox1 FROM perfil WHERE id = 'direccioncasa'", null);
         while(c.moveToNext()) {
-            direccioncasa = c.getString(0);
+            direccioncasa = c.getString(0).replace("´","'");
         }
 
         c = db.rawQuery("SELECT textbox1 FROM perfil WHERE id = 'direcciontrabajo'", null);
         while(c.moveToNext()) {
-            direcciontrabajo = c.getString(0);
+            direcciontrabajo = c.getString(0).replace("´","'");
         }
 
         // Cambia el texto del titulo al nombre de la seccion
@@ -312,7 +312,7 @@ public class FragmentPerfil extends Fragment {
 
             public void afterTextChanged(Editable s) {
                 db.execSQL("DELETE FROM perfil WHERE id = 'direccioncasa';");
-                db.execSQL("INSERT INTO perfil(id, textbox1) values ('direccioncasa','"+s.toString()+"')");
+                db.execSQL("INSERT INTO perfil(id, textbox1) values ('direccioncasa','"+s.toString().replace("'","´")+"')");
                 direccioncasa = s.toString();
             }
 
@@ -325,7 +325,7 @@ public class FragmentPerfil extends Fragment {
 
             public void afterTextChanged(Editable s) {
                 db.execSQL("DELETE FROM perfil WHERE id = 'direcciontrabajo';");
-                db.execSQL("INSERT INTO perfil(id, textbox1) values ('direcciontrabajo','"+s.toString()+"')");
+                db.execSQL("INSERT INTO perfil(id, textbox1) values ('direcciontrabajo','"+s.toString().replace("'","´")+"')");
                 direcciontrabajo = s.toString();
             }
 
