@@ -90,14 +90,20 @@ public class MainActivity extends AppCompatActivity
         /* Base de datos */
         db = openOrCreateDatabase("BaseDeDatos", Context.MODE_PRIVATE, null);
 
-        Cursor c = db.rawQuery("SELECT * FROM centros WHERE id = '12345678910'", null);
+        // Creamos la tabla con la info de los colegios y borramos los que sean muy antiguos
+        db.execSQL("CREATE TABLE IF NOT EXISTS centros (id VARCHAR(100), nombre VARCHAR(100), direccion VARCHAR(1000), codigopostal VARCHAR(10), telefono VARCHAR(15), localidad VARCHAR(100), infantil1 VARCHAR(1), infantil2 VARCHAR(1), primaria VARCHAR(1), eso VARCHAR(1), bachillerato VARCHAR(1), actualizado VARCHAR(100), latitud VARCHAR(1000), longitud VARCHAR(1000));");
 
-        if(!c.moveToFirst())
-        {
-            db.execSQL("DROP TABLE perfil");
-            db.execSQL("DROP TABLE filtros");
-            db.execSQL("DROP TABLE centros");
+        Cursor c = db.rawQuery("SELECT * FROM centros WHERE id = '123456'", null);
+
+        if(!c.moveToFirst()) {
+                db.execSQL("DROP TABLE IF EXISTS perfil");
+                db.execSQL("DROP TABLE IF EXISTS filtros");
+                db.execSQL("DROP TABLE IF EXISTS centros");
+
         }
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS centros (id VARCHAR(100), nombre VARCHAR(100), direccion VARCHAR(1000), codigopostal VARCHAR(10), telefono VARCHAR(15), localidad VARCHAR(100), infantil1 VARCHAR(1), infantil2 VARCHAR(1), primaria VARCHAR(1), eso VARCHAR(1), bachillerato VARCHAR(1), actualizado VARCHAR(100), latitud VARCHAR(1000), longitud VARCHAR(1000));");
+        db.execSQL("INSERT INTO centros (id) VALUES ('123456');");
 
         // Creamos la tabla filtros con las preferencias
         db.execSQL("CREATE TABLE IF NOT EXISTS filtros (nina INTEGER, nino INTEGER, publico INTEGER, concertado INTEGER, privado INTEGER, religioso INTEGER, laico INTEGER, castellano INTEGER, catalan INTEGER, ingles INTEGER, frances INTEGER, aleman INTEGER, infantil1 INTEGER, infantil2 INTEGER, primaria INTEGER, eso INTEGER, bachillerato INTEGER);");
@@ -108,11 +114,6 @@ public class MainActivity extends AppCompatActivity
         {
             db.execSQL("INSERT INTO filtros (nina, nino, publico, concertado, privado, religioso, laico, castellano, catalan, ingles, frances, aleman, infantil1, infantil2, primaria, eso, bachillerato) VALUES (1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1);");
         }
-
-        // Creamos la tabla con la info de los colegios y borramos los que sean muy antiguos
-        db.execSQL("CREATE TABLE IF NOT EXISTS centros (id VARCHAR(100), nombre VARCHAR(100), direccion VARCHAR(1000), codigopostal VARCHAR(10), telefono VARCHAR(15), localidad VARCHAR(100), infantil1 VARCHAR(1), infantil2 VARCHAR(1), primaria VARCHAR(1), eso VARCHAR(1), bachillerato VARCHAR(1), actualizado VARCHAR(100), latitud VARCHAR(1000), longitud VARCHAR(1000));");
-
-        db.execSQL("INSERT INTO centros (id) VALUES ('12345678910');");
 
         //db.execSQL("DELETE FROM centros WHERE actualizado < sysdate()-30;");
 
